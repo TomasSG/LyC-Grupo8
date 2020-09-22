@@ -12,6 +12,8 @@ int yyval;
 
 LETRA			[a-zA-Z]
 DIGITO			[0-9]
+DIGITO_BINARIO	[01]
+DIGITO_HEXA		[0-9a-fA-F]
 
 /* Palabras reservadas */
 WHILE			"while"
@@ -19,13 +21,15 @@ IF				"if"
 ELSE			"Else"
 PUT				"PUT"
 GET				"GET"
-DIM	
+DIM				"DIM"
 
 /* Signos puntuación y otros */
 LLAVE_ABIERTO	"{"
 LLAVE_CERRADO	"}"
 PAR_ABIERTO		"("
 PAR_CERRADO		")"
+COR_ABIERTO		"["
+COR_CERRADO		"]"
 PUNTO_COMA		";"
 COMA			","
 
@@ -47,6 +51,8 @@ OP_OR			"or"
 CONST_ENTERA	{DIGITO}+
 CONST_REAL		{DIGITO}*"."{DIGITO}*
 CONST_STRING	\".{0,30}\"
+CONST_BINARIA	0b{DIGITO_BINARIO}+
+CONST_HEXA		0x{DIGITO_HEXA}+
 
 /* Variables */
 ID				{LETRA}({LETRA}|{DIGITO}|"_")*
@@ -56,7 +62,8 @@ COMENTARIO		"*-".*"-*"
 
 
 %%
-{COMENTARIO}	{printf("Comentario: %s\n", yytext);}
+{CONST_BINARIA}	{printf("Binario: %s\n", yytext);}
+{COMENTARIO}	
 {CONST_STRING}	
 {CONST_ENTERA}	
 {CONST_REAL}	

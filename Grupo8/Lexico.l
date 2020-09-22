@@ -18,10 +18,14 @@ DIGITO_HEXA		[0-9a-fA-F]
 /* Palabras reservadas */
 WHILE			"while"
 IF				"if"
-ELSE			"Else"
+ELSE			"else"|"Else"
 PUT				"PUT"
 GET				"GET"
 DIM				"DIM"
+CONTAR			"contar"
+INTEGER			"Integer"
+FLOAT			"Float"
+
 
 /* Signos puntuación y otros */
 LLAVE_ABIERTO	"{"
@@ -34,7 +38,7 @@ PUNTO_COMA		";"
 COMA			","
 
 /* Operadores */
-OP_ASIGNACION	":="
+OP_ASIGNACION	":"
 OP_SUMA 		"+"
 OP_RESTA		"-"
 OP_DIVISION		"/"
@@ -60,17 +64,48 @@ ID				{LETRA}({LETRA}|{DIGITO}|"_")*
 /* Comentarios */
 COMENTARIO		"*-".*"-*"
 
-
 %%
-{CONST_HEXA}	{printf("Hexa: %s\n", yytext);}
-{CONST_BINARIA}	
-{COMENTARIO}	
-{CONST_STRING}	
-{CONST_ENTERA}	
-{CONST_REAL}	
-{ID}
-"\t"
-"\n"			
+
+{WHILE}			|	
+{IF}			|	
+{ELSE}			|
+{PUT}			|
+{GET}			|	
+{DIM}			|	
+{INTEGER}		|
+{FLOAT}			{printf("(Palabra reservada) %s", yytext);}
+
+{LLAVE_ABIERTO}	|
+{LLAVE_CERRADO}	|
+{PAR_ABIERTO}	|
+{PAR_CERRADO}	|
+{COR_ABIERTO}	|
+{COR_CERRADO}	|
+{PUNTO_COMA}	|
+{COMA}			{printf("(Signo puntuacion) %s", yytext);}
+
+{OP_ASIGNACION} |
+{OP_SUMA}		|
+{OP_RESTA}		|
+{OP_DIVISION}	|
+{OP_MULT}		|
+{OP_LE}			|
+{OP_LEQ}		|	
+{OP_GE}			|
+{OP_GEQ}		|	
+{OP_NOT}		|
+{OP_AND}		|
+{OP_OR}			{printf("(Operador) %s", yytext);}
+
+{CONST_ENTERA}	{printf("(CONST_ENTERA) %s", yytext);}
+{CONST_REAL}	{printf("(CONST_REAL) %s", yytext);}
+{CONST_STRING}	{printf("(CONST_STRING) %s", yytext);}
+{CONST_BINARIA}	{printf("(CONST_B2) %s", yytext);}
+{CONST_HEXA}	{printf("(CONST_B16) %s", yytext);}
+
+{ID}			{printf("(ID) %s", yytext);}
+
+{COMENTARIO}	{printf("(COMENTARIo) %s", yytext);}
 
 %%
 

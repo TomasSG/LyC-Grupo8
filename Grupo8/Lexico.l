@@ -4,7 +4,7 @@
 #include <conio.h>
 #include <string.h>
 
-/* DEFINICIONES PARA LA LISTA */
+/* Definiciones para la lista */
 #define TODO_BIEN 1
 #define LISTA_LLENA 0
 #define LISTA_VACIA -1
@@ -33,13 +33,17 @@ void crear_lista(t_lista*);
 void vaciar_lista(t_lista*);
 int insertar_ordenado(t_lista*,const t_dato*,t_cmp);
 void recorrer_lista(const t_lista*,t_fun);
+void guardar_lista(const t_lista*, FILE*);
 
 int comparacion(const t_dato*,const t_dato*);
 void mostrar(const t_dato*);
 
+
 /* Algunos define para funciones */
 #define CON_VALOR 1
 #define SIN_VALOR 0
+#define PATH_ARCHIVO_TS "./ts.txt"
+#define TEXTO_ESCRITURA "wt"
 
 /* Variables globales */
 FILE *yyin;
@@ -156,6 +160,7 @@ COMENTARIO		"*-".*"-*"
 
 int main(int argc, char *argv[]) 
 {
+	FILE *pf;
 	yyin = fopen(argv[1], "rt");
 	if(yyin == NULL)
 	{	
@@ -165,8 +170,20 @@ int main(int argc, char *argv[])
 	{
 		crear_lista(&tabla_simbolos);
 		yylex();
-		recorrer_lista(&tabla_simbolos, mostrar);
 	}
+
+	pf = fopen(PATH_ARCHIVO_TS, TEXTO_ESCRITURA);
+	if(!pf)
+	{
+		printf("No se pudo crear el archivo %s para la tabla de simbolos\n", PATH_ARCHIVO_TS);
+	}	
+	else
+	{
+		guardar_lista(&tabla_simbolos, pf);
+		fclose(pf);
+	}
+	
+	
 	vaciar_lista(&tabla_simbolos);
 	fclose(yyin);
 	return 0;
@@ -281,6 +298,18 @@ void recorrer_lista(const t_lista *pl,t_fun fun)
         pl=&(*pl)->psig;
     }
 	printf("|------|------------------------|----|------------------|-----|\n");
+}
+
+void guardar_lista(const t_lista *pl, FILE *pf)
+{
+	t_dato *pd;
+	fprintf(pf,"|LEXEMA|TIPO|VALOR|\n", pd->lexema, pd->tipo, pd->valor);
+    while(*pl)
+    {
+        pd =  &(*pl)->dato;
+		fprintf(pf,"|%s|%s|%s|\n", pd->lexema, pd->tipo, pd->valor);
+        pl = &(*pl)->psig;
+    }
 }
 
 int comparacion(const t_dato *pd1,const t_dato *pd2)

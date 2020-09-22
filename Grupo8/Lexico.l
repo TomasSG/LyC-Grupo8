@@ -28,15 +28,19 @@ PUNTO_COMA		";"
 /* Operadores */
 OP_ASIGNACION	":="
 
-/* Token interesantes */
-ID				{LETRA}({LETRA}|{DIGITO}|"_")*
+/* Constantes*/
 CONST_ENTERA	{DIGITO}+
 CONST_REAL		{DIGITO}*"."{DIGITO}*
+CONST_STRING	\".{0,30}\"
+
+
+/* Variables */
+ID				{LETRA}({LETRA}|{DIGITO}|"_")*
 
 %%
-
-{CONST_ENTERA}	|
-{CONST_REAL}	{printf("Constante: %s\n", yytext);}
+{CONST_STRING}	{printf("String: %s\n", yytext);}
+{CONST_ENTERA}	
+{CONST_REAL}	
 {ID}
 "\t"
 "\n"			

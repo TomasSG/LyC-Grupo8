@@ -62,7 +62,8 @@ COMENTARIO		"*-".*"-*"
 
 
 %%
-{CONST_BINARIA}	{printf("Binario: %s\n", yytext);}
+{CONST_HEXA}	{printf("Hexa: %s\n", yytext);}
+{CONST_BINARIA}	
 {COMENTARIO}	
 {CONST_STRING}	
 {CONST_ENTERA}	

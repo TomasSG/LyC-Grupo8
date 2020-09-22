@@ -9,6 +9,6 @@ BIEN
 
 MAL
 azaasd
-"asdasd
-	asdads"
-"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaaaaaaa"
+"string sin cerrar por derecha
+string sin cerrar por izquierda"
+"Comentario muy largoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaaaaaaa"

@@ -16,7 +16,7 @@ echo.
 echo -----------------------------------------------------------------
 pause
 del lex.yy.c
-del ejecutable.exe
+del Primera.exe
 cls
 set /p seguir=Desea seguir con el programa? [s/n]
 if "%seguir%"=="s" goto do_while

@@ -4,7 +4,7 @@
 #include <conio.h>
 #include <string.h>
 
-/* Definiciones para la lista */
+/* DEFINICIONES PARA LISTA*/
 #define TODO_BIEN 1
 #define LISTA_LLENA 0
 #define LISTA_VACIA -1
@@ -39,13 +39,13 @@ int comparacion(const t_dato*,const t_dato*);
 void mostrar(const t_dato*);
 
 
-/* Algunos define para funciones */
+/* DEFINICIONES PARA FUNCIONES */
 #define CON_VALOR 1
 #define SIN_VALOR 0
 #define PATH_ARCHIVO_TS "./ts.txt"
 #define TEXTO_ESCRITURA "wt"
 
-/* Variables globales */
+/* VARIABLES GLOBALES */
 FILE *yyin;
 int yyval;
 t_lista tabla_simbolos;
@@ -59,7 +59,7 @@ DIGITO			[0-9]
 DIGITO_BINARIO	[01]
 DIGITO_HEXA		[0-9a-fA-F]
 
-/* Palabras reservadas */
+/* PALABRAS RESERVADAS */
 WHILE			"while"
 IF				"if"
 ELSE			"else"|"Else"
@@ -72,7 +72,7 @@ INTEGER			"Integer"
 FLOAT			"Float"
 
 
-/* Signos puntuación y otros */
+/* SIGNOS PUNTUACION Y OTROS */
 LLAVE_ABIERTO	"{"
 LLAVE_CERRADO	"}"
 PAR_ABIERTO		"("
@@ -82,7 +82,7 @@ COR_CERRADO		"]"
 PUNTO_COMA		";"
 COMA			","
 
-/* Operadores */
+/* OPERADORES */
 OP_ASIGNACION	":="
 OP_SUMA 		"+"
 OP_RESTA		"-"
@@ -96,17 +96,17 @@ OP_NOT			"<>"
 OP_AND			"and"
 OP_OR			"or"
 
-/* Constantes*/
+/* CONSTANTES */
 CONST_ENTERA	{DIGITO}+
 CONST_REAL		{DIGITO}*"."{DIGITO}*
 CONST_STRING	\".{0,30}\"
 CONST_BINARIA	0b{DIGITO_BINARIO}+
 CONST_HEXA		0x{DIGITO_HEXA}+
 
-/* Variables */
+/* VARIABLES */
 ID				{LETRA}({LETRA}|{DIGITO}|"_")*
 
-/* Comentarios */
+/* COMENTARIOS */
 COMENTARIO		"*-".*"-*"
 
 %%
@@ -160,17 +160,16 @@ COMENTARIO		"*-".*"-*"
 
 int main(int argc, char *argv[]) 
 {
-	FILE *pf;
+	FILE *pf = NULL;
 	yyin = fopen(argv[1], "rt");
 	if(yyin == NULL)
 	{	
 		printf("\nNo se pudo abrir el archivo %s\n", argv[1]);
+		return 1;
 	}
-	else
-	{
-		crear_lista(&tabla_simbolos);
-		yylex();
-	}
+	crear_lista(&tabla_simbolos);
+	
+	yylex();
 
 	pf = fopen(PATH_ARCHIVO_TS, TEXTO_ESCRITURA);
 	if(!pf)
@@ -182,8 +181,7 @@ int main(int argc, char *argv[])
 		guardar_lista(&tabla_simbolos, pf);
 		fclose(pf);
 	}
-	
-	
+
 	vaciar_lista(&tabla_simbolos);
 	fclose(yyin);
 	return 0;
@@ -251,7 +249,7 @@ int insertar_ts(char *string, int opcion)
 	return 0;
 }
 
-/* Funciones de lista */
+/* FUNCIONES DE LISTA */
 
 void crear_lista(t_lista *pl)
 {

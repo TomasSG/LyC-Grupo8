@@ -4,5 +4,5 @@ Repositorio para el Trabajo Práctico de Lenguajes y Compiladores en 2do Cuatrim
 # Temas Especiales
 
 * Tercetos
-* Cte Binaria y Hexad
+* Cte Binaria y Hexadecimal
 * Contar

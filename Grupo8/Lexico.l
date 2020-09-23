@@ -40,12 +40,12 @@ void mostrar(const t_dato*);
 
 
 /* DEFINICIONES PARA FUNCIONES */
-#define CON_VALOR 1
-#define SIN_VALOR 0
 #define PATH_ARCHIVO_TS "./ts.txt"
 #define TEXTO_ESCRITURA "wt"
 
-char* sacar_comillas(const char *s);
+int insertar_ts(char*, char*);
+char* sacar_comillas(const char*);
+char* agregar_guion_bajo(const char*);
 
 /* VARIABLES GLOBALES */
 FILE *yyin;
@@ -147,15 +147,15 @@ COMENTARIO		"*-".*"-*"
 {OP_OR}			{/*printf("(Operador) %s", yytext);*/}
 
 
-{CONST_STRING}	{insertar_ts(sacar_comillas(yytext), CON_VALOR);}
+{CONST_STRING}	{insertar_ts(agregar_guion_bajo(sacar_comillas(yytext)), sacar_comillas(yytext));}
 {CONST_ENTERA}	|
-{CONST_REAL}	|
+{CONST_REAL}	{insertar_ts(agregar_guion_bajo(yytext), yytext);}
 {CONST_BINARIA}	|
-{CONST_HEXA}	{insertar_ts(yytext, CON_VALOR);}
+{CONST_HEXA}	{insertar_ts(agregar_guion_bajo(yytext), yytext);}
 
-{ID}			{insertar_ts(yytext, SIN_VALOR);}
+{ID}			{insertar_ts(yytext, NULL);}
 
-{COMENTARIO}	{/*printf("(COMENTARIo) %s", yytext);*/}
+{COMENTARIO}	{}
 "\n"
 "\t"
 
@@ -196,11 +196,12 @@ int yyerror(void)
 	exit(1);
 }
 
-int insertar_ts(char *string, int opcion)
+int insertar_ts(char *lexema, char *valor)
 {
 	int resultado = -1;
 	t_dato *pd;
-	
+
+	// Reservamos memoria para el t_dato
 	pd = (t_dato*)malloc(sizeof(t_dato));
 	if(!pd)
 	{
@@ -208,42 +209,36 @@ int insertar_ts(char *string, int opcion)
 		return 1;
 	}
 
+	// El tipo no se completa así que lo dejamos en nulo
 	pd->tipo = NULL;
-	
-	if(opcion == SIN_VALOR)
+
+	// El lexema lo copiamos tal cual
+	pd->lexema = (char*) malloc(sizeof(char)*strlen(lexema) + 1);
+	if(!(pd->lexema))
 	{
-		pd->lexema = (char*) malloc(sizeof(char)*strlen(string) + 1);
-		if(!(pd->lexema))
-		{
-			printf("Problemas de memoria\n");
-			return 1;
-		}
-		
-		strcpy(pd->lexema, string);
-		pd->valor = NULL;
+		printf("Problemas de memoria\n");
+		return 1;
 	}
-	else if (opcion == CON_VALOR)
+	strcpy(pd->lexema, lexema);
+	
+	// El valor hay que validar que no sea NULL porque hay casos en que no se completa 
+	// el campo
+	if(valor != NULL)
 	{
-
-		pd->lexema = (char*) malloc(sizeof(char)*strlen(string) + 2);
-		if(!(pd->lexema))
-		{
-			printf("Problemas de memoria\n");
-			return 1;
-		}
-		
-		strcpy(pd->lexema, "_");
-		strcat(pd->lexema, string);
-
-		pd->valor = (char*) malloc(sizeof(char)*strlen(string) + 1);
+		pd->valor = (char*) malloc(sizeof(char)*strlen(valor) + 1);
 		if(!pd->valor)
 		{
 			printf("Problemas de memoria\n");
 			return 1;
 		}
-		strcpy(pd->valor, string);
+		strcpy(pd->valor, valor);
+	}
+	else
+	{
+		pd->valor = NULL;
 	}
 	
+	// Ya armado el t_dato insertamos en la tabla
 	resultado = insertar_ordenado(&tabla_simbolos, pd, comparacion);
 	if(resultado == LISTA_LLENA || resultado == DUPLICADO)
 	{
@@ -340,6 +335,20 @@ char* sacar_comillas(const char *s)
 	}
 	*resultado = '\0';
 	return inicio;		
+}
+
+char* agregar_guion_bajo(const char *s)
+{
+	char* resultado;
+	resultado =(char*) malloc(sizeof(char) * strlen(s) + 2);
+	if(!resultado)
+	{
+		printf("Problemas con memoria\n");
+		return NULL;
+	}
+	strcpy(resultado, "_");
+	strcat(resultado, s);
+	return resultado;
 }
 
 int comparacion(const t_dato *pd1,const t_dato *pd2)

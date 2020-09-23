@@ -100,6 +100,7 @@ OP_GEQ			">="
 OP_NOT			"<>"
 OP_AND			"and"
 OP_OR			"or"
+OP_NOT			"not"
 
 /* CONSTANTES */
 CONST_ENTERA	{DIGITO}+
@@ -147,7 +148,8 @@ COMENTARIO		"*-".*"-*"
 {OP_GEQ}		|	
 {OP_NOT}		|
 {OP_AND}		|
-{OP_OR}			{/*printf("(Operador) %s", yytext);*/}
+{OP_OR}			|
+{OP_NOT}		{/*printf("(Operador) %s", yytext);*/}
 
 
 {CONST_STRING}	{insertar_ts(agregar_guion_bajo(sacar_comillas(yytext)), sacar_comillas(yytext));}

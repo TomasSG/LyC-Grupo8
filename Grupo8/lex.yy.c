@@ -528,6 +528,7 @@ char *yytext;
 #include <stdlib.h>
 #include <conio.h>
 #include <string.h>
+#include <math.h>
 
 /* DEFINICIONES PARA LISTA*/
 #define TODO_BIEN 1
@@ -565,14 +566,14 @@ void mostrar(const t_dato*);
 
 
 /* DEFINICIONES PARA FUNCIONES */
-#define CON_VALOR 1
-#define SIN_VALOR 0
 #define PATH_ARCHIVO_TS "./ts.txt"
 #define TEXTO_ESCRITURA "wt"
 
 int insertar_ts(char*, char*);
 char* sacar_comillas(const char*);
 char* agregar_guion_bajo(const char*);
+char* convertir_cadena_decimal(const char*);
+int convertir_caracter_decimal(const char);
 
 /* VARIABLES GLOBALES */
 FILE *yyin;
@@ -584,7 +585,7 @@ t_lista tabla_simbolos;
 /* CONSTANTES */
 /* VARIABLES */
 /* COMENTARIOS */
-#line 588 "lex.yy.c"
+#line 589 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -735,10 +736,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 116 "Lexico.l"
+#line 117 "Lexico.l"
 
 
-#line 742 "lex.yy.c"
+#line 743 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -830,116 +831,119 @@ do_action:	/* This label is used only to access EOF actions. */
 		switch ( yy_act )
 	{ /* beginning of action switch */
 case 1:
-#line 119 "Lexico.l"
-case 2:
 #line 120 "Lexico.l"
-case 3:
+case 2:
 #line 121 "Lexico.l"
-case 4:
+case 3:
 #line 122 "Lexico.l"
-case 5:
+case 4:
 #line 123 "Lexico.l"
-case 6:
+case 5:
 #line 124 "Lexico.l"
-case 7:
+case 6:
 #line 125 "Lexico.l"
-case 8:
+case 7:
 #line 126 "Lexico.l"
-case 9:
+case 8:
 #line 127 "Lexico.l"
+case 9:
+#line 128 "Lexico.l"
 case 10:
 YY_RULE_SETUP
-#line 127 "Lexico.l"
+#line 128 "Lexico.l"
 {/*printf("(Palabra reservada) %s", yytext);*/}
 	YY_BREAK
 case 11:
-#line 130 "Lexico.l"
-case 12:
 #line 131 "Lexico.l"
-case 13:
+case 12:
 #line 132 "Lexico.l"
-case 14:
+case 13:
 #line 133 "Lexico.l"
-case 15:
+case 14:
 #line 134 "Lexico.l"
-case 16:
+case 15:
 #line 135 "Lexico.l"
-case 17:
+case 16:
 #line 136 "Lexico.l"
+case 17:
+#line 137 "Lexico.l"
 case 18:
 YY_RULE_SETUP
-#line 136 "Lexico.l"
+#line 137 "Lexico.l"
 {/*printf("(Signo puntuacion) %s", yytext);*/}
 	YY_BREAK
 case 19:
-#line 139 "Lexico.l"
-case 20:
 #line 140 "Lexico.l"
-case 21:
+case 20:
 #line 141 "Lexico.l"
-case 22:
+case 21:
 #line 142 "Lexico.l"
-case 23:
+case 22:
 #line 143 "Lexico.l"
-case 24:
+case 23:
 #line 144 "Lexico.l"
-case 25:
+case 24:
 #line 145 "Lexico.l"
-case 26:
+case 25:
 #line 146 "Lexico.l"
-case 27:
+case 26:
 #line 147 "Lexico.l"
-case 28:
+case 27:
 #line 148 "Lexico.l"
-case 29:
+case 28:
 #line 149 "Lexico.l"
+case 29:
+#line 150 "Lexico.l"
 case 30:
 YY_RULE_SETUP
-#line 149 "Lexico.l"
+#line 150 "Lexico.l"
 {/*printf("(Operador) %s", yytext);*/}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 152 "Lexico.l"
+#line 153 "Lexico.l"
 {insertar_ts(agregar_guion_bajo(sacar_comillas(yytext)), sacar_comillas(yytext));}
 	YY_BREAK
 case 32:
-#line 154 "Lexico.l"
-case 33:
 #line 155 "Lexico.l"
+case 33:
+YY_RULE_SETUP
+#line 155 "Lexico.l"
+{insertar_ts(agregar_guion_bajo(yytext), yytext);}
+	YY_BREAK
 case 34:
-#line 156 "Lexico.l"
+#line 157 "Lexico.l"
 case 35:
 YY_RULE_SETUP
-#line 156 "Lexico.l"
-{insertar_ts(agregar_guion_bajo(yytext), yytext);}
+#line 157 "Lexico.l"
+{insertar_ts(agregar_guion_bajo(yytext), convertir_cadena_decimal(yytext));}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 158 "Lexico.l"
+#line 159 "Lexico.l"
 {insertar_ts(yytext, NULL);}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 160 "Lexico.l"
-{/*printf("(COMENTARIo) %s", yytext);*/}
+#line 161 "Lexico.l"
+{}
 	YY_BREAK
 case 38:
-YY_RULE_SETUP
-#line 161 "Lexico.l"
-
-	YY_BREAK
-case 39:
 YY_RULE_SETUP
 #line 162 "Lexico.l"
 
 	YY_BREAK
+case 39:
+YY_RULE_SETUP
+#line 163 "Lexico.l"
+
+	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 164 "Lexico.l"
+#line 165 "Lexico.l"
 ECHO;
 	YY_BREAK
-#line 943 "lex.yy.c"
+#line 947 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1823,7 +1827,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 164 "Lexico.l"
+#line 165 "Lexico.l"
 
 
 int main(int argc, char *argv[]) 
@@ -1886,7 +1890,7 @@ int insertar_ts(char *lexema, char *valor)
 	}
 	strcpy(pd->lexema, lexema);
 	
-	// El valor hay que validar que no sea NULL porque los id no se completa 
+	// El valor hay que validar que no sea NULL porque hay casos en que no se completa 
 	// el campo
 	if(valor != NULL)
 	{
@@ -2014,6 +2018,63 @@ char* agregar_guion_bajo(const char *s)
 	strcpy(resultado, "_");
 	strcat(resultado, s);
 	return resultado;
+}
+
+char* convertir_cadena_decimal(const char *s)
+{
+	char *aux, resultado[500];
+	int valor_numerico = 0, i = 0;
+	double base = 0;
+	
+	// Necesitamos el auxiliar solo para dar vuelta la cadena con los números
+	aux = (char*) malloc(sizeof(char)* strlen(s) + 1);
+	if(!aux)
+	{
+		printf("Problemas con memoria\n");
+		return 0;
+	}
+	strcpy(aux, &s[2]);
+	aux = strrev(aux);
+
+	// Esto determina la base con la letra que se encuentra en segunda posición
+	if(s[1] == 'b' ||  s[1] == 'B')
+	{
+		base = 2;
+	}
+	else if(s[1] == 'x' ||  s[1] == 'X')
+	{
+		base = 16;
+	}
+
+	// Esto hace la converisón a base 10 pero lo almacena como int
+	for(i = 0; i < strlen(aux); i++)
+	{
+		valor_numerico += convertir_caracter_decimal(aux[i]) * pow(base, i);
+	}
+
+	// El itoa para devolver la string en base 10
+	return itoa(valor_numerico, resultado, 10);
+}
+
+int convertir_caracter_decimal(const char c)
+{
+	char valores[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+	int i = 0;
+	for(i = 0; i < 10; i++)
+	{
+		if(c == valores[i])
+		{
+			return i;
+		}
+	}
+	for(i = 10; i < 16; i++)
+	{
+		if(toupper(c) == toupper(valores[i]))
+		{
+			return i;
+		}
+	}
+	return -1;
 }
 
 int comparacion(const t_dato *pd1,const t_dato *pd2)

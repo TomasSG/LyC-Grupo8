@@ -1,7 +1,4 @@
 |LEXEMA|TIPO|VALOR|
-|_"La suma es: "|(null)|"La suma es: "|
-|_"Prueba.txt LyC Tema 1!"|(null)|"Prueba.txt LyC Tema 1!"|
-|_"no es mayor que 2"|(null)|"no es mayor que 2"|
 |_0|(null)|0|
 |_0.342|(null)|0.342|
 |_02.5|(null)|02.5|
@@ -13,6 +10,9 @@
 |_4|(null)|4|
 |_52|(null)|52|
 |_92|(null)|92|
+|_La suma es: |(null)|La suma es: |
+|_Prueba.txt LyC Tema 1!|(null)|Prueba.txt LyC Tema 1!|
+|_no es mayor que 2|(null)|no es mayor que 2|
 |actual|(null)|(null)|
 |contador|(null)|(null)|
 |promedio|(null)|(null)|

@@ -45,6 +45,8 @@ void mostrar(const t_dato*);
 #define PATH_ARCHIVO_TS "./ts.txt"
 #define TEXTO_ESCRITURA "wt"
 
+char* sacar_comillas(const char *s);
+
 /* VARIABLES GLOBALES */
 FILE *yyin;
 int yyval;
@@ -144,9 +146,10 @@ COMENTARIO		"*-".*"-*"
 {OP_AND}		|
 {OP_OR}			{/*printf("(Operador) %s", yytext);*/}
 
+
+{CONST_STRING}	{insertar_ts(sacar_comillas(yytext), CON_VALOR);}
 {CONST_ENTERA}	|
 {CONST_REAL}	|
-{CONST_STRING}	|
 {CONST_BINARIA}	|
 {CONST_HEXA}	{insertar_ts(yytext, CON_VALOR);}
 
@@ -249,7 +252,7 @@ int insertar_ts(char *string, int opcion)
 	return 0;
 }
 
-/* FUNCIONES DE LISTA */
+/*-------------------------------FUNCIONES DE LISTA-------------------------------*/
 
 void crear_lista(t_lista *pl)
 {
@@ -308,6 +311,35 @@ void guardar_lista(const t_lista *pl, FILE *pf)
 		fprintf(pf,"|%s|%s|%s|\n", pd->lexema, pd->tipo, pd->valor);
         pl = &(*pl)->psig;
     }
+}
+
+/*-------------------------------FUNCIONES AUXILIARES-------------------------------*/
+
+char* sacar_comillas(const char *s)
+{
+	int i, largo = strlen(s);
+	char *inicio, *resultado;
+	resultado = (char*) malloc(sizeof(char) * largo - 2 + 1);
+	if(!resultado)
+	{
+		printf("Problemas con memoria\n");
+		return NULL;
+	}
+	inicio = resultado;
+	while(*s) {
+		if( *s != '\"')
+		{		
+			*resultado = *s;
+			resultado++;
+			s++;
+		}
+		else 
+		{
+			s++;
+		}
+	}
+	*resultado = '\0';
+	return inicio;		
 }
 
 int comparacion(const t_dato *pd1,const t_dato *pd2)

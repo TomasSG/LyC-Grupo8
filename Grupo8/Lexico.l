@@ -97,7 +97,7 @@ OP_LE			"<"
 OP_LEQ			"<="
 OP_GE			">"
 OP_GEQ			">="
-OP_NOT			"<>"
+OP_NE			"<>"
 OP_AND			"and"
 OP_OR			"or"
 OP_NOT			"not"
@@ -146,7 +146,7 @@ COMENTARIO		"*-".*"-*"
 {OP_LEQ}		|	
 {OP_GE}			|
 {OP_GEQ}		|	
-{OP_NOT}		|
+{OP_NE}			|
 {OP_AND}		|
 {OP_OR}			|
 {OP_NOT}		{/*printf("(Operador) %s", yytext);*/}
@@ -394,8 +394,11 @@ char* convertir_cadena_decimal(const char *s)
 
 int convertir_caracter_decimal(const char c)
 {
+	// La lista de valores es para poder mapear el valor numérico con el caracter
 	char valores[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 	int i = 0;
+
+	// Si el caracter representa un digito en 0-9 entonces hay conversión directa
 	for(i = 0; i < 10; i++)
 	{
 		if(c == valores[i])
@@ -403,6 +406,9 @@ int convertir_caracter_decimal(const char c)
 			return i;
 		}
 	}
+
+	// Si el caracter es un valor de hexa A-F entonces llevo todo a mayus para evitar
+	// problemas sienta case sensitive
 	for(i = 10; i < 16; i++)
 	{
 		if(toupper(c) == toupper(valores[i]))
@@ -410,6 +416,7 @@ int convertir_caracter_decimal(const char c)
 			return i;
 		}
 	}
+
 	return -1;
 }
 

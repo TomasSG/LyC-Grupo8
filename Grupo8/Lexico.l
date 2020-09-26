@@ -49,6 +49,7 @@ char* sacar_comillas(const char*);
 char* agregar_guion_bajo(const char*);
 char* convertir_cadena_decimal(const char*);
 int convertir_caracter_decimal(const char);
+int verificar_string(const char*);
 
 /* VARIABLES GLOBALES */
 FILE *yyin;
@@ -108,7 +109,7 @@ OP_NOT				"not"
 /* CONSTANTES */
 CONST_ENTERA		{DIGITO}+
 CONST_REAL			({DIGITO}+"."{DIGITO}*)|({DIGITO}*"."{DIGITO}+)
-CONST_STRING		\".\"
+CONST_STRING		\".*\"
 CONST_BINARIA		0b{DIGITO_BINARIO}+
 CONST_HEXA			0x{DIGITO_HEXA}+
 
@@ -158,10 +159,10 @@ COMENTARIO		"*-".*"-*"
 {CONST_STRING}		{verificar_string(yytext);
 					insertar_ts(agregar_guion_bajo(sacar_comillas(yytext)), sacar_comillas(yytext));}
 {CONST_ENTERA}		|
-{CONST_REAL}		{verificar_rango(yytext);
+{CONST_REAL}		{/*verificar_rango(yytext);*/
 					insertar_ts(agregar_guion_bajo(yytext), yytext);}
 {CONST_BINARIA}		|
-{CONST_HEXA}		{verificar_rango(yytext);
+{CONST_HEXA}		{/*verificar_rango(yytext);*/
 					insertar_ts(agregar_guion_bajo(yytext), convertir_cadena_decimal(yytext));}
 
 {ID}				{insertar_ts(yytext, NULL);}
@@ -201,9 +202,10 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-int yyerror(void)
+int yyerror(const char *msj)
 {
-	printf("\nError léxico\n");
+	printf("Error lexico\n");
+	printf("Linea nro %d: %s\n", yylineno, msj);
 	exit(1);
 }
 
@@ -434,4 +436,14 @@ int comparacion(const t_dato *pd1,const t_dato *pd2)
 void mostrar(const t_dato *pd)
 {	
 	printf("|%s\t\t\t%s\t\t\t%s|\n", pd->lexema, pd->tipo, pd->valor);
+}
+
+int verificar_string(const char *s)
+{
+	if(strlen(s) > 32)
+	{
+		yyerror("String mayor a 30 caracteres");
+		return 0;
+	}
+	return 1;
 }

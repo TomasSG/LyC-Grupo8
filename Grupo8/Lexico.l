@@ -61,25 +61,25 @@ t_lista tabla_simbolos;
 
 LETRA			[a-zA-Z]
 DIGITO			[0-9]
-DIGITO_BINARIO	[01]
+DIGITO_BINARIO		[01]
 DIGITO_HEXA		[0-9a-fA-F]
 
 /* PALABRAS RESERVADAS */
 WHILE			"while"
-IF				"if"
+IF			"if"
 ELSE			"else"|"Else"
-PUT				"PUT"
-GET				"GET"
-DIM				"DIM"
-AS				"AS"
+PUT			"PUT"
+GET			"GET"
+DIM			"DIM"
+AS			"AS"
 CONTAR			"contar"
 INTEGER			"Integer"
 FLOAT			"Float"
-
+STRING			"String"
 
 /* SIGNOS PUNTUACION Y OTROS */
-LLAVE_ABIERTO	"{"
-LLAVE_CERRADO	"}"
+LLAVE_ABIERTO		"{"
+LLAVE_CERRADO		"}"
 PAR_ABIERTO		"("
 PAR_CERRADO		")"
 COR_ABIERTO		"["
@@ -88,7 +88,7 @@ PUNTO_COMA		";"
 COMA			","
 
 /* OPERADORES */
-OP_ASIGNACION	":="
+OP_ASIGNACION		":="
 OP_SUMA 		"+"
 OP_RESTA		"-"
 OP_DIVISION		"/"
@@ -101,16 +101,18 @@ OP_NE			"<>"
 OP_AND			"and"
 OP_OR			"or"
 OP_NOT			"not"
+OP_IGUAL		"=="
+OP_DISTINTO		"!="
 
 /* CONSTANTES */
-CONST_ENTERA	{DIGITO}+
+CONST_ENTERA		{DIGITO}+
 CONST_REAL		({DIGITO}+"."{DIGITO}*)|({DIGITO}*"."{DIGITO}+)
-CONST_STRING	\".{0,30}\"
-CONST_BINARIA	0b{DIGITO_BINARIO}+
+CONST_STRING		\".{0,30}\"
+CONST_BINARIA		0b{DIGITO_BINARIO}+
 CONST_HEXA		0x{DIGITO_HEXA}+
 
 /* VARIABLES */
-ID				{LETRA}({LETRA}|{DIGITO}|"_")*
+ID			{LETRA}({LETRA}|{DIGITO}|"_")*
 
 /* COMENTARIOS */
 COMENTARIO		"*-".*"-*"
@@ -128,19 +130,19 @@ COMENTARIO		"*-".*"-*"
 {INTEGER}		|
 {FLOAT}			{/*printf("(Palabra reservada) %s", yytext);*/}
 
-{LLAVE_ABIERTO}	|
-{LLAVE_CERRADO}	|
-{PAR_ABIERTO}	|
-{PAR_CERRADO}	|
-{COR_ABIERTO}	|
-{COR_CERRADO}	|
-{PUNTO_COMA}	|
+{LLAVE_ABIERTO}		|
+{LLAVE_CERRADO}		|
+{PAR_ABIERTO}		|
+{PAR_CERRADO}		|
+{COR_ABIERTO}		|
+{COR_CERRADO}		|
+{PUNTO_COMA}		|
 {COMA}			{/*printf("(Signo puntuacion) %s", yytext);*/}
 
-{OP_ASIGNACION} |
+{OP_ASIGNACION} 	|
 {OP_SUMA}		|
 {OP_RESTA}		|
-{OP_DIVISION}	|
+{OP_DIVISION}		|
 {OP_MULT}		|
 {OP_LE}			|
 {OP_LEQ}		|	
@@ -152,15 +154,15 @@ COMENTARIO		"*-".*"-*"
 {OP_NOT}		{/*printf("(Operador) %s", yytext);*/}
 
 
-{CONST_STRING}	{insertar_ts(agregar_guion_bajo(sacar_comillas(yytext)), sacar_comillas(yytext));}
-{CONST_ENTERA}	|
-{CONST_REAL}	{insertar_ts(agregar_guion_bajo(yytext), yytext);}
-{CONST_BINARIA}	|
-{CONST_HEXA}	{insertar_ts(agregar_guion_bajo(yytext), convertir_cadena_decimal(yytext));}
+{CONST_STRING}		{insertar_ts(agregar_guion_bajo(sacar_comillas(yytext)), sacar_comillas(yytext));}
+{CONST_ENTERA}		|
+{CONST_REAL}		{insertar_ts(agregar_guion_bajo(yytext), yytext);}
+{CONST_BINARIA}		|
+{CONST_HEXA}		{insertar_ts(agregar_guion_bajo(yytext), convertir_cadena_decimal(yytext));}
 
 {ID}			{insertar_ts(yytext, NULL);}
 
-{COMENTARIO}	{}
+{COMENTARIO}		{}
 "\n"
 "\t"
 

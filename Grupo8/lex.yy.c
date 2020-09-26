@@ -521,6 +521,8 @@ char* agregar_guion_bajo(const char*);
 char* convertir_cadena_decimal(const char*);
 int convertir_caracter_decimal(const char);
 int verificar_string(const char*);
+int verificar_rango_entero(const char*);
+int verificar_rango_real(const char*);
 
 /* VARIABLES GLOBALES */
 FILE *yyin;
@@ -532,7 +534,7 @@ t_lista tabla_simbolos;
 /* CONSTANTES */
 /* VARIABLES */
 /* COMENTARIOS */
-#line 536 "lex.yy.c"
+#line 538 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -683,10 +685,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 122 "Lexico.l"
+#line 124 "Lexico.l"
 
 
-#line 690 "lex.yy.c"
+#line 692 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -778,124 +780,128 @@ do_action:	/* This label is used only to access EOF actions. */
 		switch ( yy_act )
 	{ /* beginning of action switch */
 case 1:
-#line 125 "Lexico.l"
-case 2:
-#line 126 "Lexico.l"
-case 3:
 #line 127 "Lexico.l"
-case 4:
+case 2:
 #line 128 "Lexico.l"
-case 5:
+case 3:
 #line 129 "Lexico.l"
-case 6:
+case 4:
 #line 130 "Lexico.l"
-case 7:
+case 5:
 #line 131 "Lexico.l"
-case 8:
+case 6:
 #line 132 "Lexico.l"
-case 9:
+case 7:
 #line 133 "Lexico.l"
+case 8:
+#line 134 "Lexico.l"
+case 9:
+#line 135 "Lexico.l"
 case 10:
 YY_RULE_SETUP
-#line 133 "Lexico.l"
+#line 135 "Lexico.l"
 {/*printf("(Palabra reservada) %s", yytext);*/}
 	YY_BREAK
 case 11:
-#line 136 "Lexico.l"
-case 12:
-#line 137 "Lexico.l"
-case 13:
 #line 138 "Lexico.l"
-case 14:
+case 12:
 #line 139 "Lexico.l"
-case 15:
+case 13:
 #line 140 "Lexico.l"
-case 16:
+case 14:
 #line 141 "Lexico.l"
-case 17:
+case 15:
 #line 142 "Lexico.l"
+case 16:
+#line 143 "Lexico.l"
+case 17:
+#line 144 "Lexico.l"
 case 18:
 YY_RULE_SETUP
-#line 142 "Lexico.l"
+#line 144 "Lexico.l"
 {/*printf("(Signo puntuacion) %s", yytext);*/}
 	YY_BREAK
 case 19:
-#line 145 "Lexico.l"
-case 20:
-#line 146 "Lexico.l"
-case 21:
 #line 147 "Lexico.l"
-case 22:
+case 20:
 #line 148 "Lexico.l"
-case 23:
+case 21:
 #line 149 "Lexico.l"
-case 24:
+case 22:
 #line 150 "Lexico.l"
-case 25:
+case 23:
 #line 151 "Lexico.l"
-case 26:
+case 24:
 #line 152 "Lexico.l"
-case 27:
+case 25:
 #line 153 "Lexico.l"
-case 28:
+case 26:
 #line 154 "Lexico.l"
-case 29:
+case 27:
 #line 155 "Lexico.l"
-case 30:
+case 28:
 #line 156 "Lexico.l"
+case 29:
+#line 157 "Lexico.l"
+case 30:
+#line 158 "Lexico.l"
 case 31:
 YY_RULE_SETUP
-#line 156 "Lexico.l"
+#line 158 "Lexico.l"
 {/*printf("(Operador) %s", yytext);*/}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 159 "Lexico.l"
+#line 161 "Lexico.l"
 {verificar_string(yytext);
 					insertar_ts(agregar_guion_bajo(sacar_comillas(yytext)), sacar_comillas(yytext));}
 	YY_BREAK
 case 33:
-#line 162 "Lexico.l"
+YY_RULE_SETUP
+#line 164 "Lexico.l"
+{verificar_rango_entero(yytext);
+					insertar_ts(agregar_guion_bajo(yytext), yytext);}
+	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 162 "Lexico.l"
-{/*verificar_rango(yytext);*/
+#line 167 "Lexico.l"
+{verificar_rango_real(yytext);
 					insertar_ts(agregar_guion_bajo(yytext), yytext);}
 	YY_BREAK
 case 35:
-#line 165 "Lexico.l"
+#line 171 "Lexico.l"
 case 36:
 YY_RULE_SETUP
-#line 165 "Lexico.l"
-{/*verificar_rango(yytext);*/
+#line 171 "Lexico.l"
+{verificar_rango_entero(convertir_cadena_decimal(yytext));
 					insertar_ts(agregar_guion_bajo(yytext), convertir_cadena_decimal(yytext));}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 168 "Lexico.l"
+#line 174 "Lexico.l"
 {insertar_ts(yytext, NULL);}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 170 "Lexico.l"
+#line 176 "Lexico.l"
 {}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 171 "Lexico.l"
+#line 177 "Lexico.l"
 
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 172 "Lexico.l"
+#line 178 "Lexico.l"
 
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 174 "Lexico.l"
+#line 180 "Lexico.l"
 ECHO;
 	YY_BREAK
-#line 899 "lex.yy.c"
+#line 905 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1779,7 +1785,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 174 "Lexico.l"
+#line 180 "Lexico.l"
 
 
 int main(int argc, char *argv[]) 
@@ -1814,8 +1820,8 @@ int main(int argc, char *argv[])
 int yyerror(const char *msj)
 {
 	printf("Error lexico\n");
-	printf("Linea nro %d: %s\n", yylineno,msj);
-	exit(1);
+	printf("Linea nro %d: %s\n", yylineno, msj);
+	//exit(1);
 }
 
 int insertar_ts(char *lexema, char *valor)
@@ -2055,4 +2061,41 @@ int verificar_string(const char *s)
 		return 0;
 	}
 	return 1;
+}
+
+int verificar_rango_real(const char *s)
+{
+	
+}
+
+int verificar_rango_entero(const char *s)
+{
+	// Rango para 16b en int -32768 a 32767
+	int valor = 0, tipo = 0;
+	if(*s == '-')
+	{
+		tipo = 1;
+		s++;
+	}
+	while(*s == '0')
+	{
+		s++;
+	}
+	if(strlen(s) > 5)
+	{
+		yyerror("Entero fuera de rango");
+		return 1;
+	}
+	valor = atoi(s);
+	if(tipo == 0 && valor > 32767)
+	{
+		yyerror("Entero fuera de rango");
+		return 1;
+	}
+	else if(valor > 32768)
+	{
+		yyerror("Entero fuera de rango");
+		return 1;
+	}
+	return 0;
 }

@@ -50,6 +50,8 @@ char* agregar_guion_bajo(const char*);
 char* convertir_cadena_decimal(const char*);
 int convertir_caracter_decimal(const char);
 int verificar_string(const char*);
+int verificar_rango_entero(const char*);
+int verificar_rango_real(const char*);
 
 /* VARIABLES GLOBALES */
 FILE *yyin;
@@ -158,11 +160,15 @@ COMENTARIO		"*-".*"-*"
 
 {CONST_STRING}		{verificar_string(yytext);
 					insertar_ts(agregar_guion_bajo(sacar_comillas(yytext)), sacar_comillas(yytext));}
-{CONST_ENTERA}		|
-{CONST_REAL}		{/*verificar_rango(yytext);*/
+
+{CONST_ENTERA}		{verificar_rango_entero(yytext);
 					insertar_ts(agregar_guion_bajo(yytext), yytext);}
+
+{CONST_REAL}		{verificar_rango_real(yytext);
+					insertar_ts(agregar_guion_bajo(yytext), yytext);}
+
 {CONST_BINARIA}		|
-{CONST_HEXA}		{/*verificar_rango(yytext);*/
+{CONST_HEXA}		{verificar_rango_entero(convertir_cadena_decimal(yytext));
 					insertar_ts(agregar_guion_bajo(yytext), convertir_cadena_decimal(yytext));}
 
 {ID}				{insertar_ts(yytext, NULL);}
@@ -446,4 +452,41 @@ int verificar_string(const char *s)
 		return 0;
 	}
 	return 1;
+}
+
+int verificar_rango_real(const char *s)
+{
+	// Rango para 32b en float 3.4*10^-38 a 3.4*10^38
+}
+
+int verificar_rango_entero(const char *s)
+{
+	// Rango para 16b en int -32768 a 32767
+	int valor = 0, tipo = 0;
+	if(*s == '-')
+	{
+		tipo = 1;
+		s++;
+	}
+	while(*s == '0')
+	{
+		s++;
+	}
+	if(strlen(s) > 5)
+	{
+		yyerror("Entero fuera de rango");
+		return 1;
+	}
+	valor = atoi(s);
+	if(tipo == 0 && valor > 32767)
+	{
+		yyerror("Entero fuera de rango");
+		return 1;
+	}
+	else if(valor > 32768)
+	{
+		yyerror("Entero fuera de rango");
+		return 1;
+	}
+	return 0;
 }

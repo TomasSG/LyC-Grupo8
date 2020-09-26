@@ -64,7 +64,7 @@ t_lista tabla_simbolos;
 
 LETRA			[a-zA-Z]
 DIGITO			[0-9]
-DIGITO_BINARIO		[01]
+DIGITO_BINARIO	[01]
 DIGITO_HEXA		[0-9a-fA-F]
 
 /* PALABRAS RESERVADAS */
@@ -105,8 +105,6 @@ OP_IGUAL			"=="
 OP_AND				"and"
 OP_OR				"or"
 OP_NOT				"not"
-
-
 
 /* CONSTANTES */
 CONST_ENTERA		{DIGITO}+
@@ -174,8 +172,8 @@ COMENTARIO		"*-".*"-*"
 {ID}				{insertar_ts(yytext, NULL);}
 
 {COMENTARIO}		{}
-"\n"
-"\t"
+"\n"				{}
+"\t"				{}
 
 %%
 
@@ -375,6 +373,7 @@ char* convertir_cadena_decimal(const char *s)
 	char *aux, resultado[500];
 	int valor_numerico = 0, i = 0;
 	double base = 0;
+
 	
 	// Necesitamos el auxiliar solo para dar vuelta la cadena con los números
 	aux = (char*) malloc(sizeof(char)* strlen(s) + 1);
@@ -457,6 +456,28 @@ int verificar_string(const char *s)
 int verificar_rango_real(const char *s)
 {
 	// Rango para 32b en float 3.4*10^-38 a 3.4*10^38
+	double valor = 0;
+	if(*s == '-')
+	{
+		s++;
+	}
+	while(*s == '0')
+	{
+		s++;
+	}
+	if(strlen(s) > 41)
+	{
+		yyerror("Real fuera de rango");
+		return 1;
+	}
+	valor = atof(s);
+	if(valor > 3.4e38)
+	{
+		yyerror("Real fuera de rango");
+		return 1;
+	}
+	return 0;
+	
 }
 
 int verificar_rango_entero(const char *s)

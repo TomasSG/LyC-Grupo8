@@ -1,4 +1,4 @@
-BIEN
+*-BIEN-*
 *-comentario-*
 *-comentario mas complejo-*
 *- comentario con										tabs-*
@@ -7,7 +7,7 @@ BIEN
 *--*
 *-comentario con una string "asdasda"-*
 
-MAL
+*-MAL-*
 comentiario malo
 *- comentario sin cerrar por derecha
 comentario sin cerrar por izquierda-*

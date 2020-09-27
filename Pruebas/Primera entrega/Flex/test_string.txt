@@ -1,4 +1,4 @@
-BIEN
+*-BIEN-*
 ""
 "string"
 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
@@ -7,7 +7,7 @@ BIEN
 "1313123"
 "123-_-asd	1 		"
 
-MAL
+*-MAL-*
 azaasd
 "string sin cerrar por derecha
 string sin cerrar por izquierda"

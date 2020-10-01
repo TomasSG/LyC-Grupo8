@@ -20,6 +20,7 @@ S=<Programa>
 <Termino>         --> <Factor> OP_MULT <Termino>
 <Termino>         --> <Factor> OP_DIVISION <Termino>
 <Termino>         --> <Factor>
+<Termino>         --> <Cuenta>                                 //REVISAR
 <Factor>          --> ID|CTE|CONST_BINARIA|CONST_HEXA
 <Factor>          --> <FuncionContar>
 

@@ -67,14 +67,12 @@ int yystopparser=0;
 /* VARIABLES */
 %token	ID
 
-/* COMENTARIOS */
-%token	COMENTARIO
 /* ______________________________________________________________ */
 
 /* DECLARACION DE REGLAS SINTACTICAS */
 %%
 
-programa	: bloque 					{printf("Regla: <programa> -> <bloque>\n");}
+programa	: bloque 					{printf("Regla: <programa> -> <bloque> --- COMPILACION EXITOSA\n");}
 		;
 
 bloque		: sentencia bloque 			{printf("Regla: <bloque> -> <sentencia> <bloque>\n");}
@@ -148,7 +146,7 @@ entrada		: GET ID					{printf("Regla: <entrada> -> GET ID\n");}
 /* REGLAS PARA LA DECLARACION DE WHILE E IF */
 
 bloqueWhile	: WHILE PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO	{printf("Regla: <bloque_while> -> WHILE PAR_ABIERTO <condicion> PAR_CERRADO LLAVE_ABIERTO <bloque> LLAVE_CERRADO\n");}
-		| WHILE condicion sentencia		{printf("Regla: <bloque_while> -> WHILE <condicion> <sentencia>\n");}
+		| WHILE PAR_ABIERTO condicion PAR_CERRADO sentencia		{printf("Regla: <bloque_while> -> WHILE <condicion> <sentencia>\n");}
 		;
 /* REVISAR REGLAS DEL IF, NO CUBRE TODOS LOS CASOS*/
 bloqueIf	: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO resto_if {printf("Regla: <bloque_if> -> IF PAR_ABIERTO <condicion> PAR_CERRADO LLAVE_ABIERTO <bloque> LLAVE_CERRADO <resto_if>\n");}
@@ -158,8 +156,10 @@ resto_if	: ELSE LLAVE_ABIERTO bloque LLAVE_CERRADO	{printf("Regla: <resto_if> ->
 			| sentencia					{printf("Regla: <resto_if> -> <sentencia>\n");}
 			;
 		
-condicion	: expLogica OP_AND condicion {printf("Regla: <condicion> -> <exp_logica> OP_AND <condicion>\n");}
-		| expLogica OP_OR condicion		{printf("Regla: <condicion> -> <exp_logica> OP_OR <condicion>\n");}
+condicion	: expLogica OP_AND expLogica {printf("Regla: <condicion> -> <exp_logica> OP_AND <exp_logica>\n");}
+		| expLogica OP_OR expLogica		{printf("Regla: <condicion> -> <exp_logica> OP_OR <exp_logica>\n");}
+		| expLogica OP_IGUAL expLogica	{printf("Regla: <condicion> -> <exp_logica> OP_IGUAL <exp_logica>\n");}
+		| OP_NOT expLogica				{printf("Regla: <condicion> -> OP_NOT <exp_logica>\n");}
 		| expLogica						{printf("Regla: <condicion> -> <exp_logica>\n");}
 		;
 

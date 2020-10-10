@@ -136,7 +136,7 @@ COMENTARIO		"*-".*"-*"
 
 {ID}				{insertar_ts(yytext, NULL, &tabla_simbolos); return ID;}
 
-{COMENTARIO}		{return COMENTARIO;}
+{COMENTARIO}		{}
 "\n"				{}
 "\t"				{}
 

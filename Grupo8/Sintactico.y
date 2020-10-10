@@ -74,47 +74,47 @@ int yystopparser=0;
 /* DECLARACION DE REGLAS SINTACTICAS */
 %%
 
-programa	: bloque
+programa	: bloque 					{printf("Regla: <programa> -> <bloque>\n");}
 		;
 
-bloque		: sentencia bloque
-		| sentencia
+bloque		: sentencia bloque 			{printf("Regla: <bloque> -> <sentencia> <bloque>\n");}
+		| sentencia 					{printf("Regla: <bloque> -> <sentencia>\n");}
 		;
 
-sentencia	: asignacion {printf("ASIGNACION \n");} PUNTO_COMA 
-			| declaracion {printf("DECLARACION DE VARIABLES \n");} PUNTO_COMA 
-			| salida PUNTO_COMA {printf("PUT \n");}
-			| entrada PUNTO_COMA {printf("GET \n");}
-			| bloqueWhile {printf("WHILE \n");}
-			| bloqueIf {printf("IF \n");}
+sentencia	: asignacion PUNTO_COMA 	{printf("Regla: <sentencia> -> <asignacion> PUNTO_COMA\n");}
+			| declaracion PUNTO_COMA	{printf("Regla: <sentencia> -> <declaracion> PUNTO_COMA\n");} 
+			| salida PUNTO_COMA 		{printf("Regla: <sentencia> -> <salida> PUNTO_COMA\n");} 
+			| entrada PUNTO_COMA 		{printf("Regla: <sentencia> -> <entrada> PUNTO_COMA\n");}
+			| bloqueWhile				{printf("Regla: <sentencia> -> <bloque_while>\n");}
+			| bloqueIf					{printf("Regla: <sentencia> -> <bloque_if>\n");}
 		;
 
 /* REGLAS PARA LA ASIGNACION */
-asignacion	: ID OP_ASIGNACION cuenta 
+asignacion	: ID OP_ASIGNACION cuenta 	{printf("Regla: <asignacion> -> ID OP_ASIGNACION <cuenta>\n");}
 		;
 
-cuenta		: termino OP_SUMA cuenta 
-		| termino OP_RESTA cuenta
-		| termino
+cuenta		: termino OP_SUMA cuenta 	{printf("Regla: <cuenta> -> <termino> OP_SUMA <cuenta>\n");}
+		| termino OP_RESTA cuenta		{printf("Regla: <cuenta> -> <termino> OP_RESTA <cuenta>\n");}
+		| termino						{printf("Regla: <cuenta> -> <termino>\n");}
 		;
 
-termino		: factor OP_MULT termino
-		| factor OP_DIVISION termino
-		| factor 
+termino		: factor OP_MULT termino	{printf("Regla: <termino> -> <factor> OP_MULT <termino>\n");}
+		| factor OP_DIVISION termino	{printf("Regla: <termino> -> <factor> OP_DIVISION <termino>\n");}
+		| factor 						{printf("Regla: <termino> -> <factor>\n");}						
 		;
 
-factor		: PAR_ABIERTO cuenta PAR_CERRADO
-		| ID 
-		| CONST_BINARIA
-		| CONST_HEXA
-		| CONST_REAL
-		| CONST_ENTERA 
-		| funcionContar
+factor		: PAR_ABIERTO cuenta PAR_CERRADO	{printf("Regla: <factor> -> PAR_ABIERTO <cuenta> PAR_CERRADO\n");}
+		| ID 							{printf("Regla: <factor> -> ID\n");}
+		| CONST_BINARIA					{printf("Regla: <factor> -> CONST_BINARIA\n");}
+		| CONST_HEXA					{printf("Regla: <factor> -> CONST_HEXA\n");}
+		| CONST_REAL					{printf("Regla: <factor> -> CONST_REAL\n");}
+		| CONST_ENTERA 					{printf("Regla: <factor> -> CONST_ENTERA\n");}
+		| funcionContar					{printf("Regla: <factor> -> <funcion_contar>\n");}
 		;
 		
 /* REGLAS PARA LA DECLARACION DE VARIABLES */
 
-declaracion	: DIM listaVariables AS listaTipos
+declaracion	: DIM listaVariables AS listaTipos {printf("Regla: <declaracion> -> DIM <lista_variables> AS <lista_tipos>\n");}
 		;
 
 listaVariables	: OP_LE variables OP_GE

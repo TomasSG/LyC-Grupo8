@@ -15,7 +15,6 @@ int verificar_rango_real(char*);
 FILE *yyin;
 int yyval;
 t_lista tabla_simbolos;
-int var_global;
 %}
 
 %option noyywrap

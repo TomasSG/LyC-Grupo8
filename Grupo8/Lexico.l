@@ -115,26 +115,26 @@ COMENTARIO		"*-".*"-*"
 
 
 {CONST_STRING}		{verificar_string(yytext);
-					/*insertar_ts(agregar_guion_bajo(sacar_comillas(yytext)), sacar_comillas(yytext), &tabla_simbolos);*/
+					insertar_ts(agregar_guion_bajo(sacar_comillas(yytext)), sacar_comillas(yytext), &tabla_simbolos);
 					return CONST_STRING;}
 
 {CONST_ENTERA}		{verificar_rango_entero(yytext);
-					/*insertar_ts(agregar_guion_bajo(yytext), yytext, &tabla_simbolos);*/
+					insertar_ts(agregar_guion_bajo(yytext), yytext, &tabla_simbolos);
 					return CONST_ENTERA;}
 
 {CONST_REAL}		{verificar_rango_real(yytext);
-					/*insertar_ts(agregar_guion_bajo(yytext), yytext, &tabla_simbolos);*/
+					insertar_ts(agregar_guion_bajo(yytext), yytext, &tabla_simbolos);
 					return CONST_REAL;}
 
 {CONST_BINARIA}		{verificar_rango_entero(convertir_cadena_decimal(yytext));
-					/*insertar_ts(agregar_guion_bajo(yytext), convertir_cadena_decimal(yytext), &tabla_simbolos);*/
+					insertar_ts(agregar_guion_bajo(yytext), convertir_cadena_decimal(yytext), &tabla_simbolos);
 					return CONST_BINARIA;}
 
 {CONST_HEXA}		{verificar_rango_entero(convertir_cadena_decimal(yytext));
-					/*insertar_ts(agregar_guion_bajo(yytext), convertir_cadena_decimal(yytext), &tabla_simbolos);*/
+					insertar_ts(agregar_guion_bajo(yytext), convertir_cadena_decimal(yytext), &tabla_simbolos);
 					return CONST_HEXA;}
 
-{ID}				{yylval.str_val = strdup(yytext); return ID;}
+{ID}				{insertar_ts(yytext, NULL, &tabla_simbolos); return ID;}
 
 {COMENTARIO}		{return COMENTARIO;}
 "\n"				{}

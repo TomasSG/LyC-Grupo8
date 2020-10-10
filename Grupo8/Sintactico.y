@@ -90,25 +90,25 @@ sentencia	: asignacion {printf("ASIGNACION \n");} PUNTO_COMA
 		;
 
 /* REGLAS PARA LA ASIGNACION */
-asignacion	: ID OP_ASIGNACION cuenta  {printf("Pase por asignacion\n");}
+asignacion	: ID OP_ASIGNACION cuenta 
 		;
 
-cuenta		: termino OP_SUMA cuenta
+cuenta		: termino OP_SUMA cuenta 
 		| termino OP_RESTA cuenta
 		| termino
 		;
 
 termino		: factor OP_MULT termino
 		| factor OP_DIVISION termino
-		| factor
+		| factor 
 		;
 
 factor		: PAR_ABIERTO cuenta PAR_CERRADO
-		| ID {printf("Pase por aca\n");insertar_ts(yylval.str_val, NULL, &tabla_simbolos);}
+		| ID 
 		| CONST_BINARIA
 		| CONST_HEXA
 		| CONST_REAL
-		| CONST_ENTERA
+		| CONST_ENTERA 
 		| funcionContar
 		;
 		
@@ -193,6 +193,7 @@ int main(int argc, char *argv[])
 {
 	FILE *pf = NULL;
 	yyin = fopen(argv[1], "rt");
+
 	if(yyin == NULL)
 	{	
 		printf("\nNo se pudo abrir el archivo %s\n", argv[1]);

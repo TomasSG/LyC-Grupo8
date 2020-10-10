@@ -4,6 +4,7 @@
 #include <conio.h>
 #include "./lib/lista.h"
 #include "./lib/utilitarias.h"
+#include "y.tab.h"
 
 /* FUNCIONES DE VERIFICACION */
 int verificar_string(const char*);
@@ -78,57 +79,64 @@ COMENTARIO		"*-".*"-*"
 
 %%
 
-{WHILE}				|	
-{IF}				|	
-{ELSE}				|
-{PUT}				|
-{GET}				|	
-{DIM}				|
-{AS}				|
-{CONTAR}			|		
-{INTEGER}			|
-{FLOAT}				{/*printf("(Palabra reservada) %s", yytext);*/}
+{WHILE}				{return WHILE;}	
+{IF}				{return IF;}	
+{ELSE}				{return ELSE;}
+{PUT}				{return PUT;}
+{GET}				{return GET;}
+{DIM}				{return DIM;}
+{AS}				{return AS;}
+{CONTAR}			{return CONTAR;}		
+{INTEGER}			{return INTEGER;}
+{FLOAT}				{return FLOAT;}
 
-{LLAVE_ABIERTO}		|
-{LLAVE_CERRADO}		|
-{PAR_ABIERTO}		|
-{PAR_CERRADO}		|
-{COR_ABIERTO}		|
-{COR_CERRADO}		|
-{PUNTO_COMA}		|
-{COMA}				{/*printf("(Signo puntuacion) %s", yytext);*/}
+{LLAVE_ABIERTO}		{return LLAVE_ABIERTO;}
+{LLAVE_CERRADO}		{return LLAVE_CERRADO;}
+{PAR_ABIERTO}		{return PAR_ABIERTO;}
+{PAR_CERRADO}		{return PAR_CERRADO;}
+{COR_ABIERTO}		{return COR_ABIERTO;}
+{COR_CERRADO}		{return COR_CERRADO;}
+{PUNTO_COMA}		{return PUNTO_COMA;}
+{COMA}				{return COMA;}
 
-{OP_ASIGNACION} 	|
-{OP_SUMA}			|
-{OP_RESTA}			|
-{OP_DIVISION}		|
-{OP_MULT}			|
-{OP_LE}				|
-{OP_LEQ}			|		
-{OP_GE}				|
-{OP_GEQ}			|	
-{OP_NE}				|
-{OP_AND}			|
-{OP_OR}				|
-{OP_NOT}			{/*printf("(Operador) %s", yytext);*/}
+{OP_ASIGNACION} 	{return OP_ASIGNACION;}
+{OP_SUMA}			{return OP_SUMA;}
+{OP_RESTA}			{return OP_RESTA;}
+{OP_DIVISION}		{return OP_DIVISION;}
+{OP_MULT}			{return OP_MULT;}
+{OP_LE}				{return OP_LE;}
+{OP_LEQ}			{return OP_LEQ;}		
+{OP_GE}				{return OP_GE;}
+{OP_GEQ}			{return OP_GEQ;}	
+{OP_NE}				{return OP_NE;}
+{OP_AND}			{return OP_AND;}
+{OP_OR}				{return OP_OR;}
+{OP_NOT}			{return OP_NOT;}
 
 
 {CONST_STRING}		{verificar_string(yytext);
-					insertar_ts(agregar_guion_bajo(sacar_comillas(yytext)), sacar_comillas(yytext), &tabla_simbolos);}
+					insertar_ts(agregar_guion_bajo(sacar_comillas(yytext)), sacar_comillas(yytext), &tabla_simbolos);
+					return CONST_STRING;}
 
 {CONST_ENTERA}		{verificar_rango_entero(yytext);
-					insertar_ts(agregar_guion_bajo(yytext), yytext, &tabla_simbolos);}
+					insertar_ts(agregar_guion_bajo(yytext), yytext, &tabla_simbolos);
+					return CONST_ENTERA;}
 
 {CONST_REAL}		{verificar_rango_real(yytext);
-					insertar_ts(agregar_guion_bajo(yytext), yytext, &tabla_simbolos);}
+					insertar_ts(agregar_guion_bajo(yytext), yytext, &tabla_simbolos);
+					return CONST_REAL;}
 
-{CONST_BINARIA}		|
+{CONST_BINARIA}		{verificar_rango_entero(convertir_cadena_decimal(yytext));
+					insertar_ts(agregar_guion_bajo(yytext), convertir_cadena_decimal(yytext), &tabla_simbolos);
+					return CONST_BINARIA;}
+
 {CONST_HEXA}		{verificar_rango_entero(convertir_cadena_decimal(yytext));
-					insertar_ts(agregar_guion_bajo(yytext), convertir_cadena_decimal(yytext), &tabla_simbolos);}
+					insertar_ts(agregar_guion_bajo(yytext), convertir_cadena_decimal(yytext), &tabla_simbolos);
+					return CONST_HEXA;}
 
-{ID}				{insertar_ts(yytext, NULL, &tabla_simbolos);}
+{ID}				{insertar_ts(yytext, NULL, &tabla_simbolos); return ID;}
 
-{COMENTARIO}		{}
+{COMENTARIO}		{return COMENTARIO;}
 "\n"				{}
 "\t"				{}
 

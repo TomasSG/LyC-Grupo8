@@ -1,3 +1,6 @@
+Estado 51 conflictos: 1 desplazamiento(s)/reducción(ones)
+
+
 Gramática
 
     0 $accept: programa $end
@@ -64,12 +67,12 @@ Gramática
 
    43 condicion: expLogica OP_AND expLogica
    44          | expLogica OP_OR expLogica
-   45          | expLogica OP_IGUAL expLogica
-   46          | OP_NOT expLogica
-   47          | expLogica
+   45          | OP_NOT expLogica
+   46          | expLogica
 
-   48 expLogica: PAR_ABIERTO condicion PAR_CERRADO
-   49          | cuenta comparador cuenta
+   47 expLogica: PAR_ABIERTO condicion PAR_CERRADO
+   48          | cuenta comparador cuenta
+   49          | cuenta
 
    50 comparador: OP_IGUAL
    51           | OP_LE
@@ -77,14 +80,13 @@ Gramática
    53           | OP_GE
    54           | OP_GEQ
    55           | OP_NE
-   56           | OP_NOT
 
-   57 funcionContar: CONTAR PAR_ABIERTO cuenta PUNTO_COMA listaFactores PAR_CERRADO
+   56 funcionContar: CONTAR PAR_ABIERTO cuenta PUNTO_COMA listaFactores PAR_CERRADO
 
-   58 listaFactores: COR_ABIERTO factores COR_CERRADO
+   57 listaFactores: COR_ABIERTO factores COR_CERRADO
 
-   59 factores: factor COMA factores
-   60         | factor
+   58 factores: factor COMA factores
+   59         | factor
 
 
 Terminales con las reglas donde aparecen
@@ -98,18 +100,18 @@ PUT (261) 34 35
 GET (262) 36
 DIM (263) 24
 AS (264) 24
-CONTAR (265) 57
+CONTAR (265) 56
 INTEGER (266) 32
 FLOAT (267) 31
 STRING (268) 33
 LLAVE_ABIERTO (269) 37 39 41
 LLAVE_CERRADO (270) 37 39 41
-PAR_ABIERTO (271) 17 37 38 39 40 48 57
-PAR_CERRADO (272) 17 37 38 39 40 48 57
-COR_ABIERTO (273) 58
-COR_CERRADO (274) 58
-PUNTO_COMA (275) 4 5 6 7 57
-COMA (276) 26 29 59
+PAR_ABIERTO (271) 17 37 38 39 40 47 56
+PAR_CERRADO (272) 17 37 38 39 40 47 56
+COR_ABIERTO (273) 57
+COR_CERRADO (274) 57
+PUNTO_COMA (275) 4 5 6 7 56
+COMA (276) 26 29 58
 OP_ASIGNACION (277) 10
 OP_SUMA (278) 11
 OP_RESTA (279) 12
@@ -120,10 +122,10 @@ OP_LEQ (283) 52
 OP_GE (284) 25 28 53
 OP_GEQ (285) 54
 OP_NE (286) 55
-OP_IGUAL (287) 45 50
+OP_IGUAL (287) 50
 OP_AND (288) 43
 OP_OR (289) 44
-OP_NOT (290) 46 56
+OP_NOT (290) 45
 CONST_ENTERA (291) 22
 CONST_REAL (292) 21
 CONST_STRING (293) 35
@@ -145,12 +147,12 @@ sentencia (45)
 asignacion (46)
     en la izquierda: 10, en la derecha: 4
 cuenta (47)
-    en la izquierda: 11 12 13, en la derecha: 10 11 12 17 49 57
+    en la izquierda: 11 12 13, en la derecha: 10 11 12 17 48 49 56
 termino (48)
     en la izquierda: 14 15 16, en la derecha: 11 12 13 14 15
 factor (49)
     en la izquierda: 17 18 19 20 21 22 23, en la derecha: 14 15 16
-    59 60
+    58 59
 declaracion (50)
     en la izquierda: 24, en la derecha: 5
 listaVariables (51)
@@ -174,17 +176,17 @@ bloqueIf (59)
 resto_if (60)
     en la izquierda: 41 42, en la derecha: 39
 condicion (61)
-    en la izquierda: 43 44 45 46 47, en la derecha: 37 38 39 40 48
+    en la izquierda: 43 44 45 46, en la derecha: 37 38 39 40 47
 expLogica (62)
-    en la izquierda: 48 49, en la derecha: 43 44 45 46 47
+    en la izquierda: 47 48 49, en la derecha: 43 44 45 46
 comparador (63)
-    en la izquierda: 50 51 52 53 54 55 56, en la derecha: 49
+    en la izquierda: 50 51 52 53 54 55, en la derecha: 48
 funcionContar (64)
-    en la izquierda: 57, en la derecha: 23
+    en la izquierda: 56, en la derecha: 23
 listaFactores (65)
-    en la izquierda: 58, en la derecha: 57
+    en la izquierda: 57, en la derecha: 56
 factores (66)
-    en la izquierda: 59 60, en la derecha: 58 59
+    en la izquierda: 58 59, en la derecha: 57 58
 
 
 estado 0
@@ -480,7 +482,7 @@ estado 29
 
 estado 30
 
-   57 funcionContar: CONTAR . PAR_ABIERTO cuenta PUNTO_COMA listaFactores PAR_CERRADO
+   56 funcionContar: CONTAR . PAR_ABIERTO cuenta PUNTO_COMA listaFactores PAR_CERRADO
 
     PAR_ABIERTO  desplazar e ir al estado 50
 
@@ -488,7 +490,7 @@ estado 30
 estado 31
 
    17 factor: PAR_ABIERTO . cuenta PAR_CERRADO
-   48 expLogica: PAR_ABIERTO . condicion PAR_CERRADO
+   47 expLogica: PAR_ABIERTO . condicion PAR_CERRADO
 
     CONTAR         desplazar e ir al estado 30
     PAR_ABIERTO    desplazar e ir al estado 31
@@ -509,7 +511,7 @@ estado 31
 
 estado 32
 
-   46 condicion: OP_NOT . expLogica
+   45 condicion: OP_NOT . expLogica
 
     CONTAR         desplazar e ir al estado 30
     PAR_ABIERTO    desplazar e ir al estado 31
@@ -563,7 +565,8 @@ estado 37
 
 estado 38
 
-   49 expLogica: cuenta . comparador cuenta
+   48 expLogica: cuenta . comparador cuenta
+   49          | cuenta .
 
     OP_LE     desplazar e ir al estado 54
     OP_LEQ    desplazar e ir al estado 55
@@ -571,9 +574,10 @@ estado 38
     OP_GEQ    desplazar e ir al estado 57
     OP_NE     desplazar e ir al estado 58
     OP_IGUAL  desplazar e ir al estado 59
-    OP_NOT    desplazar e ir al estado 60
 
-    comparador  ir al estado 61
+    $default  reduce usando la regla 49 (expLogica)
+
+    comparador  ir al estado 60
 
 
 estado 39
@@ -582,8 +586,8 @@ estado 39
    12       | termino . OP_RESTA cuenta
    13       | termino .
 
-    OP_SUMA   desplazar e ir al estado 62
-    OP_RESTA  desplazar e ir al estado 63
+    OP_SUMA   desplazar e ir al estado 61
+    OP_RESTA  desplazar e ir al estado 62
 
     $default  reduce usando la regla 13 (cuenta)
 
@@ -594,8 +598,8 @@ estado 40
    15        | factor . OP_DIVISION termino
    16        | factor .
 
-    OP_DIVISION  desplazar e ir al estado 64
-    OP_MULT      desplazar e ir al estado 65
+    OP_DIVISION  desplazar e ir al estado 63
+    OP_MULT      desplazar e ir al estado 64
 
     $default  reduce usando la regla 16 (termino)
 
@@ -605,21 +609,19 @@ estado 41
    37 bloqueWhile: WHILE PAR_ABIERTO condicion . PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO
    38            | WHILE PAR_ABIERTO condicion . PAR_CERRADO sentencia
 
-    PAR_CERRADO  desplazar e ir al estado 66
+    PAR_CERRADO  desplazar e ir al estado 65
 
 
 estado 42
 
    43 condicion: expLogica . OP_AND expLogica
    44          | expLogica . OP_OR expLogica
-   45          | expLogica . OP_IGUAL expLogica
-   47          | expLogica .
+   46          | expLogica .
 
-    OP_IGUAL  desplazar e ir al estado 67
-    OP_AND    desplazar e ir al estado 68
-    OP_OR     desplazar e ir al estado 69
+    OP_AND  desplazar e ir al estado 66
+    OP_OR   desplazar e ir al estado 67
 
-    $default  reduce usando la regla 47 (condicion)
+    $default  reduce usando la regla 46 (condicion)
 
 
 estado 43
@@ -634,7 +636,7 @@ estado 44
    39 bloqueIf: IF PAR_ABIERTO condicion . PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO resto_if
    40         | IF PAR_ABIERTO condicion . PAR_CERRADO sentencia
 
-    PAR_CERRADO  desplazar e ir al estado 70
+    PAR_CERRADO  desplazar e ir al estado 68
 
 
 estado 45
@@ -642,7 +644,7 @@ estado 45
    26 variables: ID . COMA variables
    27          | ID .
 
-    COMA  desplazar e ir al estado 71
+    COMA  desplazar e ir al estado 69
 
     $default  reduce usando la regla 27 (variables)
 
@@ -651,16 +653,16 @@ estado 46
 
    25 listaVariables: OP_LE variables . OP_GE
 
-    OP_GE  desplazar e ir al estado 72
+    OP_GE  desplazar e ir al estado 70
 
 
 estado 47
 
    24 declaracion: DIM listaVariables AS . listaTipos
 
-    OP_LE  desplazar e ir al estado 73
+    OP_LE  desplazar e ir al estado 71
 
-    listaTipos  ir al estado 74
+    listaTipos  ir al estado 72
 
 
 estado 48
@@ -675,7 +677,7 @@ estado 48
     CONST_HEXA     desplazar e ir al estado 36
     ID             desplazar e ir al estado 37
 
-    cuenta         ir al estado 75
+    cuenta         ir al estado 73
     termino        ir al estado 39
     factor         ir al estado 40
     funcionContar  ir al estado 43
@@ -690,7 +692,7 @@ estado 49
 
 estado 50
 
-   57 funcionContar: CONTAR PAR_ABIERTO . cuenta PUNTO_COMA listaFactores PAR_CERRADO
+   56 funcionContar: CONTAR PAR_ABIERTO . cuenta PUNTO_COMA listaFactores PAR_CERRADO
 
     CONTAR         desplazar e ir al estado 30
     PAR_ABIERTO    desplazar e ir al estado 48
@@ -700,7 +702,7 @@ estado 50
     CONST_HEXA     desplazar e ir al estado 36
     ID             desplazar e ir al estado 37
 
-    cuenta         ir al estado 76
+    cuenta         ir al estado 74
     termino        ir al estado 39
     factor         ir al estado 40
     funcionContar  ir al estado 43
@@ -709,32 +711,35 @@ estado 50
 estado 51
 
    17 factor: PAR_ABIERTO cuenta . PAR_CERRADO
-   49 expLogica: cuenta . comparador cuenta
+   48 expLogica: cuenta . comparador cuenta
+   49          | cuenta .
 
-    PAR_CERRADO  desplazar e ir al estado 77
+    PAR_CERRADO  desplazar e ir al estado 75
     OP_LE        desplazar e ir al estado 54
     OP_LEQ       desplazar e ir al estado 55
     OP_GE        desplazar e ir al estado 56
     OP_GEQ       desplazar e ir al estado 57
     OP_NE        desplazar e ir al estado 58
     OP_IGUAL     desplazar e ir al estado 59
-    OP_NOT       desplazar e ir al estado 60
 
-    comparador  ir al estado 61
+    PAR_CERRADO  [reduce usando la regla 49 (expLogica)]
+    $default     reduce usando la regla 49 (expLogica)
+
+    comparador  ir al estado 60
 
 
 estado 52
 
-   48 expLogica: PAR_ABIERTO condicion . PAR_CERRADO
+   47 expLogica: PAR_ABIERTO condicion . PAR_CERRADO
 
-    PAR_CERRADO  desplazar e ir al estado 78
+    PAR_CERRADO  desplazar e ir al estado 76
 
 
 estado 53
 
-   46 condicion: OP_NOT expLogica .
+   45 condicion: OP_NOT expLogica .
 
-    $default  reduce usando la regla 46 (condicion)
+    $default  reduce usando la regla 45 (condicion)
 
 
 estado 54
@@ -781,14 +786,43 @@ estado 59
 
 estado 60
 
-   56 comparador: OP_NOT .
+   48 expLogica: cuenta comparador . cuenta
 
-    $default  reduce usando la regla 56 (comparador)
+    CONTAR         desplazar e ir al estado 30
+    PAR_ABIERTO    desplazar e ir al estado 48
+    CONST_ENTERA   desplazar e ir al estado 33
+    CONST_REAL     desplazar e ir al estado 34
+    CONST_BINARIA  desplazar e ir al estado 35
+    CONST_HEXA     desplazar e ir al estado 36
+    ID             desplazar e ir al estado 37
+
+    cuenta         ir al estado 77
+    termino        ir al estado 39
+    factor         ir al estado 40
+    funcionContar  ir al estado 43
 
 
 estado 61
 
-   49 expLogica: cuenta comparador . cuenta
+   11 cuenta: termino OP_SUMA . cuenta
+
+    CONTAR         desplazar e ir al estado 30
+    PAR_ABIERTO    desplazar e ir al estado 48
+    CONST_ENTERA   desplazar e ir al estado 33
+    CONST_REAL     desplazar e ir al estado 34
+    CONST_BINARIA  desplazar e ir al estado 35
+    CONST_HEXA     desplazar e ir al estado 36
+    ID             desplazar e ir al estado 37
+
+    cuenta         ir al estado 78
+    termino        ir al estado 39
+    factor         ir al estado 40
+    funcionContar  ir al estado 43
+
+
+estado 62
+
+   12 cuenta: termino OP_RESTA . cuenta
 
     CONTAR         desplazar e ir al estado 30
     PAR_ABIERTO    desplazar e ir al estado 48
@@ -804,43 +838,7 @@ estado 61
     funcionContar  ir al estado 43
 
 
-estado 62
-
-   11 cuenta: termino OP_SUMA . cuenta
-
-    CONTAR         desplazar e ir al estado 30
-    PAR_ABIERTO    desplazar e ir al estado 48
-    CONST_ENTERA   desplazar e ir al estado 33
-    CONST_REAL     desplazar e ir al estado 34
-    CONST_BINARIA  desplazar e ir al estado 35
-    CONST_HEXA     desplazar e ir al estado 36
-    ID             desplazar e ir al estado 37
-
-    cuenta         ir al estado 80
-    termino        ir al estado 39
-    factor         ir al estado 40
-    funcionContar  ir al estado 43
-
-
 estado 63
-
-   12 cuenta: termino OP_RESTA . cuenta
-
-    CONTAR         desplazar e ir al estado 30
-    PAR_ABIERTO    desplazar e ir al estado 48
-    CONST_ENTERA   desplazar e ir al estado 33
-    CONST_REAL     desplazar e ir al estado 34
-    CONST_BINARIA  desplazar e ir al estado 35
-    CONST_HEXA     desplazar e ir al estado 36
-    ID             desplazar e ir al estado 37
-
-    cuenta         ir al estado 81
-    termino        ir al estado 39
-    factor         ir al estado 40
-    funcionContar  ir al estado 43
-
-
-estado 64
 
    15 termino: factor OP_DIVISION . termino
 
@@ -852,12 +850,12 @@ estado 64
     CONST_HEXA     desplazar e ir al estado 36
     ID             desplazar e ir al estado 37
 
-    termino        ir al estado 82
+    termino        ir al estado 80
     factor         ir al estado 40
     funcionContar  ir al estado 43
 
 
-estado 65
+estado 64
 
    14 termino: factor OP_MULT . termino
 
@@ -869,12 +867,12 @@ estado 65
     CONST_HEXA     desplazar e ir al estado 36
     ID             desplazar e ir al estado 37
 
-    termino        ir al estado 83
+    termino        ir al estado 81
     factor         ir al estado 40
     funcionContar  ir al estado 43
 
 
-estado 66
+estado 65
 
    37 bloqueWhile: WHILE PAR_ABIERTO condicion PAR_CERRADO . LLAVE_ABIERTO bloque LLAVE_CERRADO
    38            | WHILE PAR_ABIERTO condicion PAR_CERRADO . sentencia
@@ -884,10 +882,10 @@ estado 66
     PUT            desplazar e ir al estado 3
     GET            desplazar e ir al estado 4
     DIM            desplazar e ir al estado 5
-    LLAVE_ABIERTO  desplazar e ir al estado 84
+    LLAVE_ABIERTO  desplazar e ir al estado 82
     ID             desplazar e ir al estado 6
 
-    sentencia    ir al estado 85
+    sentencia    ir al estado 83
     asignacion   ir al estado 10
     declaracion  ir al estado 11
     salida       ir al estado 12
@@ -896,26 +894,7 @@ estado 66
     bloqueIf     ir al estado 15
 
 
-estado 67
-
-   45 condicion: expLogica OP_IGUAL . expLogica
-
-    CONTAR         desplazar e ir al estado 30
-    PAR_ABIERTO    desplazar e ir al estado 31
-    CONST_ENTERA   desplazar e ir al estado 33
-    CONST_REAL     desplazar e ir al estado 34
-    CONST_BINARIA  desplazar e ir al estado 35
-    CONST_HEXA     desplazar e ir al estado 36
-    ID             desplazar e ir al estado 37
-
-    cuenta         ir al estado 38
-    termino        ir al estado 39
-    factor         ir al estado 40
-    expLogica      ir al estado 86
-    funcionContar  ir al estado 43
-
-
-estado 68
+estado 66
 
    43 condicion: expLogica OP_AND . expLogica
 
@@ -930,11 +909,11 @@ estado 68
     cuenta         ir al estado 38
     termino        ir al estado 39
     factor         ir al estado 40
-    expLogica      ir al estado 87
+    expLogica      ir al estado 84
     funcionContar  ir al estado 43
 
 
-estado 69
+estado 67
 
    44 condicion: expLogica OP_OR . expLogica
 
@@ -949,11 +928,11 @@ estado 69
     cuenta         ir al estado 38
     termino        ir al estado 39
     factor         ir al estado 40
-    expLogica      ir al estado 88
+    expLogica      ir al estado 85
     funcionContar  ir al estado 43
 
 
-estado 70
+estado 68
 
    39 bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO . LLAVE_ABIERTO bloque LLAVE_CERRADO resto_if
    40         | IF PAR_ABIERTO condicion PAR_CERRADO . sentencia
@@ -963,10 +942,10 @@ estado 70
     PUT            desplazar e ir al estado 3
     GET            desplazar e ir al estado 4
     DIM            desplazar e ir al estado 5
-    LLAVE_ABIERTO  desplazar e ir al estado 89
+    LLAVE_ABIERTO  desplazar e ir al estado 86
     ID             desplazar e ir al estado 6
 
-    sentencia    ir al estado 90
+    sentencia    ir al estado 87
     asignacion   ir al estado 10
     declaracion  ir al estado 11
     salida       ir al estado 12
@@ -975,105 +954,105 @@ estado 70
     bloqueIf     ir al estado 15
 
 
-estado 71
+estado 69
 
    26 variables: ID COMA . variables
 
     ID  desplazar e ir al estado 45
 
-    variables  ir al estado 91
+    variables  ir al estado 88
 
 
-estado 72
+estado 70
 
    25 listaVariables: OP_LE variables OP_GE .
 
     $default  reduce usando la regla 25 (listaVariables)
 
 
-estado 73
+estado 71
 
    28 listaTipos: OP_LE . tipos OP_GE
 
-    INTEGER  desplazar e ir al estado 92
-    FLOAT    desplazar e ir al estado 93
-    STRING   desplazar e ir al estado 94
+    INTEGER  desplazar e ir al estado 89
+    FLOAT    desplazar e ir al estado 90
+    STRING   desplazar e ir al estado 91
 
-    tipos       ir al estado 95
-    tipoDeDato  ir al estado 96
+    tipos       ir al estado 92
+    tipoDeDato  ir al estado 93
 
 
-estado 74
+estado 72
 
    24 declaracion: DIM listaVariables AS listaTipos .
 
     $default  reduce usando la regla 24 (declaracion)
 
 
-estado 75
+estado 73
 
    17 factor: PAR_ABIERTO cuenta . PAR_CERRADO
 
-    PAR_CERRADO  desplazar e ir al estado 77
+    PAR_CERRADO  desplazar e ir al estado 75
 
 
-estado 76
+estado 74
 
-   57 funcionContar: CONTAR PAR_ABIERTO cuenta . PUNTO_COMA listaFactores PAR_CERRADO
+   56 funcionContar: CONTAR PAR_ABIERTO cuenta . PUNTO_COMA listaFactores PAR_CERRADO
 
-    PUNTO_COMA  desplazar e ir al estado 97
+    PUNTO_COMA  desplazar e ir al estado 94
 
 
-estado 77
+estado 75
 
    17 factor: PAR_ABIERTO cuenta PAR_CERRADO .
 
     $default  reduce usando la regla 17 (factor)
 
 
-estado 78
+estado 76
 
-   48 expLogica: PAR_ABIERTO condicion PAR_CERRADO .
+   47 expLogica: PAR_ABIERTO condicion PAR_CERRADO .
+
+    $default  reduce usando la regla 47 (expLogica)
+
+
+estado 77
+
+   48 expLogica: cuenta comparador cuenta .
 
     $default  reduce usando la regla 48 (expLogica)
 
 
-estado 79
-
-   49 expLogica: cuenta comparador cuenta .
-
-    $default  reduce usando la regla 49 (expLogica)
-
-
-estado 80
+estado 78
 
    11 cuenta: termino OP_SUMA cuenta .
 
     $default  reduce usando la regla 11 (cuenta)
 
 
-estado 81
+estado 79
 
    12 cuenta: termino OP_RESTA cuenta .
 
     $default  reduce usando la regla 12 (cuenta)
 
 
-estado 82
+estado 80
 
    15 termino: factor OP_DIVISION termino .
 
     $default  reduce usando la regla 15 (termino)
 
 
-estado 83
+estado 81
 
    14 termino: factor OP_MULT termino .
 
     $default  reduce usando la regla 14 (termino)
 
 
-estado 84
+estado 82
 
    37 bloqueWhile: WHILE PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO . bloque LLAVE_CERRADO
 
@@ -1084,7 +1063,7 @@ estado 84
     DIM    desplazar e ir al estado 5
     ID     desplazar e ir al estado 6
 
-    bloque       ir al estado 98
+    bloque       ir al estado 95
     sentencia    ir al estado 9
     asignacion   ir al estado 10
     declaracion  ir al estado 11
@@ -1094,35 +1073,28 @@ estado 84
     bloqueIf     ir al estado 15
 
 
-estado 85
+estado 83
 
    38 bloqueWhile: WHILE PAR_ABIERTO condicion PAR_CERRADO sentencia .
 
     $default  reduce usando la regla 38 (bloqueWhile)
 
 
-estado 86
-
-   45 condicion: expLogica OP_IGUAL expLogica .
-
-    $default  reduce usando la regla 45 (condicion)
-
-
-estado 87
+estado 84
 
    43 condicion: expLogica OP_AND expLogica .
 
     $default  reduce usando la regla 43 (condicion)
 
 
-estado 88
+estado 85
 
    44 condicion: expLogica OP_OR expLogica .
 
     $default  reduce usando la regla 44 (condicion)
 
 
-estado 89
+estado 86
 
    39 bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO . bloque LLAVE_CERRADO resto_if
 
@@ -1133,7 +1105,7 @@ estado 89
     DIM    desplazar e ir al estado 5
     ID     desplazar e ir al estado 6
 
-    bloque       ir al estado 99
+    bloque       ir al estado 96
     sentencia    ir al estado 9
     asignacion   ir al estado 10
     declaracion  ir al estado 11
@@ -1143,103 +1115,103 @@ estado 89
     bloqueIf     ir al estado 15
 
 
-estado 90
+estado 87
 
    40 bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO sentencia .
 
     $default  reduce usando la regla 40 (bloqueIf)
 
 
-estado 91
+estado 88
 
    26 variables: ID COMA variables .
 
     $default  reduce usando la regla 26 (variables)
 
 
-estado 92
+estado 89
 
    32 tipoDeDato: INTEGER .
 
     $default  reduce usando la regla 32 (tipoDeDato)
 
 
-estado 93
+estado 90
 
    31 tipoDeDato: FLOAT .
 
     $default  reduce usando la regla 31 (tipoDeDato)
 
 
-estado 94
+estado 91
 
    33 tipoDeDato: STRING .
 
     $default  reduce usando la regla 33 (tipoDeDato)
 
 
-estado 95
+estado 92
 
    28 listaTipos: OP_LE tipos . OP_GE
 
-    OP_GE  desplazar e ir al estado 100
+    OP_GE  desplazar e ir al estado 97
 
 
-estado 96
+estado 93
 
    29 tipos: tipoDeDato . COMA tipos
    30      | tipoDeDato .
 
-    COMA  desplazar e ir al estado 101
+    COMA  desplazar e ir al estado 98
 
     $default  reduce usando la regla 30 (tipos)
 
 
-estado 97
+estado 94
 
-   57 funcionContar: CONTAR PAR_ABIERTO cuenta PUNTO_COMA . listaFactores PAR_CERRADO
+   56 funcionContar: CONTAR PAR_ABIERTO cuenta PUNTO_COMA . listaFactores PAR_CERRADO
 
-    COR_ABIERTO  desplazar e ir al estado 102
+    COR_ABIERTO  desplazar e ir al estado 99
 
-    listaFactores  ir al estado 103
+    listaFactores  ir al estado 100
 
 
-estado 98
+estado 95
 
    37 bloqueWhile: WHILE PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque . LLAVE_CERRADO
 
-    LLAVE_CERRADO  desplazar e ir al estado 104
+    LLAVE_CERRADO  desplazar e ir al estado 101
 
 
-estado 99
+estado 96
 
    39 bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque . LLAVE_CERRADO resto_if
 
-    LLAVE_CERRADO  desplazar e ir al estado 105
+    LLAVE_CERRADO  desplazar e ir al estado 102
 
 
-estado 100
+estado 97
 
    28 listaTipos: OP_LE tipos OP_GE .
 
     $default  reduce usando la regla 28 (listaTipos)
 
 
-estado 101
+estado 98
 
    29 tipos: tipoDeDato COMA . tipos
 
-    INTEGER  desplazar e ir al estado 92
-    FLOAT    desplazar e ir al estado 93
-    STRING   desplazar e ir al estado 94
+    INTEGER  desplazar e ir al estado 89
+    FLOAT    desplazar e ir al estado 90
+    STRING   desplazar e ir al estado 91
 
-    tipos       ir al estado 106
-    tipoDeDato  ir al estado 96
+    tipos       ir al estado 103
+    tipoDeDato  ir al estado 93
 
 
-estado 102
+estado 99
 
-   58 listaFactores: COR_ABIERTO . factores COR_CERRADO
+   57 listaFactores: COR_ABIERTO . factores COR_CERRADO
 
     CONTAR         desplazar e ir al estado 30
     PAR_ABIERTO    desplazar e ir al estado 48
@@ -1249,102 +1221,102 @@ estado 102
     CONST_HEXA     desplazar e ir al estado 36
     ID             desplazar e ir al estado 37
 
-    factor         ir al estado 107
+    factor         ir al estado 104
     funcionContar  ir al estado 43
-    factores       ir al estado 108
+    factores       ir al estado 105
 
 
-estado 103
+estado 100
 
-   57 funcionContar: CONTAR PAR_ABIERTO cuenta PUNTO_COMA listaFactores . PAR_CERRADO
+   56 funcionContar: CONTAR PAR_ABIERTO cuenta PUNTO_COMA listaFactores . PAR_CERRADO
 
-    PAR_CERRADO  desplazar e ir al estado 109
+    PAR_CERRADO  desplazar e ir al estado 106
 
 
-estado 104
+estado 101
 
    37 bloqueWhile: WHILE PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO .
 
     $default  reduce usando la regla 37 (bloqueWhile)
 
 
-estado 105
+estado 102
 
    39 bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO . resto_if
 
     WHILE  desplazar e ir al estado 1
     IF     desplazar e ir al estado 2
-    ELSE   desplazar e ir al estado 110
+    ELSE   desplazar e ir al estado 107
     PUT    desplazar e ir al estado 3
     GET    desplazar e ir al estado 4
     DIM    desplazar e ir al estado 5
     ID     desplazar e ir al estado 6
 
-    sentencia    ir al estado 111
+    sentencia    ir al estado 108
     asignacion   ir al estado 10
     declaracion  ir al estado 11
     salida       ir al estado 12
     entrada      ir al estado 13
     bloqueWhile  ir al estado 14
     bloqueIf     ir al estado 15
-    resto_if     ir al estado 112
+    resto_if     ir al estado 109
 
 
-estado 106
+estado 103
 
    29 tipos: tipoDeDato COMA tipos .
 
     $default  reduce usando la regla 29 (tipos)
 
 
+estado 104
+
+   58 factores: factor . COMA factores
+   59         | factor .
+
+    COMA  desplazar e ir al estado 110
+
+    $default  reduce usando la regla 59 (factores)
+
+
+estado 105
+
+   57 listaFactores: COR_ABIERTO factores . COR_CERRADO
+
+    COR_CERRADO  desplazar e ir al estado 111
+
+
+estado 106
+
+   56 funcionContar: CONTAR PAR_ABIERTO cuenta PUNTO_COMA listaFactores PAR_CERRADO .
+
+    $default  reduce usando la regla 56 (funcionContar)
+
+
 estado 107
-
-   59 factores: factor . COMA factores
-   60         | factor .
-
-    COMA  desplazar e ir al estado 113
-
-    $default  reduce usando la regla 60 (factores)
-
-
-estado 108
-
-   58 listaFactores: COR_ABIERTO factores . COR_CERRADO
-
-    COR_CERRADO  desplazar e ir al estado 114
-
-
-estado 109
-
-   57 funcionContar: CONTAR PAR_ABIERTO cuenta PUNTO_COMA listaFactores PAR_CERRADO .
-
-    $default  reduce usando la regla 57 (funcionContar)
-
-
-estado 110
 
    41 resto_if: ELSE . LLAVE_ABIERTO bloque LLAVE_CERRADO
 
-    LLAVE_ABIERTO  desplazar e ir al estado 115
+    LLAVE_ABIERTO  desplazar e ir al estado 112
 
 
-estado 111
+estado 108
 
    42 resto_if: sentencia .
 
     $default  reduce usando la regla 42 (resto_if)
 
 
-estado 112
+estado 109
 
    39 bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO resto_if .
 
     $default  reduce usando la regla 39 (bloqueIf)
 
 
-estado 113
+estado 110
 
-   59 factores: factor COMA . factores
+   58 factores: factor COMA . factores
 
     CONTAR         desplazar e ir al estado 30
     PAR_ABIERTO    desplazar e ir al estado 48
@@ -1354,19 +1326,19 @@ estado 113
     CONST_HEXA     desplazar e ir al estado 36
     ID             desplazar e ir al estado 37
 
-    factor         ir al estado 107
+    factor         ir al estado 104
     funcionContar  ir al estado 43
-    factores       ir al estado 116
+    factores       ir al estado 113
 
 
-estado 114
+estado 111
 
-   58 listaFactores: COR_ABIERTO factores COR_CERRADO .
+   57 listaFactores: COR_ABIERTO factores COR_CERRADO .
 
-    $default  reduce usando la regla 58 (listaFactores)
+    $default  reduce usando la regla 57 (listaFactores)
 
 
-estado 115
+estado 112
 
    41 resto_if: ELSE LLAVE_ABIERTO . bloque LLAVE_CERRADO
 
@@ -1377,7 +1349,7 @@ estado 115
     DIM    desplazar e ir al estado 5
     ID     desplazar e ir al estado 6
 
-    bloque       ir al estado 117
+    bloque       ir al estado 114
     sentencia    ir al estado 9
     asignacion   ir al estado 10
     declaracion  ir al estado 11
@@ -1387,21 +1359,21 @@ estado 115
     bloqueIf     ir al estado 15
 
 
-estado 116
+estado 113
 
-   59 factores: factor COMA factores .
+   58 factores: factor COMA factores .
 
-    $default  reduce usando la regla 59 (factores)
+    $default  reduce usando la regla 58 (factores)
 
 
-estado 117
+estado 114
 
    41 resto_if: ELSE LLAVE_ABIERTO bloque . LLAVE_CERRADO
 
-    LLAVE_CERRADO  desplazar e ir al estado 118
+    LLAVE_CERRADO  desplazar e ir al estado 115
 
 
-estado 118
+estado 115
 
    41 resto_if: ELSE LLAVE_ABIERTO bloque LLAVE_CERRADO .
 

@@ -112,6 +112,7 @@ COMENTARIO		"*-".*"-*"
 {OP_AND}			{return OP_AND;}
 {OP_OR}				{return OP_OR;}
 {OP_NOT}			{return OP_NOT;}
+{OP_IGUAL}			{return OP_IGUAL;}
 
 
 {CONST_STRING}		{verificar_string(yytext);

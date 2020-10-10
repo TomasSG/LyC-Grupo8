@@ -158,13 +158,12 @@ resto_if	: ELSE LLAVE_ABIERTO bloque LLAVE_CERRADO	{printf("Regla: <resto_if> ->
 		
 condicion	: expLogica OP_AND expLogica {printf("Regla: <condicion> -> <exp_logica> OP_AND <exp_logica>\n");}
 		| expLogica OP_OR expLogica		{printf("Regla: <condicion> -> <exp_logica> OP_OR <exp_logica>\n");}
-		| expLogica OP_IGUAL expLogica	{printf("Regla: <condicion> -> <exp_logica> OP_IGUAL <exp_logica>\n");}
 		| OP_NOT expLogica				{printf("Regla: <condicion> -> OP_NOT <exp_logica>\n");}
 		| expLogica						{printf("Regla: <condicion> -> <exp_logica>\n");}
 		;
 
 expLogica	: PAR_ABIERTO condicion PAR_CERRADO	{printf("Regla: <exp_logica> -> PAR_ABIERTO <condicion> PAR_CERRADO\n");}
-		| cuenta comparador cuenta		{printf("Regla: <exp_logica> -> <cuenta> <comparador> <cuenta>\n");}	
+		| cuenta comparador cuenta		{printf("Regla: <exp_logica> -> <cuenta> <comparador> <cuenta>\n");}
 		;
 
 comparador	: OP_IGUAL					{printf("Regla: <comparador> -> OP_IGUAL\n");}
@@ -173,7 +172,6 @@ comparador	: OP_IGUAL					{printf("Regla: <comparador> -> OP_IGUAL\n");}
 		| OP_GE							{printf("Regla: <comparador> -> OP_GE\n");}
 		| OP_GEQ						{printf("Regla: <comparador> -> OP_GEQ\n");}
 		| OP_NE							{printf("Regla: <comparador> -> OP_NE\n");}
-		| OP_NOT						{printf("Regla: <comparador> -> OP_NOT\n");}
 		;
 /* REGLAS PARA CONTAR */
 

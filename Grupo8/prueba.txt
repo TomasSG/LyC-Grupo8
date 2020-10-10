@@ -1,2 +1,15 @@
-if(a < b or c > d and a < 2 )
+
+if(a < b or c > d)
+	PUT "next";
+
+if(a < b)
+	PUT "next";
+
+if(c > d)
+	PUT "next";
+
+if ( a == b)
+	PUT "next";
+
+if( not (a > b))
 	PUT "next";

@@ -1,5 +1,4 @@
 |LEXEMA|TIPO|VALOR|
-|_2|(null)|2|
 |_next|(null)|next|
 |a|(null)|(null)|
 |b|(null)|(null)|

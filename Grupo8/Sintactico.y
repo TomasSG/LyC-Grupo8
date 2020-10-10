@@ -117,63 +117,63 @@ factor		: PAR_ABIERTO cuenta PAR_CERRADO	{printf("Regla: <factor> -> PAR_ABIERTO
 declaracion	: DIM listaVariables AS listaTipos {printf("Regla: <declaracion> -> DIM <lista_variables> AS <lista_tipos>\n");}
 		;
 
-listaVariables	: OP_LE variables OP_GE
+listaVariables	: OP_LE variables OP_GE	{printf("Regla: <lista_variables> -> OP_LE <variables> OP_GE\n");}
 		;
 
-variables	: ID COMA variables
-		| ID
+variables	: ID COMA variables			{printf("Regla: <variables> -> ID COMA <variables>\n");}
+		| ID							{printf("Regla: <variables> -> ID\n");}
 		;
 
-listaTipos	: OP_LE tipos OP_GE
+listaTipos	: OP_LE tipos OP_GE			{printf("Regla: <lista_tipos> -> OP_LE <tipos> OP_GE\n");}
 		;
 
-tipos		: tipoDeDato COMA tipos
-		|tipoDeDato
+tipos		: tipoDeDato COMA tipos		{printf("Regla: <tipos> -> <tipo_dato> COMA <tipos>\n");}
+		|tipoDeDato						{printf("Regla: <tipos> -> <tipo_dato>\n");}
 		;
 
-tipoDeDato	: FLOAT
-		| INTEGER
-		| STRING
+tipoDeDato	: FLOAT						{printf("Regla: <tipo_dato> -> FLOAT\n");}
+		| INTEGER						{printf("Regla: <tipo_dato> -> INTEGER\n");}
+		| STRING						{printf("Regla: <tipo_dato> -> STRING\n");}
 		;
 		
 /* REGLAS PARA PUT Y GET */
 
-salida		: PUT ID
-		| PUT CONST_STRING
+salida		: PUT ID					{printf("Regla: <salida> -> PUT ID\n");}
+		| PUT CONST_STRING				{printf("Regla: <salida> -> PUT CONST_STRING\n");}
 		;
 
-entrada		: GET ID
+entrada		: GET ID					{printf("Regla: <entrada> -> GET ID\n");}
 		;
 
 /* REGLAS PARA LA DECLARACION DE WHILE E IF */
 
-bloqueWhile	: WHILE PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO
-		| WHILE condicion sentencia
+bloqueWhile	: WHILE PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO	{printf("Regla: <bloque_while> -> WHILE PAR_ABIERTO <condicion> PAR_CERRADO LLAVE_ABIERTO <bloque> LLAVE_CERRADO\n");}
+		| WHILE condicion sentencia		{printf("Regla: <bloque_while> -> WHILE <condicion> <sentencia>\n");}
 		;
 /* REVISAR REGLAS DEL IF, NO CUBRE TODOS LOS CASOS*/
-bloqueIf	: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO resto_if
-			| IF PAR_ABIERTO condicion PAR_CERRADO sentencia
+bloqueIf	: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO resto_if {printf("Regla: <bloque_if> -> IF PAR_ABIERTO <condicion> PAR_CERRADO LLAVE_ABIERTO <bloque> LLAVE_CERRADO <resto_if>\n");}
+			| IF PAR_ABIERTO condicion PAR_CERRADO sentencia	{printf("Regla: <bloque_if> -> IF PAR_ABIERTO <condicion> PAR_CERRADO <sentencia>\n");}
 			;
-resto_if	: ELSE LLAVE_ABIERTO bloque LLAVE_CERRADO
-			| sentencia
+resto_if	: ELSE LLAVE_ABIERTO bloque LLAVE_CERRADO	{printf("Regla: <resto_if> -> ELSE LLAVE_ABIERTO <bloque> LLAVE_CERRADO\n");}
+			| sentencia					{printf("Regla: <resto_if> -> <sentencia>\n");}
 			;
 		
-condicion	: expLogica OP_AND condicion
-		| expLogica OP_OR condicion
-		| expLogica
+condicion	: expLogica OP_AND condicion {printf("Regla: <condicion> -> <exp_logica> OP_AND <condicion>\n");}
+		| expLogica OP_OR condicion		{printf("Regla: <condicion> -> <exp_logica> OP_OR <condicion>\n");}
+		| expLogica						{printf("Regla: <condicion> -> <exp_logica>\n");}
 		;
 
-expLogica	: PAR_ABIERTO condicion PAR_CERRADO
-		| cuenta comparador cuenta
+expLogica	: PAR_ABIERTO condicion PAR_CERRADO	{printf("Regla: <exp_logica> -> PAR_ABIERTO <condicion> PAR_CERRADO\n");}
+		| cuenta comparador cuenta		{printf("Regla: <exp_logica> -> <cuenta> <comparador> <cuenta>\n");}	
 		;
 
-comparador	: OP_IGUAL
-		| OP_LE
-		| OP_LEQ
-		| OP_GE
-		| OP_GEQ
-		| OP_NE
-		| OP_NOT
+comparador	: OP_IGUAL					{printf("Regla: <comparador> -> OP_IGUAL\n");}
+		| OP_LE							{printf("Regla: <comparador> -> OP_LE\n");}
+		| OP_LEQ						{printf("Regla: <comparador> -> OP_LEQ\n");}
+		| OP_GE							{printf("Regla: <comparador> -> OP_GE\n");}
+		| OP_GEQ						{printf("Regla: <comparador> -> OP_GEQ\n");}
+		| OP_NE							{printf("Regla: <comparador> -> OP_NE\n");}
+		| OP_NOT						{printf("Regla: <comparador> -> OP_NOT\n");}
 		;
 /* REGLAS PARA CONTAR */
 

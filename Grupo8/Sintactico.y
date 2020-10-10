@@ -177,14 +177,14 @@ comparador	: OP_IGUAL					{printf("Regla: <comparador> -> OP_IGUAL\n");}
 		;
 /* REGLAS PARA CONTAR */
 
-funcionContar	: CONTAR PAR_ABIERTO cuenta PUNTO_COMA listaFactores PAR_CERRADO
+funcionContar	: CONTAR PAR_ABIERTO cuenta PUNTO_COMA listaFactores PAR_CERRADO	{printf("Regla: <funcion_contar> -> CONTAR PAR_ABIERTO <cuenta> PUNTO_COMA <lista_factores> PAR_CERRADO\n");}
 		;
 
-listaFactores	: COR_ABIERTO factores COR_CERRADO
+listaFactores	: COR_ABIERTO factores COR_CERRADO 	{printf("Regla: <lista_factores> -> COR_ABIERTO <factores> COR_CERRADO\n");}
 		;
 
-factores	: factor COMA factores
-		| factor
+factores	: factor COMA factores		{printf("Regla: <factor> -> <factor> COMA <factores>\n");}
+		| factor						{printf("Regla: <factor> -> <factor>\n");}
 		;
 		
 %%

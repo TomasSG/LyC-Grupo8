@@ -89,6 +89,7 @@ COMENTARIO		"*-".*"-*"
 {CONTAR}			{return CONTAR;}		
 {INTEGER}			{return INTEGER;}
 {FLOAT}				{return FLOAT;}
+{STRING}			{return STRING;}
 
 {LLAVE_ABIERTO}		{return LLAVE_ABIERTO;}
 {LLAVE_CERRADO}		{return LLAVE_CERRADO;}

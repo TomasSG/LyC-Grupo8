@@ -103,10 +103,7 @@ termino		: factor OP_MULT termino	{printf("Regla: <termino> -> <factor> OP_MULT 
 
 factor		: PAR_ABIERTO cuenta PAR_CERRADO	{printf("Regla: <factor> -> PAR_ABIERTO <cuenta> PAR_CERRADO\n");}
 		| ID 							{printf("Regla: <factor> -> ID\n");}
-		| CONST_BINARIA					{printf("Regla: <factor> -> CONST_BINARIA\n");}
-		| CONST_HEXA					{printf("Regla: <factor> -> CONST_HEXA\n");}
-		| CONST_REAL					{printf("Regla: <factor> -> CONST_REAL\n");}
-		| CONST_ENTERA 					{printf("Regla: <factor> -> CONST_ENTERA\n");}
+		| constante					{printf("Regla: <factor> -> <constante>\n");}
 		| funcionContar					{printf("Regla: <factor> -> <funcion_contar>\n");}
 		;
 		
@@ -175,16 +172,21 @@ comparador	: OP_IGUAL					{printf("Regla: <comparador> -> OP_IGUAL\n");}
 		;
 /* REGLAS PARA CONTAR */
 
-funcionContar	: CONTAR PAR_ABIERTO cuenta PUNTO_COMA listaFactores PAR_CERRADO	{printf("Regla: <funcion_contar> -> CONTAR PAR_ABIERTO <cuenta> PUNTO_COMA <lista_factores> PAR_CERRADO\n");}
+funcionContar	: CONTAR PAR_ABIERTO cuenta PUNTO_COMA listaConstantes PAR_CERRADO	{printf("Regla: <funcion_contar> -> CONTAR PAR_ABIERTO <cuenta> PUNTO_COMA <lista_constantes> PAR_CERRADO\n");}
 		;
 
-listaFactores	: COR_ABIERTO factores COR_CERRADO 	{printf("Regla: <lista_factores> -> COR_ABIERTO <factores> COR_CERRADO\n");}
+listaConstantes	: COR_ABIERTO constantes COR_CERRADO 	{printf("Regla: <lista_constantes> -> COR_ABIERTO <constantes> COR_CERRADO\n");}
 		;
 
-factores	: factor COMA factores		{printf("Regla: <factor> -> <factor> COMA <factores>\n");}
-		| factor						{printf("Regla: <factor> -> <factor>\n");}
+constantes	: constante COMA constantes		{printf("Regla: <constantes> -> <constante> COMA <constantes>\n");}
+		| constante						{printf("Regla: <constantes> -> <constante>\n");}
 		;
-		
+
+constante : CONST_BINARIA					{printf("Regla: <constante> -> CONST_BINARIA\n");}
+		| CONST_HEXA					{printf("Regla: <constante> -> CONST_HEXA\n");}
+		| CONST_REAL					{printf("Regla: <constante> -> CONST_REAL\n");}
+		| CONST_ENTERA 					{printf("Regla: <constante> -> CONST_ENTERA\n");}
+		;
 %%
 
 int main(int argc, char *argv[]) 

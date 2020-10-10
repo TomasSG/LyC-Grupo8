@@ -2,10 +2,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
+#include "./lib/lista.h"
+#include "./lib/utilitarias.h"
 #include "y.tab.h"
+
+/* VARIABLES GLOBALES */
+FILE *yyin;
+t_lista tabla_simbolos;
 int yystopparser=0;
-FILE  *yyin;
 %}
+
+%union {
+	char *str_val;
+}
+
 
 				/* LISTA DE TOKENS */
 /* PALABRAS RESERVADAS */
@@ -80,7 +90,7 @@ sentencia	: asignacion {printf("ASIGNACION \n");} PUNTO_COMA
 		;
 
 /* REGLAS PARA LA ASIGNACION */
-asignacion	: ID OP_ASIGNACION cuenta
+asignacion	: ID OP_ASIGNACION cuenta  {printf("Pase por asignacion\n");}
 		;
 
 cuenta		: termino OP_SUMA cuenta
@@ -94,7 +104,7 @@ termino		: factor OP_MULT termino
 		;
 
 factor		: PAR_ABIERTO cuenta PAR_CERRADO
-		| ID
+		| ID {printf("Pase por aca\n");insertar_ts(yylval.str_val, NULL, &tabla_simbolos);}
 		| CONST_BINARIA
 		| CONST_HEXA
 		| CONST_REAL
@@ -179,22 +189,38 @@ factores	: factor COMA factores
 		
 %%
 
-int main(int argc,char *argv[])
+int main(int argc, char *argv[]) 
 {
-  if ((yyin = fopen(argv[1], "rt")) == NULL)
-  {
-	printf("\nNo se puede abrir el archivo: %s\n", argv[1]);
-  }
-  else
-  {
+	FILE *pf = NULL;
+	yyin = fopen(argv[1], "rt");
+	if(yyin == NULL)
+	{	
+		printf("\nNo se pudo abrir el archivo %s\n", argv[1]);
+		return ERROR;
+	}
+	
+	crear_lista(&tabla_simbolos);
+
 	yyparse();
-  }
-  fclose(yyin);
-  return 0;
+
+	pf = fopen(PATH_ARCHIVO_TS, TEXTO_ESCRITURA);
+	if(!pf)
+	{
+		printf("No se pudo crear el archivo %s para la tabla de simbolos\n", PATH_ARCHIVO_TS);
+	}	
+	else
+	{
+		guardar_lista(&tabla_simbolos, pf);
+		fclose(pf);
+	}
+
+	vaciar_lista(&tabla_simbolos);
+	fclose(yyin);
+	return CORRECTO;
 }
+
 int yyerror(void)
-     {
-       printf("Error Sintactico\n");
-	 system ("Pause");
-	 //exit (1);
-     }
+{
+    printf("Error Sintactico\n");
+	exit (1);
+}

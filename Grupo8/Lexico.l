@@ -115,26 +115,26 @@ COMENTARIO		"*-".*"-*"
 
 
 {CONST_STRING}		{verificar_string(yytext);
-					insertar_ts(agregar_guion_bajo(sacar_comillas(yytext)), sacar_comillas(yytext), &tabla_simbolos);
+					/*insertar_ts(agregar_guion_bajo(sacar_comillas(yytext)), sacar_comillas(yytext), &tabla_simbolos);*/
 					return CONST_STRING;}
 
 {CONST_ENTERA}		{verificar_rango_entero(yytext);
-					insertar_ts(agregar_guion_bajo(yytext), yytext, &tabla_simbolos);
+					/*insertar_ts(agregar_guion_bajo(yytext), yytext, &tabla_simbolos);*/
 					return CONST_ENTERA;}
 
 {CONST_REAL}		{verificar_rango_real(yytext);
-					insertar_ts(agregar_guion_bajo(yytext), yytext, &tabla_simbolos);
+					/*insertar_ts(agregar_guion_bajo(yytext), yytext, &tabla_simbolos);*/
 					return CONST_REAL;}
 
 {CONST_BINARIA}		{verificar_rango_entero(convertir_cadena_decimal(yytext));
-					insertar_ts(agregar_guion_bajo(yytext), convertir_cadena_decimal(yytext), &tabla_simbolos);
+					/*insertar_ts(agregar_guion_bajo(yytext), convertir_cadena_decimal(yytext), &tabla_simbolos);*/
 					return CONST_BINARIA;}
 
 {CONST_HEXA}		{verificar_rango_entero(convertir_cadena_decimal(yytext));
-					insertar_ts(agregar_guion_bajo(yytext), convertir_cadena_decimal(yytext), &tabla_simbolos);
+					/*insertar_ts(agregar_guion_bajo(yytext), convertir_cadena_decimal(yytext), &tabla_simbolos);*/
 					return CONST_HEXA;}
 
-{ID}				{insertar_ts(yytext, NULL, &tabla_simbolos); return ID;}
+{ID}				{yylval.str_val = strdup(yytext); return ID;}
 
 {COMENTARIO}		{return COMENTARIO;}
 "\n"				{}
@@ -142,47 +142,18 @@ COMENTARIO		"*-".*"-*"
 
 %%
 
-int main(int argc, char *argv[]) 
-{
-	FILE *pf = NULL;
-	yyin = fopen(argv[1], "rt");
-	if(yyin == NULL)
-	{	
-		printf("\nNo se pudo abrir el archivo %s\n", argv[1]);
-		return ERROR;
-	}
-	crear_lista(&tabla_simbolos);
-	
-	yylex();
-
-	pf = fopen(PATH_ARCHIVO_TS, TEXTO_ESCRITURA);
-	if(!pf)
-	{
-		printf("No se pudo crear el archivo %s para la tabla de simbolos\n", PATH_ARCHIVO_TS);
-	}	
-	else
-	{
-		guardar_lista(&tabla_simbolos, pf);
-		fclose(pf);
-	}
-
-	vaciar_lista(&tabla_simbolos);
-	fclose(yyin);
-	return CORRECTO;
-}
-
-int yyerror(const char *msj)
+int error(const char *msj)
 {
 	printf("Error lexico\n");
 	printf("Linea nro %d: %s\n", yylineno, msj);
-	//exit(1);
+	exit(1);
 }
 
 int verificar_string(const char *s)
 {
 	if(strlen(s) > 32)
 	{
-		yyerror("String mayor a 30 caracteres");
+		error("String mayor a 30 caracteres");
 	}
 	return CORRECTO;
 }
@@ -196,14 +167,14 @@ int verificar_rango_real(char *s)
 
 	if(strlen(s) > 41)
 	{
-		yyerror("Real fuera de rango");
+		error("Real fuera de rango");
 	}
 
 	valor = atof(s);
 
 	if(valor > 3.4e38)
 	{
-		yyerror("Real fuera de rango");
+		error("Real fuera de rango");
 	}
 	return CORRECTO;	
 }
@@ -217,14 +188,14 @@ int verificar_rango_entero(char *s)
 
 	if(strlen(s) > 5)
 	{
-		yyerror("Entero fuera de rango");
+		error("Entero fuera de rango");
 	}
 
 	valor = atoi(s);
 
 	if(valor > 32768)
 	{
-		yyerror("Entero fuera de rango");
+		error("Entero fuera de rango");
 	}
 	return CORRECTO;
 }

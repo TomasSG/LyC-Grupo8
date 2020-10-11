@@ -10,13 +10,25 @@
 #define PATH_ARCHIVO_TS "./ts.txt"
 #define TEXTO_ESCRITURA "wt"
 #define CORRECTO 0
-#define ERROR -500
+#define ERROR 1
+
+#define MAXIMA_CANTIDAD_CARACTERES_STRING 30
+#define MAXIMA_CANTIDAD_CARACTERES_REAL 41
+#define MAXIMO_VALOR_REAL 3.4e38
+#define MAXIMA_CANTIDAD_CARACTERES_ENTERO 5
+#define MAXIMO_VALOR_ENTERO 32768
 
 char* sacar_comillas(const char*);
 char* agregar_guion_bajo(const char*);
 char* convertir_cadena_decimal(const char*);
 int convertir_caracter_decimal(const char);
 char* adelantar_ceros(char*);
+int error_lexico(const char*, const int);
+
+/* FUNCIONES DE VERIFICACION */
+int verificar_string(const char*, const int);
+int verificar_rango_entero(char*, const int);
+int verificar_rango_real(char*, const int);
 
 
 #endif // UTILITARIAS_H_INCLUDED

@@ -14,7 +14,7 @@
 |_La suma es: |(null)|La suma es: |
 |_Prueba.txt LyC Tema 1!|(null)|Prueba.txt LyC Tema 1!|
 |_mayor que 2 y distinto de cero|(null)|mayor que 2 y distinto de cero|
-|_no es mayor que 2|(null)|no es mayor que 2|
+|_no es mayor que 2aaaaaaaaaaaaa|(null)|no es mayor que 2aaaaaaaaaaaaa|
 |actual|(null)|(null)|
 |contador|(null)|(null)|
 |promedio|(null)|(null)|

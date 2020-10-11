@@ -6,11 +6,6 @@
 #include "./lib/utilitarias.h"
 #include "y.tab.h"
 
-/* FUNCIONES DE VERIFICACION */
-int verificar_string(const char*);
-int verificar_rango_entero(char*);
-int verificar_rango_real(char*);
-
 /* VARIABLES GLOBALES */
 FILE *yyin;
 int yyval;
@@ -116,24 +111,27 @@ COMENTARIO		"*-".*"-*"
 {OP_IGUAL}			{return OP_IGUAL;}
 
 
-{CONST_STRING}		{verificar_string(yytext);
-					insertar_ts(agregar_guion_bajo(sacar_comillas(yytext)), sacar_comillas(yytext), &tabla_simbolos);
+{CONST_STRING}		{char *string = sacar_comillas(yytext);
+					verificar_string(string, yylineno);
+					insertar_ts(agregar_guion_bajo(string), string, &tabla_simbolos);
 					return CONST_STRING;}
 
-{CONST_ENTERA}		{verificar_rango_entero(yytext);
+{CONST_ENTERA}		{verificar_rango_entero(yytext, yylineno);
 					insertar_ts(agregar_guion_bajo(yytext), yytext, &tabla_simbolos);
 					return CONST_ENTERA;}
 
-{CONST_REAL}		{verificar_rango_real(yytext);
+{CONST_REAL}		{verificar_rango_real(yytext, yylineno);
 					insertar_ts(agregar_guion_bajo(yytext), yytext, &tabla_simbolos);
 					return CONST_REAL;}
 
-{CONST_BINARIA}		{verificar_rango_entero(convertir_cadena_decimal(yytext));
-					insertar_ts(agregar_guion_bajo(yytext), convertir_cadena_decimal(yytext), &tabla_simbolos);
+{CONST_BINARIA}		{char *cadena_valor_decimal = convertir_cadena_decimal(yytext);
+					verificar_rango_entero(cadena_valor_decimal, yylineno);
+					insertar_ts(agregar_guion_bajo(yytext), cadena_valor_decimal, &tabla_simbolos);
 					return CONST_BINARIA;}
 
-{CONST_HEXA}		{verificar_rango_entero(convertir_cadena_decimal(yytext));
-					insertar_ts(agregar_guion_bajo(yytext), convertir_cadena_decimal(yytext), &tabla_simbolos);
+{CONST_HEXA}		{char *cadena_valor_decimal = convertir_cadena_decimal(yytext);
+					verificar_rango_entero(cadena_valor_decimal, yylineno);
+					insertar_ts(agregar_guion_bajo(yytext), cadena_valor_decimal, &tabla_simbolos);
 					return CONST_HEXA;}
 
 {ID}				{insertar_ts(yytext, NULL, &tabla_simbolos); return ID;}
@@ -144,60 +142,4 @@ COMENTARIO		"*-".*"-*"
 
 %%
 
-int error(const char *msj)
-{
-	printf("Error lexico\n");
-	printf("Linea nro %d: %s\n", yylineno, msj);
-	exit(1);
-}
 
-int verificar_string(const char *s)
-{
-	if(strlen(s) > 32)
-	{
-		error("String mayor a 30 caracteres");
-	}
-	return CORRECTO;
-}
-
-int verificar_rango_real(char *s)
-{
-	// Rango para 32b en float 3.4*10^-38 a 3.4*10^38
-	double valor = 0;
-
-	s = adelantar_ceros(s);
-
-	if(strlen(s) > 41)
-	{
-		error("Real fuera de rango");
-	}
-
-	valor = atof(s);
-
-	if(valor > 3.4e38)
-	{
-		error("Real fuera de rango");
-	}
-	return CORRECTO;	
-}
-
-int verificar_rango_entero(char *s)
-{
-	// Rango para 16b en int -32768 a 32767, pero lo tomamos simétrico el intervalo
-	int valor = 0;
-	
-	s = adelantar_ceros(s);
-
-	if(strlen(s) > 5)
-	{
-		error("Entero fuera de rango");
-	}
-
-	valor = atoi(s);
-
-	if(valor > 32768)
-	{
-		error("Entero fuera de rango");
-	}
-	return CORRECTO;
-}

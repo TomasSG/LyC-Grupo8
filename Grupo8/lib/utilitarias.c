@@ -116,3 +116,63 @@ char* adelantar_ceros(char *s)
 	return s;
 }
 
+int error_lexico(const char *msj, const int nro_linea)
+{
+	printf("Error lexico\n");
+	printf("Linea nro %d: %s\n", nro_linea, msj);
+	exit(ERROR);
+}
+
+/* FUNCIONES DE VERIFICACION */
+
+
+int verificar_string(const char *s, const int nro_linea)
+{
+	if(strlen(s) > MAXIMA_CANTIDAD_CARACTERES_STRING)
+	{
+		error_lexico("String supera la maxima cantidad de caracteres", nro_linea);
+	}
+	return CORRECTO;
+}
+
+int verificar_rango_real(char *s, const int nro_linea)
+{
+	// Rango para 32b en float 3.4*10^-38 a 3.4*10^38
+	double valor = 0;
+
+	s = adelantar_ceros(s);
+
+	if(strlen(s) > MAXIMA_CANTIDAD_CARACTERES_REAL)
+	{
+		error_lexico("Real fuera de rango", nro_linea);
+	}
+
+	valor = atof(s);
+
+	if(valor > MAXIMO_VALOR_REAL)
+	{
+		error_lexico("Real fuera de rango", nro_linea);
+	}
+	return CORRECTO;	
+}
+
+int verificar_rango_entero(char *s, const int nro_linea)
+{
+	// Rango para 16b en int -32768 a 32767, pero lo tomamos simétrico el intervalo
+	int valor = 0;
+	
+	s = adelantar_ceros(s);
+
+	if(strlen(s) > MAXIMA_CANTIDAD_CARACTERES_ENTERO)
+	{
+		error_lexico("Entero fuera de rango", nro_linea);
+	}
+
+	valor = atoi(s);
+
+	if(valor > MAXIMO_VALOR_ENTERO)
+	{
+		error_lexico("Entero fuera de rango", nro_linea);
+	}
+	return CORRECTO;
+}

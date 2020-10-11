@@ -9,6 +9,7 @@
 
 #define PATH_ARCHIVO_TS "./ts.txt"
 #define TEXTO_ESCRITURA "wt"
+#define TEXTO_LECTURA "rt"
 #define CORRECTO 0
 #define ERROR 1
 

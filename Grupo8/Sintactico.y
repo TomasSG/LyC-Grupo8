@@ -187,7 +187,7 @@ constante : CONST_BINARIA					{printf("Regla: <constante> -> CONST_BINARIA\n");}
 int main(int argc, char *argv[]) 
 {
 	FILE *pf = NULL;
-	yyin = fopen(argv[1], "rt");
+	yyin = fopen(argv[1], TEXTO_LECTURA);
 
 	if(yyin == NULL)
 	{	
@@ -200,7 +200,7 @@ int main(int argc, char *argv[])
 	yyparse();
 
 	pf = fopen(PATH_ARCHIVO_TS, TEXTO_ESCRITURA);
-	if(!pf)
+	if(pf == NULL)
 	{
 		printf("No se pudo crear el archivo %s para la tabla de simbolos\n", PATH_ARCHIVO_TS);
 	}	

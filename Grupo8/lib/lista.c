@@ -70,7 +70,7 @@ int insertar_ts(const char *lexema, const char *valor, t_lista *ptabla_simbolos)
 	if(!pd)
 	{
 		printf("Problemas de memoria\n");
-		return 1;
+		return LISTA_LLENA;
 	}
 
 	// El tipo no se completa así que lo dejamos en nulo
@@ -81,19 +81,18 @@ int insertar_ts(const char *lexema, const char *valor, t_lista *ptabla_simbolos)
 	if(!(pd->lexema))
 	{
 		printf("Problemas de memoria\n");
-		return 1;
+		return LISTA_LLENA;
 	}
 	strcpy(pd->lexema, lexema);
 	
-	// El valor hay que validar que no sea NULL porque hay casos en que no se completa 
-	// el campo
+	// El valor hay que validar que no sea NULL porque hay casos en que no se completa el campo
 	if(valor != NULL)
 	{
 		pd->valor = (char*) malloc(sizeof(char)*strlen(valor) + 1);
 		if(!pd->valor)
 		{
 			printf("Problemas de memoria\n");
-			return 1;
+			return LISTA_LLENA;
 		}
 		strcpy(pd->valor, valor);
 	}
@@ -107,8 +106,9 @@ int insertar_ts(const char *lexema, const char *valor, t_lista *ptabla_simbolos)
 	if(resultado == LISTA_LLENA || resultado == DUPLICADO)
 	{
 		free(pd);
+		return resultado;
 	}
-	return 0;
+	return TODO_BIEN;
 }
 
 int comparacion(const t_dato *pd1,const t_dato *pd2)

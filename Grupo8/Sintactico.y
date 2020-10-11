@@ -12,11 +12,6 @@ t_lista tabla_simbolos;
 int yystopparser=0;
 %}
 
-%union {
-	char *str_val;
-}
-
-
 				/* LISTA DE TOKENS */
 /* PALABRAS RESERVADAS */
 %token	WHILE

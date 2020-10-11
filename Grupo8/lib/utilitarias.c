@@ -4,7 +4,7 @@ char* sacar_comillas(const char *s)
 {
 	int i, largo = strlen(s);
 	char *inicio, *resultado;
-	resultado = (char*) malloc(sizeof(char) * largo - 2 + 1);
+	resultado = (char*) malloc(sizeof(char) * largo - CANTIDAD_COMILLAS + 1);
 	if(!resultado)
 	{
 		printf("Problemas con memoria\n");
@@ -30,7 +30,7 @@ char* sacar_comillas(const char *s)
 char* agregar_guion_bajo(const char *s)
 {
 	char* resultado;
-	resultado =(char*) malloc(sizeof(char) * strlen(s) + 2);
+	resultado =(char*) malloc(sizeof(char) * strlen(s) + CANTIDAD_GUIONES_BAJOS + 1);
 	if(!resultado)
 	{
 		printf("Problemas con memoria\n");

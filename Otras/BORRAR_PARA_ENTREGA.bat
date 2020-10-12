@@ -2,13 +2,13 @@
 
 :do_while
 echo Creando el archivo lex.yy.c.
-F:\GnuWin32\bin\flex Lexico.l
+C:\GnuWin32\bin\flex Lexico.l
 pause
 echo Creando el archivo de byson.
-F:\GnuWin32\bin\bison -dyv Sintactico.y
+C:\GnuWin32\bin\bison -dyv Sintactico.y
 pause
 echo Creando el ejecutable ...
-F:\MinGW\bin\gcc.exe  ./lib/lista.c ./lib/utilitarias.c lex.yy.c y.tab.c -o Primera.exe
+C:\MinGW\bin\gcc.exe  ./lib/lista.c ./lib/utilitarias.c lex.yy.c y.tab.c -o Primera.exe
 pause
 cls
 echo Ejecutando el Analizador Lexicografico

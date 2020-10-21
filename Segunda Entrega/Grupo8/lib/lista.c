@@ -50,13 +50,18 @@ void recorrer_lista(const t_lista *pl,t_fun fun)
 void guardar_lista(const t_lista *pl, FILE *pf)
 {
 	t_dato *pd;
-	fprintf(pf,"|LEXEMA|TIPO|VALOR|\n", pd->lexema, pd->tipo, pd->valor);
+	fprintf(pf,"|--------------------------------------------------------------------------------------------------------------------------|\n", pd->lexema, pd->tipo, pd->valor);
+	fprintf(pf,"|												        TABLA DE SIMBOLOS												   |\n", pd->lexema, pd->tipo, pd->valor);
+	fprintf(pf,"|--------------------------------------------------------------------------------------------------------------------------|\n", pd->lexema, pd->tipo, pd->valor);
+	fprintf(pf,"|LEXEMA									 |TIPO                                    |VALOR                                   |\n", pd->lexema, pd->tipo, pd->valor);
+	fprintf(pf,"|--------------------------------------------------------------------------------------------------------------------------|\n", pd->lexema, pd->tipo, pd->valor);
     while(*pl)
     {
         pd =  &(*pl)->dato;
-		fprintf(pf,"|%-50s|%-50s|%-50s|\n", pd->lexema, pd->tipo, pd->valor);
+		fprintf(pf,"|%-40s|%-40s|%-40s|\n", pd->lexema, pd->tipo, pd->valor);
         pl = &(*pl)->psig;
     }
+	fprintf(pf,"|--------------------------------------------------------------------------------------------------------------------------|\n", pd->lexema, pd->tipo, pd->valor);
 }
 
 int insertar_ts(const char *lexema, const char *valor, t_lista *ptabla_simbolos)

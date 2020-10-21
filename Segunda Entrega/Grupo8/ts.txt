@@ -1,21 +1,26 @@
-|LEXEMA|TIPO|VALOR|
-|_0                            |(null)                        |0                             |
-|_0.342                        |(null)                        |0.342                         |
-|_02.5                         |(null)                        |02.5                          |
-|_0b10                         |(null)                        |2                             |
-|_0b111010                     |(null)                        |58                            |
-|_0x7FF                        |(null)                        |2047                          |
-|_1                            |(null)                        |1                             |
-|_256                          |(null)                        |256                           |
-|_4                            |(null)                        |4                             |
-|_52                           |(null)                        |52                            |
-|_92                           |(null)                        |92                            |
-|_Ingrese un valor para actual: |(null)                        |Ingrese un valor para actual: |
-|_La suma es:                  |(null)                        |La suma es:                   |
-|_Prueba.txt LyC Tema 1!       |(null)                        |Prueba.txt LyC Tema 1!        |
-|_mayor que 2 y distinto de cero|(null)                        |mayor que 2 y distinto de cero|
-|_no es mayor que 2            |(null)                        |no es mayor que 2             |
-|actual                        |(null)                        |(null)                        |
-|contador                      |(null)                        |(null)                        |
-|promedio                      |(null)                        |(null)                        |
-|suma                          |(null)                        |(null)                        |
+|--------------------------------------------------------------------------------------------------------------------------|
+|												        TABLA DE SIMBOLOS												   |
+|--------------------------------------------------------------------------------------------------------------------------|
+|LEXEMA									 |TIPO                                    |VALOR                                   |
+|--------------------------------------------------------------------------------------------------------------------------|
+|_0                                      |(null)                                  |0                                       |
+|_0.342                                  |(null)                                  |0.342                                   |
+|_02.5                                   |(null)                                  |02.5                                    |
+|_0b10                                   |(null)                                  |2                                       |
+|_0b111010                               |(null)                                  |58                                      |
+|_0x7FF                                  |(null)                                  |2047                                    |
+|_1                                      |(null)                                  |1                                       |
+|_256                                    |(null)                                  |256                                     |
+|_4                                      |(null)                                  |4                                       |
+|_52                                     |(null)                                  |52                                      |
+|_92                                     |(null)                                  |92                                      |
+|_Ingrese un valor para actual:          |(null)                                  |Ingrese un valor para actual:           |
+|_La suma es:                            |(null)                                  |La suma es:                             |
+|_Prueba.txt LyC Tema 1!                 |(null)                                  |Prueba.txt LyC Tema 1!                  |
+|_mayor que 2 y distinto de cero         |(null)                                  |mayor que 2 y distinto de cero          |
+|_no es mayor que 2                      |(null)                                  |no es mayor que 2                       |
+|actual                                  |(null)                                  |(null)                                  |
+|contador                                |(null)                                  |(null)                                  |
+|promedio                                |(null)                                  |(null)                                  |
+|suma                                    |(null)                                  |(null)                                  |
+|--------------------------------------------------------------------------------------------------------------------------|

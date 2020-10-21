@@ -43,7 +43,7 @@ char* agregar_guion_bajo(const char *s)
 
 char* convertir_cadena_decimal(const char *s)
 {
-	char *aux, resultado[500];
+	char *aux, resultado[CANTIDAD_ITOA];
 	int valor_numerico = 0, i = 0;
 	double base = 0;
 
@@ -126,16 +126,15 @@ int error_lexico(const char *msj, const int nro_linea)
 /* FUNCIONES DE VERIFICACION */
 
 
-int verificar_string(const char *s, const int nro_linea)
+void verificar_string(const char *s, const int nro_linea)
 {
 	if(strlen(s) > UTILITARIAS_MAXIMA_CANTIDAD_CARACTERES_STRING)
 	{
 		error_lexico("String supera la maxima cantidad de caracteres", nro_linea);
 	}
-	return TODO_BIEN;
 }
 
-int verificar_rango_real(char *s, const int nro_linea)
+void verificar_rango_real(char *s, const int nro_linea)
 {
 	// Rango para 32b en float 3.4*10^-38 a 3.4*10^38
 	double valor = 0;
@@ -153,10 +152,9 @@ int verificar_rango_real(char *s, const int nro_linea)
 	{
 		error_lexico("Real fuera de rango", nro_linea);
 	}
-	return TODO_BIEN;	
 }
 
-int verificar_rango_entero(char *s, const int nro_linea)
+void verificar_rango_entero(char *s, const int nro_linea)
 {
 	// Rango para 16b en int -32768 a 32767, pero lo tomamos simétrico el intervalo
 	int valor = 0;
@@ -174,5 +172,4 @@ int verificar_rango_entero(char *s, const int nro_linea)
 	{
 		error_lexico("Entero fuera de rango", nro_linea);
 	}
-	return TODO_BIEN;
 }

@@ -26,4 +26,7 @@
 #define TEXTO_LECTURA "rt"
 #define TEXTO_APPEND "at"
 
+/* CONSTANTES GENERALES */
+#define CANTIDAD_ITOA 1000
+
 #endif // CONSTANTES_H_INCLUDED

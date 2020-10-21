@@ -15,9 +15,9 @@ char* adelantar_ceros(char*);
 int error_lexico(const char*, const int);
 
 /* FUNCIONES DE VERIFICACION */
-int verificar_string(const char*, const int);
-int verificar_rango_entero(char*, const int);
-int verificar_rango_real(char*, const int);
+void verificar_string(const char*, const int);
+void verificar_rango_entero(char*, const int);
+void verificar_rango_real(char*, const int);
 
 
 #endif // UTILITARIAS_H_INCLUDED

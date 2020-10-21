@@ -57,18 +57,17 @@ void guardar_lista(const t_lista *pl, const char *path)
     while(*pl)
     {
         pd =  &(*pl)->dato;
-		fprintf(pf,"|%-35s|%-35s|%-35s|%-35s|\n", pd->lexema, pd->tipo ? pd->tipo : " ", pd->valor ? pd->valor : " ", pd->longitud ? pd->longitud : " ");
+		fprintf(pf,"|%-35s|%-35s|%-35s|%d|\n", pd->lexema, pd->tipo ? pd->tipo : " ", pd->valor ? pd->valor : " ", pd->longitud);
         pl = &(*pl)->psig;
     }
 	fprintf(pf,"|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 	fclose(pf);
 }
 
-int insertar_ts(const char *lexema, const char *valor, const int longitud, t_lista *ptabla_simbolos)
+int insertar_ts(const char *lexema, const char *valor, int longitud, t_lista *ptabla_simbolos)
 {
 	int resultado = -1;
 	t_dato *pd;
-
 	// Reservamos memoria para el t_dato
 	pd = (t_dato*)malloc(sizeof(t_dato));
 	if(pd == NULL)
@@ -81,7 +80,7 @@ int insertar_ts(const char *lexema, const char *valor, const int longitud, t_lis
 	pd->tipo = NULL;
 
 	// El lexema lo copiamos tal cual
-	pd->lexema = (char*) malloc(sizeof(char)*strlen(lexema) + 1);
+	pd->lexema = (char*)malloc(sizeof(char) * strlen(lexema) + 1);
 	if(pd->lexema == NULL)
 	{
 		printf("Problemas de memoria\n");
@@ -92,34 +91,21 @@ int insertar_ts(const char *lexema, const char *valor, const int longitud, t_lis
 	// El valor hay que validar que no sea NULL porque hay casos en que no se completa el campo
 	if(valor != NULL)
 	{
-		pd->valor = (char*) malloc(sizeof(char)*strlen(valor) + 1);
+		pd->valor = (char*) malloc(sizeof(char) * strlen(valor) + 1);
 		if(pd->valor == NULL)
 		{
 			printf("Problemas de memoria\n");
 			return LISTA_LLENA;
 		}
 		strcpy(pd->valor, valor);
+		
 	}
 	else
 	{
 		pd->valor = NULL;
 	}
-	
-	// La longitud verificamos si es distinta de cero.
-	if(longitud != 0)
-	{
-		pd->longitud = (char*) malloc(5);
-		if(pd->longitud == NULL)
-		{
-			printf("Problemas de memoria\n");
-			return LISTA_LLENA;
-		}
-		itoa(longitud, pd->longitud, 10);
-	}
-	else
-	{
-		pd->longitud = NULL;
-	}
+
+	pd->longitud = longitud;
 	
 	// Ya armado el t_dato insertamos en la tabla
 	resultado = insertar_ordenado(ptabla_simbolos, pd, comparacion);
@@ -138,5 +124,5 @@ int comparacion(const t_dato *pd1,const t_dato *pd2)
 
 void mostrar(const t_dato *pd)
 {	
-	printf("|%-35s|%-35s|%-35s|%-35s|\n", pd->lexema, pd->tipo, pd->valor, pd->longitud);
+	printf("|%-35s|%-35s|%-35s|%d|\n", pd->lexema, pd->tipo, pd->valor, pd->longitud);
 }

@@ -174,9 +174,7 @@ constante : CONST_BINARIA					{printf("Regla: <constante> -> CONST_BINARIA\n");}
 
 int main(int argc, char *argv[]) 
 {
-	FILE *pf = NULL;
 	yyin = fopen(argv[1], TEXTO_LECTURA);
-
 	if(yyin == NULL)
 	{	
 		printf("\nNo se pudo abrir el archivo %s\n", argv[1]);

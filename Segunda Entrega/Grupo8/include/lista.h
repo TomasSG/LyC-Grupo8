@@ -11,6 +11,7 @@ typedef struct
 	char *lexema;
 	char *tipo;
 	char *valor;
+	char *longitud;
 }t_dato;
 
 typedef struct s_nodo
@@ -29,7 +30,7 @@ int insertar_ordenado(t_lista*,const t_dato*,t_cmp);
 void recorrer_lista(const t_lista*,t_fun);
 void guardar_lista(const t_lista*, const char*);
 
-int insertar_ts(const char*, const char*, t_lista*);
+int insertar_ts(const char*, const char*, const int, t_lista*);
 int comparacion(const t_dato*,const t_dato*);
 void mostrar(const t_dato*);
 

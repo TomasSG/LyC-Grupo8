@@ -49,22 +49,22 @@ void guardar_lista(const t_lista *pl, const char *path)
 	{
 		printf("No se pudo abrir el archivo %s\n", path);
 	}
-	fprintf(pf,"|--------------------------------------------------------------------------------------------------------------------------|\n");
-	fprintf(pf,"|												        TABLA DE SIMBOLOS												   |\n");
-	fprintf(pf,"|--------------------------------------------------------------------------------------------------------------------------|\n");
-	fprintf(pf,"|             LEXEMA    				 |                  TIPO                  |                VALOR                   |\n");
-	fprintf(pf,"|----------------------------------------|----------------------------------------|----------------------------------------|\n");
+	fprintf(pf,"|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+	fprintf(pf,"|                                                      TABLA DE SIMBOLOS                                                                        |\n");
+	fprintf(pf,"|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+	fprintf(pf,"|%-35s|%-35s|%-35s|%-35s|\n", "LEXEMA", "TIPO", "VALOR", "LONGITUD");
+	fprintf(pf,"|----------------------------------------|----------------------------------------|-------------------------------------------------------------|\n");
     while(*pl)
     {
         pd =  &(*pl)->dato;
-		fprintf(pf,"|%-40s|%-40s|%-40s|\n", pd->lexema, pd->tipo, pd->valor);
+		fprintf(pf,"|%-35s|%-35s|%-35s|%-35s|\n", pd->lexema, pd->tipo, pd->valor, pd->longitud);
         pl = &(*pl)->psig;
     }
-	fprintf(pf,"|--------------------------------------------------------------------------------------------------------------------------|\n");
+	fprintf(pf,"|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 	fclose(pf);
 }
 
-int insertar_ts(const char *lexema, const char *valor, t_lista *ptabla_simbolos)
+int insertar_ts(const char *lexema, const char *valor, const int longitud, t_lista *ptabla_simbolos)
 {
 	int resultado = -1;
 	t_dato *pd;
@@ -105,6 +105,22 @@ int insertar_ts(const char *lexema, const char *valor, t_lista *ptabla_simbolos)
 		pd->valor = NULL;
 	}
 	
+	// La longitud verificamos si es distinta de cero.
+	if(longitud != 0)
+	{
+		pd->longitud = (char*) malloc(5);
+		if(!pd->longitud)
+		{
+			printf("Problemas de memoria\n");
+			return LISTA_LLENA;
+		}
+		itoa(longitud, pd->longitud, 10);
+	}
+	else
+	{
+		pd->longitud = NULL;
+	}
+	
 	// Ya armado el t_dato insertamos en la tabla
 	resultado = insertar_ordenado(ptabla_simbolos, pd, comparacion);
 	if(resultado == LISTA_LLENA || resultado == LISTA_DUPLICADO)
@@ -122,5 +138,5 @@ int comparacion(const t_dato *pd1,const t_dato *pd2)
 
 void mostrar(const t_dato *pd)
 {	
-	printf("|%-40s|%-40s|%-40s|\n", pd->lexema, pd->tipo, pd->valor);
+	printf("|%-35s|%-35s|%-35s|%-35s|\n", pd->lexema, pd->tipo, pd->valor, pd->longitud);
 }

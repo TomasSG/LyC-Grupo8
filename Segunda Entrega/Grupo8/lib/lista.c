@@ -34,34 +34,34 @@ int insertar_ordenado(t_lista *pl,const t_dato *pd,t_cmp cmp)
 
 void recorrer_lista(const t_lista *pl,t_fun fun)
 {
-    printf("|-------------------------------------------------------------|\n");
-	printf("|\t\t\tTABLA DE SIMBOLOS                     |\n");
-	printf("|-------------------------------------------------------------|\n");
-	printf("|LEXEMA|\t\t\t|TIPO|\t\t\t|VALOR|\n");
-	printf("|------|------------------------|----|------------------|-----|\n");
     while(*pl)
     {
         fun(&(*pl)->dato);
         pl=&(*pl)->psig;
     }
-	printf("|------|------------------------|----|------------------|-----|\n");
 }
 
-void guardar_lista(const t_lista *pl, FILE *pf)
+void guardar_lista(const t_lista *pl, const char *path)
 {
 	t_dato *pd;
-	fprintf(pf,"|--------------------------------------------------------------------------------------------------------------------------|\n", pd->lexema, pd->tipo, pd->valor);
-	fprintf(pf,"|												        TABLA DE SIMBOLOS												   |\n", pd->lexema, pd->tipo, pd->valor);
-	fprintf(pf,"|--------------------------------------------------------------------------------------------------------------------------|\n", pd->lexema, pd->tipo, pd->valor);
-	fprintf(pf,"|LEXEMA									 |TIPO                                    |VALOR                                   |\n", pd->lexema, pd->tipo, pd->valor);
-	fprintf(pf,"|--------------------------------------------------------------------------------------------------------------------------|\n", pd->lexema, pd->tipo, pd->valor);
+	FILE *pf = fopen(path, TEXTO_ESCRITURA);
+	if(pf == NULL)
+	{
+		printf("No se pudo abrir el archivo %s\n", path);
+	}
+	fprintf(pf,"|--------------------------------------------------------------------------------------------------------------------------|\n");
+	fprintf(pf,"|												        TABLA DE SIMBOLOS												   |\n");
+	fprintf(pf,"|--------------------------------------------------------------------------------------------------------------------------|\n");
+	fprintf(pf,"|             LEXEMA    				 |                  TIPO                  |                VALOR                   |\n");
+	fprintf(pf,"|----------------------------------------|----------------------------------------|----------------------------------------|\n");
     while(*pl)
     {
         pd =  &(*pl)->dato;
 		fprintf(pf,"|%-40s|%-40s|%-40s|\n", pd->lexema, pd->tipo, pd->valor);
         pl = &(*pl)->psig;
     }
-	fprintf(pf,"|--------------------------------------------------------------------------------------------------------------------------|\n", pd->lexema, pd->tipo, pd->valor);
+	fprintf(pf,"|--------------------------------------------------------------------------------------------------------------------------|\n");
+	fclose(pf);
 }
 
 int insertar_ts(const char *lexema, const char *valor, t_lista *ptabla_simbolos)
@@ -122,5 +122,5 @@ int comparacion(const t_dato *pd1,const t_dato *pd2)
 
 void mostrar(const t_dato *pd)
 {	
-	printf("|%s\t\t\t%s\t\t\t%s|\n", pd->lexema, pd->tipo, pd->valor);
+	printf("|%-40s|%-40s|%-40s|\n", pd->lexema, pd->tipo, pd->valor);
 }

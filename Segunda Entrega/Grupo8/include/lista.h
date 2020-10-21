@@ -27,7 +27,7 @@ void crear_lista(t_lista*);
 void vaciar_lista(t_lista*);
 int insertar_ordenado(t_lista*,const t_dato*,t_cmp);
 void recorrer_lista(const t_lista*,t_fun);
-void guardar_lista(const t_lista*, FILE*);
+void guardar_lista(const t_lista*, const char*);
 
 int insertar_ts(const char*, const char*, t_lista*);
 int comparacion(const t_dato*,const t_dato*);

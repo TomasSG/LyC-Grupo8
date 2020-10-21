@@ -184,22 +184,13 @@ int main(int argc, char *argv[])
 	}
 	
 	crear_lista(&tabla_simbolos);
-
 	yyparse();
+	guardar_lista(&tabla_simbolos, PATH_ARCHIVO_TS);
 
-	pf = fopen(PATH_ARCHIVO_TS, TEXTO_ESCRITURA);
-	if(pf == NULL)
-	{
-		printf("No se pudo crear el archivo %s para la tabla de simbolos\n", PATH_ARCHIVO_TS);
-	}	
-	else
-	{
-		guardar_lista(&tabla_simbolos, pf);
-		fclose(pf);
-	}
 
 	vaciar_lista(&tabla_simbolos);
 	fclose(yyin);
+
 	return TODO_BIEN;
 }
 

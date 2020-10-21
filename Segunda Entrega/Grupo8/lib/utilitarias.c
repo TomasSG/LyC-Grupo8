@@ -49,8 +49,8 @@ char* convertir_cadena_decimal(const char *s)
 
 	
 	// Necesitamos el auxiliar solo para dar vuelta la cadena con los números
-	aux = (char*) malloc(sizeof(char)* strlen(s) + 1);
-	if(!aux)
+	aux = (char*) malloc(sizeof(char) * strlen(s) + 1);
+	if(aux == NULL)
 	{
 		printf("Problemas con memoria\n");
 		return NULL;

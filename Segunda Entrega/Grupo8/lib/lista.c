@@ -53,11 +53,11 @@ void guardar_lista(const t_lista *pl, const char *path)
 	fprintf(pf,"|                                                      TABLA DE SIMBOLOS                                                                        |\n");
 	fprintf(pf,"|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 	fprintf(pf,"|%-35s|%-35s|%-35s|%-35s|\n", "LEXEMA", "TIPO", "VALOR", "LONGITUD");
-	fprintf(pf,"|----------------------------------------|----------------------------------------|-------------------------------------------------------------|\n");
+	fprintf(pf,"|-----------------------------------|-----------------------------------|-----------------------------------|-----------------------------------|\n");
     while(*pl)
     {
         pd =  &(*pl)->dato;
-		fprintf(pf,"|%-35s|%-35s|%-35s|%-35s|\n", pd->lexema, pd->tipo, pd->valor, pd->longitud);
+		fprintf(pf,"|%-35s|%-35s|%-35s|%-35s|\n", pd->lexema, pd->tipo ? pd->tipo : " ", pd->valor ? pd->valor : " ", pd->longitud ? pd->longitud : " ");
         pl = &(*pl)->psig;
     }
 	fprintf(pf,"|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
@@ -71,7 +71,7 @@ int insertar_ts(const char *lexema, const char *valor, const int longitud, t_lis
 
 	// Reservamos memoria para el t_dato
 	pd = (t_dato*)malloc(sizeof(t_dato));
-	if(!pd)
+	if(pd == NULL)
 	{
 		printf("Problemas de memoria\n");
 		return LISTA_LLENA;
@@ -82,7 +82,7 @@ int insertar_ts(const char *lexema, const char *valor, const int longitud, t_lis
 
 	// El lexema lo copiamos tal cual
 	pd->lexema = (char*) malloc(sizeof(char)*strlen(lexema) + 1);
-	if(!(pd->lexema))
+	if(pd->lexema == NULL)
 	{
 		printf("Problemas de memoria\n");
 		return LISTA_LLENA;
@@ -93,7 +93,7 @@ int insertar_ts(const char *lexema, const char *valor, const int longitud, t_lis
 	if(valor != NULL)
 	{
 		pd->valor = (char*) malloc(sizeof(char)*strlen(valor) + 1);
-		if(!pd->valor)
+		if(pd->valor == NULL)
 		{
 			printf("Problemas de memoria\n");
 			return LISTA_LLENA;
@@ -109,7 +109,7 @@ int insertar_ts(const char *lexema, const char *valor, const int longitud, t_lis
 	if(longitud != 0)
 	{
 		pd->longitud = (char*) malloc(5);
-		if(!pd->longitud)
+		if(pd->longitud == NULL)
 		{
 			printf("Problemas de memoria\n");
 			return LISTA_LLENA;

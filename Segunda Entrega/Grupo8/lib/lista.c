@@ -44,6 +44,7 @@ void recorrer_lista(const t_lista *pl,t_fun fun)
 void guardar_lista(const t_lista *pl, const char *path)
 {
 	t_dato *pd;
+	char auxiliar[CANTIDAD_ITOA];
 	FILE *pf = fopen(path, TEXTO_ESCRITURA);
 	if(pf == NULL)
 	{
@@ -57,7 +58,15 @@ void guardar_lista(const t_lista *pl, const char *path)
     while(*pl)
     {
         pd =  &(*pl)->dato;
-		fprintf(pf,"|%-35s|%-35s|%-35s|%d|\n", pd->lexema, pd->tipo ? pd->tipo : " ", pd->valor ? pd->valor : " ", pd->longitud);
+		if(pd->longitud == 0)
+		{
+			strcpy(auxiliar, " ");
+		}
+		else
+		{
+			itoa(pd->longitud, auxiliar, 10);
+		}
+		fprintf(pf,"|%-35s|%-35s|%-35s|%-35s|\n", pd->lexema, pd->tipo ? pd->tipo : " ", pd->valor ? pd->valor : " ", auxiliar);
         pl = &(*pl)->psig;
     }
 	fprintf(pf,"|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
@@ -105,6 +114,7 @@ int insertar_ts(const char *lexema, const char *valor, int longitud, t_lista *pt
 		pd->valor = NULL;
 	}
 
+	// La longitud la copiamos tal cual
 	pd->longitud = longitud;
 	
 	// Ya armado el t_dato insertamos en la tabla

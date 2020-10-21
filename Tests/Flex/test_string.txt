@@ -1,0 +1,14 @@
+*-BIEN-*
+""
+"string"
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+"@asdasdas%fgjhfgjf"
+"kjkj lkjmklj "
+"1313123"
+"123-_-asd	1 		"
+
+*-MAL-*
+azaasd
+"string sin cerrar por derecha
+string sin cerrar por izquierda"
+"Comentario muy largoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaaaaaaa"

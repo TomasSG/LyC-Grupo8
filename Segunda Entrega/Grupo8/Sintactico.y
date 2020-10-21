@@ -196,6 +196,6 @@ int main(int argc, char *argv[])
 
 int yyerror(void)
 {
-    printf("Error Sintactico\n");
+    printf("Linea %d: Error Sintactico\n", yylineno);
 	exit (ERROR);
 }

@@ -192,7 +192,6 @@ int main(int argc, char *argv[])
 	
 	vaciar_lista(&tabla_simbolos);
 	fclose(yyin);
-
 	return TODO_BIEN;
 }
 

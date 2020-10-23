@@ -45,6 +45,15 @@ void anadir_elemento(t_cola *pcola, const t_dato_cola *pdato, int *pcontador)
 	(*pcontador)++;
 }
 
+int error_semantico(const char *msj, const int nro_linea)
+{
+	printf("Error semantico\n");
+	printf("Linea nro %d: %s\n", nro_linea, msj);
+	exit(ERROR);
+}
+
+/* FUNCIONES RELACIONADAS CON LISTA */
+
 int cambiar_campo_tipo(t_lista *pl, const char *lexema, const char *tipo)
 {
 	while(*pl)
@@ -87,11 +96,4 @@ void completar_tipos(t_lista *ptabla_simbolos, t_cola *pcola_variables, t_cola *
 			error_semantico("Aun no se declaro dicha variable", nro_linea);
 		}
 	}
-}
-
-int error_semantico(const char *msj, const int nro_linea)
-{
-	printf("Error semantico\n");
-	printf("Linea nro %d: %s\n", nro_linea, msj);
-	exit(ERROR);
 }

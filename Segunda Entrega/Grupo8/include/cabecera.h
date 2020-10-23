@@ -3,10 +3,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "./lista.h"
-#include "./utilitarias.h"
 #include "../y.tab.h"
+#include "./lista.h"
 #include "./constantes.h"
+#include "./lexico.h"
+#include "./semantico.h"
 
 /* VARIABLES GLOBALES */
 extern FILE *yyin;

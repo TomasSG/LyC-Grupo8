@@ -1,10 +1,10 @@
-#include "../include/utilitarias.h"
+#include "../include/lexico.h"
 
 char* sacar_comillas(const char *s)
 {
 	int i, largo = strlen(s);
 	char *inicio, *resultado;
-	resultado = (char*) malloc(sizeof(char) * largo - UTILITARIAS_CANTIDAD_COMILLAS + 1);
+	resultado = (char*) malloc(sizeof(char) * largo - LEXICO_CANTIDAD_COMILLAS + 1);
 	if(!resultado)
 	{
 		printf("Problemas con memoria\n");
@@ -30,7 +30,7 @@ char* sacar_comillas(const char *s)
 char* agregar_guion_bajo(const char *s)
 {
 	char* resultado;
-	resultado =(char*) malloc(sizeof(char) * strlen(s) + UTILITARIAS_CANTIDAD_GUIONES_BAJOS + 1);
+	resultado =(char*) malloc(sizeof(char) * strlen(s) + LEXICO_CANTIDAD_GUIONES_BAJOS + 1);
 	if(!resultado)
 	{
 		printf("Problemas con memoria\n");
@@ -128,7 +128,7 @@ int error_lexico(const char *msj, const int nro_linea)
 
 void verificar_string(const char *s, const int nro_linea)
 {
-	if(strlen(s) > UTILITARIAS_MAXIMA_CANTIDAD_CARACTERES_STRING)
+	if(strlen(s) > LEXICO_MAXIMA_CANTIDAD_CARACTERES_STRING)
 	{
 		error_lexico("String supera la maxima cantidad de caracteres", nro_linea);
 	}
@@ -141,14 +141,14 @@ void verificar_rango_real(char *s, const int nro_linea)
 
 	s = adelantar_ceros(s);
 
-	if(strlen(s) > UTILITARIAS_MAXIMA_CANTIDAD_CARACTERES_REAL)
+	if(strlen(s) > LEXICO_MAXIMA_CANTIDAD_CARACTERES_REAL)
 	{
 		error_lexico("Real fuera de rango", nro_linea);
 	}
 
 	valor = atof(s);
 
-	if(valor > UTILITARIAS_MAXIMO_VALOR_REAL)
+	if(valor > LEXICO_MAXIMO_VALOR_REAL)
 	{
 		error_lexico("Real fuera de rango", nro_linea);
 	}
@@ -161,14 +161,14 @@ void verificar_rango_entero(char *s, const int nro_linea)
 	
 	s = adelantar_ceros(s);
 
-	if(strlen(s) > UTILITARIAS_MAXIMA_CANTIDAD_CARACTERES_ENTERO)
+	if(strlen(s) > LEXICO_MAXIMA_CANTIDAD_CARACTERES_ENTERO)
 	{
 		error_lexico("Entero fuera de rango", nro_linea);
 	}
 
 	valor = atoi(s);
 
-	if(valor > UTILITARIAS_MAXIMO_VALOR_ENTERO)
+	if(valor > LEXICO_MAXIMO_VALOR_ENTERO)
 	{
 		error_lexico("Entero fuera de rango", nro_linea);
 	}

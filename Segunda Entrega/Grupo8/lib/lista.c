@@ -7,7 +7,7 @@ void crear_lista(t_lista *pl)
 
 void vaciar_lista(t_lista *pl)
 {
-    t_nodo *pnodo;
+    t_nodo_lista *pnodo;
     while(*pl)
     {
         pnodo=*pl;
@@ -16,14 +16,14 @@ void vaciar_lista(t_lista *pl)
     }
 }
 
-int insertar_ordenado(t_lista *pl,const t_dato *pd,t_cmp cmp)
+int insertar_ordenado(t_lista *pl,const t_dato_lista *pd,t_cmp cmp)
 {
-    t_nodo *pnodo;
+    t_nodo_lista *pnodo;
     while(*pl && cmp(pd,&(*pl)->dato)>0)
         pl=&(*pl)->psig;
     if(*pl && cmp(pd,&(*pl)->dato)==0)
         return LISTA_DUPLICADO;
-    pnodo=(t_nodo*)malloc(sizeof(t_nodo));
+    pnodo=(t_nodo_lista*)malloc(sizeof(t_nodo_lista));
     if(!pnodo)
         return LISTA_LLENA;
     pnodo->dato=*pd;
@@ -43,7 +43,7 @@ void recorrer_lista(const t_lista *pl,t_fun fun)
 
 void guardar_lista(const t_lista *pl, const char *path)
 {
-	t_dato *pd;
+	t_dato_lista *pd;
 	char auxiliar[CANTIDAD_ITOA];
 	FILE *pf = fopen(path, TEXTO_ESCRITURA);
 	if(pf == NULL)
@@ -76,9 +76,9 @@ void guardar_lista(const t_lista *pl, const char *path)
 int insertar_ts(const char *lexema, const char *valor, int longitud, t_lista *ptabla_simbolos)
 {
 	int resultado = -1;
-	t_dato *pd;
-	// Reservamos memoria para el t_dato
-	pd = (t_dato*)malloc(sizeof(t_dato));
+	t_dato_lista *pd;
+	// Reservamos memoria para el t_dato_lista
+	pd = (t_dato_lista*)malloc(sizeof(t_dato_lista));
 	if(pd == NULL)
 	{
 		printf("Problemas de memoria\n");
@@ -117,7 +117,7 @@ int insertar_ts(const char *lexema, const char *valor, int longitud, t_lista *pt
 	// La longitud la copiamos tal cual
 	pd->longitud = longitud;
 	
-	// Ya armado el t_dato insertamos en la tabla
+	// Ya armado el t_dato_lista insertamos en la tabla
 	resultado = insertar_ordenado(ptabla_simbolos, pd, comparacion);
 	if(resultado == LISTA_LLENA || resultado == LISTA_DUPLICADO)
 	{
@@ -127,12 +127,12 @@ int insertar_ts(const char *lexema, const char *valor, int longitud, t_lista *pt
 	return TODO_BIEN;
 }
 
-int comparacion(const t_dato *pd1,const t_dato *pd2)
+int comparacion(const t_dato_lista *pd1,const t_dato_lista *pd2)
 {
     return strcmp(pd1->lexema, pd2->lexema);
 }
 
-void mostrar(const t_dato *pd)
+void mostrar(const t_dato_lista *pd)
 {	
 	printf("|%-35s|%-35s|%-35s|%d|\n", pd->lexema, pd->tipo, pd->valor, pd->longitud);
 }

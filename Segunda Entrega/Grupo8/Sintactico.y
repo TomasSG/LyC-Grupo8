@@ -188,7 +188,7 @@ int main(int argc, char *argv[])
 	inicializar_semantica(&cola_variables, &cola_tipos, &contador_variables, &contador_tipos);
 	crear_lista(&tabla_simbolos);
 	yyparse();
-	guardar_lista(&tabla_simbolos, PATH_ARCHIVO_TS);
+	guardar_tabla_simbolos(&tabla_simbolos, PATH_ARCHIVO_TS);
 	
 	vaciar_lista(&tabla_simbolos);
 	fclose(yyin);

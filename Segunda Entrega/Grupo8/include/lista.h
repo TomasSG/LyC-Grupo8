@@ -28,10 +28,5 @@ void crear_lista(t_lista*);
 void vaciar_lista(t_lista*);
 int insertar_ordenado(t_lista*,const t_dato_lista*,t_cmp);
 void recorrer_lista(const t_lista*,t_fun);
-void guardar_lista(const t_lista*, const char*);
-
-int insertar_ts(const char*, const char*, int, t_lista*);
-int comparacion(const t_dato_lista*,const t_dato_lista*);
-void mostrar(const t_dato_lista*);
 
 #endif // LISTA_H_INCLUDED

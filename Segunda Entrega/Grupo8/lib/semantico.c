@@ -68,6 +68,7 @@ int cambiar_campo_tipo(t_lista *pl, const char *lexema, const char *tipo)
 
 void completar_tipos(t_lista *ptabla_simbolos, t_cola *pcola_variables, t_cola *pcola_tipos, int *pcontador_variables, int *pcontador_tipos, int nro_linea)
 {
+	int retorno;
 	t_dato_cola dato_variable, dato_tipo;
 	if(*pcontador_tipos != *pcontador_variables)
 	{
@@ -75,7 +76,16 @@ void completar_tipos(t_lista *ptabla_simbolos, t_cola *pcola_variables, t_cola *
 	}
 	while(desacolar(pcola_variables, &dato_variable) == TODO_BIEN && desacolar(pcola_tipos, &dato_tipo) == TODO_BIEN)
 	{
-		cambiar_campo_tipo(ptabla_simbolos, dato_variable.string, dato_tipo.string);
+		retorno = cambiar_campo_tipo(ptabla_simbolos, dato_variable.string, dato_tipo.string);
+		if( retorno == LISTA_LLENA)
+		{
+			printf("No hay suficiente memoria\n");
+			exit(ERROR);
+		}
+		if( retorno == LISTA_NO_EXISTE_ELEMENTO)
+		{
+			error_semantico("Aun no se declaro dicha variable", nro_linea);
+		}
 	}
 }
 

@@ -9,6 +9,7 @@
 #define LISTA_LLENA -1
 #define LISTA_VACIA -2
 #define LISTA_DUPLICADO -3
+#define LISTA_NO_EXISTE_ELEMENTO -4
 
 /* CONSTANTES DE COLA */
 #define COLA_LLENA -4

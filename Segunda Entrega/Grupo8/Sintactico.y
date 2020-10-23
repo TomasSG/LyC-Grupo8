@@ -56,6 +56,9 @@
 /* VARIABLES */
 %token	<string> ID
 
+/* DECLARACIONES TIPOS ELEMENTOS NO TERMINALES */
+%type <string> tipoDeDato
+
 /* ______________________________________________________________ */
 
 /* DECLARACION DE REGLAS SINTACTICAS */
@@ -98,7 +101,7 @@ factor		: PAR_ABIERTO cuenta PAR_CERRADO	{printf("Regla: <factor> -> PAR_ABIERTO
 		
 /* REGLAS PARA LA DECLARACION DE VARIABLES */
 
-declaracion	: DIM OP_LE listaVariables OP_GE AS OP_LE listaTipos OP_GE {printf("Regla: <declaracion> -> DIM OP_LE <lista_variables> OP_GE AS OP_LE <lista_tipos> OP_GE\n");}
+declaracion	: DIM OP_LE listaVariables OP_GE AS OP_LE listaTipos OP_GE {completar_tipos(&tabla_simbolos, &cola_variables, &cola_tipos, &contador_variables, &contador_tipos, yylineno);}
 		;
 
 listaVariables	: listaVariables COMA ID  		{anadir_elemento(&cola_variables, crear_dato($3), &contador_variables);}
@@ -111,9 +114,9 @@ listaTipos	: listaTipos COMA tipoDeDato 		{anadir_elemento(&cola_tipos, crear_da
 												anadir_elemento(&cola_tipos, crear_dato($1), &contador_tipos);}
 		;
 
-tipoDeDato	: FLOAT								{$$ = $1;}
-		| INTEGER								{$$ = $1;}
-		| STRING								{$$ = $1;}
+tipoDeDato	: FLOAT								
+		| INTEGER								
+		| STRING								
 		;
 		
 /* REGLAS PARA PUT Y GET */
@@ -186,7 +189,7 @@ int main(int argc, char *argv[])
 	crear_lista(&tabla_simbolos);
 	yyparse();
 	guardar_lista(&tabla_simbolos, PATH_ARCHIVO_TS);
-
+	
 	vaciar_lista(&tabla_simbolos);
 	fclose(yyin);
 

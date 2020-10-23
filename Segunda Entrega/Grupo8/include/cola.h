@@ -5,7 +5,11 @@
 #include <stdio.h>
 #include "./constantes.h"
 
-typedef char* t_dato_cola;
+typedef struct
+{
+	char *string;
+} t_dato_cola;
+
 typedef struct s_nodo_cola
 {
     t_dato_cola dato;
@@ -16,10 +20,9 @@ typedef struct
 {
     t_nodo_cola *ppri;
     t_nodo_cola *pult;
-
 } t_cola;
 
-void crear_cola (t_cola *);
+void crear_cola (t_cola*);
 int cola_vacia (const t_cola*);
 int cola_llena (const t_cola*);
 int acolar (t_cola*,const t_dato_cola*);

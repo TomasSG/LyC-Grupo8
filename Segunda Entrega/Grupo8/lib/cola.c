@@ -23,11 +23,11 @@ int acolar (t_cola* cola ,const t_dato_cola* dato )
 {
     t_nodo_cola* nuevo;
     nuevo=(t_nodo_cola*)malloc(sizeof(t_nodo_cola));
-    if(!nuevo)
+	if(!nuevo)
         return COLA_LLENA;
     if(cola->ppri)
         cola->pult->psig=nuevo;
-    else
+	else
         cola->ppri=nuevo;
     cola->pult=nuevo;
     nuevo->dato=*dato;

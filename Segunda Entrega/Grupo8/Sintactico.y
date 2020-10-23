@@ -2,7 +2,11 @@
 #include "./include/cabecera.h"
 %}
 
-				/* LISTA DE TOKENS */
+%union
+{
+	char *string;
+}
+
 /* PALABRAS RESERVADAS */
 %token	WHILE
 %token	IF
@@ -12,9 +16,9 @@
 %token	DIM
 %token	AS
 %token	CONTAR
-%token	INTEGER
-%token	FLOAT
-%token	STRING
+%token	<string> INTEGER
+%token	<string> FLOAT
+%token	<string> STRING
 
 /* SIGNOS PUNTUACION Y OTROS */
 %token	LLAVE_ABIERTO
@@ -50,7 +54,7 @@
 %token	CONST_HEXA
 
 /* VARIABLES */
-%token	ID
+%token	<string> ID
 
 /* ______________________________________________________________ */
 
@@ -94,35 +98,31 @@ factor		: PAR_ABIERTO cuenta PAR_CERRADO	{printf("Regla: <factor> -> PAR_ABIERTO
 		
 /* REGLAS PARA LA DECLARACION DE VARIABLES */
 
-declaracion	: DIM listaVariables AS listaTipos {printf("Regla: <declaracion> -> DIM <lista_variables> AS <lista_tipos>\n");}
+declaracion	: DIM OP_LE listaVariables OP_GE AS OP_LE listaTipos OP_GE {printf("Regla: <declaracion> -> DIM OP_LE <lista_variables> OP_GE AS OP_LE <lista_tipos> OP_GE\n");}
 		;
 
-listaVariables	: OP_LE variables OP_GE	{printf("Regla: <lista_variables> -> OP_LE <variables> OP_GE\n");}
+listaVariables	: listaVariables COMA ID  		{anadir_elemento(&cola_variables, crear_dato($3), &contador_variables);}
+		| ID									{reiniciar_semantica(&cola_variables, &contador_variables);
+												anadir_elemento(&cola_variables, crear_dato($1), &contador_variables);}
 		;
 
-variables	: ID COMA variables			{printf("Regla: <variables> -> ID COMA <variables>\n");}
-		| ID							{printf("Regla: <variables> -> ID\n");}
+listaTipos	: listaTipos COMA tipoDeDato 		{anadir_elemento(&cola_tipos, crear_dato($3), &contador_tipos);}
+		|tipoDeDato								{reiniciar_semantica(&cola_tipos, &contador_tipos);
+												anadir_elemento(&cola_tipos, crear_dato($1), &contador_tipos);}
 		;
 
-listaTipos	: OP_LE tipos OP_GE			{printf("Regla: <lista_tipos> -> OP_LE <tipos> OP_GE\n");}
-		;
-
-tipos		: tipoDeDato COMA tipos		{printf("Regla: <tipos> -> <tipo_dato> COMA <tipos>\n");}
-		|tipoDeDato						{printf("Regla: <tipos> -> <tipo_dato>\n");}
-		;
-
-tipoDeDato	: FLOAT						{printf("Regla: <tipo_dato> -> FLOAT\n");}
-		| INTEGER						{printf("Regla: <tipo_dato> -> INTEGER\n");}
-		| STRING						{printf("Regla: <tipo_dato> -> STRING\n");}
+tipoDeDato	: FLOAT								{$$ = $1;}
+		| INTEGER								{$$ = $1;}
+		| STRING								{$$ = $1;}
 		;
 		
 /* REGLAS PARA PUT Y GET */
 
-salida		: PUT ID					{printf("Regla: <salida> -> PUT ID\n");}
-		| PUT CONST_STRING				{printf("Regla: <salida> -> PUT CONST_STRING\n");}
+salida		: PUT ID							{printf("Regla: <salida> -> PUT ID\n");}
+		| PUT CONST_STRING						{printf("Regla: <salida> -> PUT CONST_STRING\n");}
 		;
 
-entrada		: GET ID					{printf("Regla: <entrada> -> GET ID\n");}
+entrada		: GET ID							{printf("Regla: <entrada> -> GET ID\n");}
 		;
 
 /* REGLAS PARA LA DECLARACION DE WHILE E IF */
@@ -174,6 +174,7 @@ constante : CONST_BINARIA					{printf("Regla: <constante> -> CONST_BINARIA\n");}
 
 int main(int argc, char *argv[]) 
 {
+	
 	yyin = fopen(argv[1], TEXTO_LECTURA);
 	if(yyin == NULL)
 	{	
@@ -181,10 +182,10 @@ int main(int argc, char *argv[])
 		return ERROR;
 	}
 	
+	inicializar_semantica(&cola_variables, &cola_tipos, &contador_variables, &contador_tipos);
 	crear_lista(&tabla_simbolos);
 	yyparse();
 	guardar_lista(&tabla_simbolos, PATH_ARCHIVO_TS);
-
 
 	vaciar_lista(&tabla_simbolos);
 	fclose(yyin);

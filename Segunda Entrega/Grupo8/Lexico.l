@@ -79,9 +79,9 @@ COMENTARIO						{APERTURA_COMENTARIO}.*{CIERRE_COMENTARIO}
 {DIM}							{return DIM;}
 {AS}							{return AS;}
 {CONTAR}						{return CONTAR;}		
-{INTEGER}						{return INTEGER;}
-{FLOAT}							{return FLOAT;}
-{STRING}						{return STRING;}
+{INTEGER}						{yylval.string = strdup(yytext); return INTEGER;}
+{FLOAT}							{yylval.string = strdup(yytext); return FLOAT;}
+{STRING}						{yylval.string = strdup(yytext); return STRING;}
 
 {LLAVE_ABIERTO}					{return LLAVE_ABIERTO;}
 {LLAVE_CERRADO}					{return LLAVE_CERRADO;}
@@ -131,7 +131,7 @@ COMENTARIO						{APERTURA_COMENTARIO}.*{CIERRE_COMENTARIO}
 								insertar_ts(agregar_guion_bajo(yytext), cadena_valor_decimal, 0, &tabla_simbolos);
 								return CONST_HEXA;}
 
-{ID}							{insertar_ts(yytext, NULL, 0, &tabla_simbolos); return ID;}
+{ID}							{insertar_ts(yytext, NULL, 0, &tabla_simbolos); yylval.string = strdup(yytext); return ID;}
 
 {COMENTARIO}		
 [ \n\t]

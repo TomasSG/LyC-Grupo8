@@ -67,7 +67,7 @@
 programa	: bloque 					{printf("Regla: <programa> -> <bloque> --- COMPILACION EXITOSA\n");}
 		;
 
-bloque		: sentencia bloque 			{printf("Regla: <bloque> -> <sentencia> <bloque>\n");}
+bloque		: bloque sentencia 			{printf("Regla: <bloque> ->  <bloque> <sentencia>\n");}
 		| sentencia 					{printf("Regla: <bloque> -> <sentencia>\n");}
 		;
 
@@ -83,19 +83,19 @@ sentencia	: asignacion PUNTO_COMA 	{printf("Regla: <sentencia> -> <asignacion> P
 asignacion	: ID OP_ASIGNACION cuenta 	{printf("Regla: <asignacion> -> ID OP_ASIGNACION <cuenta>\n");}
 		;
 
-cuenta		: termino OP_SUMA cuenta 	{printf("Regla: <cuenta> -> <termino> OP_SUMA <cuenta>\n");}
-		| termino OP_RESTA cuenta		{printf("Regla: <cuenta> -> <termino> OP_RESTA <cuenta>\n");}
+cuenta		: cuenta OP_SUMA  termino	{printf("Regla: <cuenta> -> <cuenta> OP_SUMA <termino>\n");}
+		| cuenta OP_RESTA termino		{printf("Regla: <cuenta> -> <cuenta> OP_RESTA <termino>\n");}
 		| termino						{printf("Regla: <cuenta> -> <termino>\n");}
 		;
 
-termino		: factor OP_MULT termino	{printf("Regla: <termino> -> <factor> OP_MULT <termino>\n");}
-		| factor OP_DIVISION termino	{printf("Regla: <termino> -> <factor> OP_DIVISION <termino>\n");}
+termino		: termino OP_MULT factor 	{printf("Regla: <termino> -> <termino> OP_MULT <factor>\n");}
+		| termino OP_DIVISION factor  	{printf("Regla: <termino> -> <termino> OP_DIVISION <factor>\n");}
 		| factor 						{printf("Regla: <termino> -> <factor>\n");}						
 		;
 
 factor		: PAR_ABIERTO cuenta PAR_CERRADO	{printf("Regla: <factor> -> PAR_ABIERTO <cuenta> PAR_CERRADO\n");}
 		| ID 							{printf("Regla: <factor> -> ID\n");}
-		| constante					{printf("Regla: <factor> -> <constante>\n");}
+		| constante						{printf("Regla: <factor> -> <constante>\n");}
 		| funcionContar					{printf("Regla: <factor> -> <funcion_contar>\n");}
 		;
 		
@@ -128,7 +128,7 @@ entrada		: GET ID							{printf("Regla: <entrada> -> GET ID\n");}
 bloqueWhile	: WHILE PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO	{printf("Regla: <bloque_while> -> WHILE PAR_ABIERTO <condicion> PAR_CERRADO LLAVE_ABIERTO <bloque> LLAVE_CERRADO\n");}
 		| WHILE PAR_ABIERTO condicion PAR_CERRADO sentencia		{printf("Regla: <bloque_while> -> WHILE <condicion> <sentencia>\n");}
 		;
-/* TOMAMOS NADA MÁS QUE TENGAN QUE IR ENTRE LLAVES EXCEPTO EL IF DE UNA SOLA LÍNEA*/
+
 bloqueIf	: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO ELSE LLAVE_ABIERTO bloque LLAVE_CERRADO {printf("Regla: <bloque_if> -> IF PAR_ABIERTO <condicion> PAR_CERRADO LLAVE_ABIERTO <bloque> LLAVE_CERRADO ELSE LLAVE_ABIERTO <bloque> LLAVE_CERRADO\n");}
 			| IF PAR_ABIERTO condicion PAR_CERRADO sentencia {printf("Regla: <bloque_if> -> IF PAR_ABIERTO <condicion> PAR_CERRADO <sentencia>\n");}
 			| IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO {printf("Regla: <bloque_if> -> IF PAR_ABIERTO <condicion> PAR_CERRADO LLAVE_ABIERTO <bloque> LLAVE_CERRADO\n");}
@@ -159,7 +159,7 @@ funcionContar	: CONTAR PAR_ABIERTO cuenta PUNTO_COMA listaConstantes PAR_CERRADO
 listaConstantes	: COR_ABIERTO constantes COR_CERRADO 	{printf("Regla: <lista_constantes> -> COR_ABIERTO <constantes> COR_CERRADO\n");}
 		;
 
-constantes	: constante COMA constantes		{printf("Regla: <constantes> -> <constante> COMA <constantes>\n");}
+constantes	: constantes  COMA 	constante	{printf("Regla: <constantes> -> <constantes> COMA <constante>\n");}
 		| constante						{printf("Regla: <constantes> -> <constante>\n");}
 		;
 
@@ -187,7 +187,7 @@ int main(int argc, char *argv[])
 	
 	vaciar_lista(&tabla_simbolos);
 	fclose(yyin);
-return TODO_BIEN;
+	return TODO_BIEN;
 }
 
 int yyerror(void)

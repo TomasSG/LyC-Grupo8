@@ -1,58 +1,52 @@
 #include "../include/semantico.h"
 
-void inicializar_semantica(t_cola *pcola_variables, t_cola *pcola_tipos, int *pcontador_variables, int *pcontador_tipos)
-{
-	crear_cola(pcola_variables);
-	crear_cola(pcola_tipos);
-	*pcontador_variables = 0;
-	*pcontador_tipos = 0;
-}
+int cambiar_campo_tipo(t_lista*, const char*, const char*);
+int insertar_matriz(char**, const char*, int);
 
-void reiniciar_semantica(t_cola *pcola, int *pcontador)
+
+void iniciar_contador(int *pcontador)
 {
-	vaciar_cola(pcola);
 	*pcontador = 0;
 }
 
-t_dato_cola* crear_dato(const char *string)
+void resetear_semantica (char **matriz_id, char **matriz_tipo, int *pcontador)
 {
-	
-	t_dato_cola *pdato;
-	pdato = (t_dato_cola*) malloc(sizeof(t_dato_cola));
-	if(pdato == NULL)
+	while((*pcontador) > 0)
 	{
-		printf("No hay suficiente memoria\n");
-		return NULL;
+		free(matriz_id[(*pcontador) - 1]);
+		free(matriz_tipo[(*pcontador) - 1]);
+		(*pcontador) --;
 	}
-	pdato->string = (char*) malloc(sizeof(char*) * strlen(string)  + 1);
-	if(pdato->string == NULL)
-	{
-		printf("No hay suficiente memoria\n");
-		return NULL;
-	}
-	strcpy(pdato->string, string);
-	return pdato;
 }
 
-void anadir_elemento(t_cola *pcola, const t_dato_cola *pdato, int *pcontador)
+int insertar_matriz(char **matriz, const char *string, int indice)
 {
-	
-	if(pdato == NULL || acolar(pcola, pdato) == COLA_LLENA)
+	matriz[indice] = (char*) malloc(sizeof(char) * strlen(string) + 1);
+	if(matriz[indice] == NULL)
 	{
-		printf("No hay suficiente memoria\n");
+		return ERROR;
+	}
+	strcpy(matriz[indice], string);
+	return TODO_BIEN;
+}
+
+
+void anadir_elementos(char **matriz_id, char **matriz_tipo, const char *id, const char *tipo, int *pcontador)
+{
+	if(insertar_matriz(matriz_id, id, *pcontador) == ERROR || insertar_matriz(matriz_tipo, tipo, *pcontador) == ERROR)
+	{
+		printf("Problemas con memoria\n");
 		exit(ERROR);
 	}
-	(*pcontador)++;
+	(*pcontador)++;	
+	if( (*pcontador) > SEMANTICA_MAXIMA_LONGITUD_LISTA_DECLARACION)
+	{
+		printf("No se pueden declarar mas de %d variables en una sola linea de declaracion\n", SEMANTICA_MAXIMA_LONGITUD_LISTA_DECLARACION);
+		exit(ERROR);
+	}
 }
 
-int error_semantico(const char *msj, const int nro_linea)
-{
-	printf("Error semantico\n");
-	printf("Linea nro %d: %s\n", nro_linea, msj);
-	exit(ERROR);
-}
-
-/* FUNCIONES RELACIONADAS CON LISTA */
+/* FUNCIONES CON LISTA */
 
 int cambiar_campo_tipo(t_lista *pl, const char *lexema, const char *tipo)
 {
@@ -75,25 +69,18 @@ int cambiar_campo_tipo(t_lista *pl, const char *lexema, const char *tipo)
 	return LISTA_NO_EXISTE_ELEMENTO;
 }
 
-void completar_tipos(t_lista *ptabla_simbolos, t_cola *pcola_variables, t_cola *pcola_tipos, int *pcontador_variables, int *pcontador_tipos, int nro_linea)
+void completar_tipos(t_lista *ptabla_simbolos, const char *lexema, const char *tipo)
 {
-	int retorno;
-	t_dato_cola dato_variable, dato_tipo;
-	if(*pcontador_tipos != *pcontador_variables)
+	int retorno;	
+	retorno = cambiar_campo_tipo(ptabla_simbolos, lexema, tipo);
+	if( retorno == LISTA_LLENA)
 	{
-		error_semantico("En la declaracion de variables, la lista de tipos y de variables deben coincidir en cantidad", nro_linea);
+		printf("No hay suficiente memoria\n");
+		exit(ERROR);
 	}
-	while(desacolar(pcola_variables, &dato_variable) == TODO_BIEN && desacolar(pcola_tipos, &dato_tipo) == TODO_BIEN)
+	if( retorno == LISTA_NO_EXISTE_ELEMENTO)
 	{
-		retorno = cambiar_campo_tipo(ptabla_simbolos, dato_variable.string, dato_tipo.string);
-		if( retorno == LISTA_LLENA)
-		{
-			printf("No hay suficiente memoria\n");
-			exit(ERROR);
-		}
-		if( retorno == LISTA_NO_EXISTE_ELEMENTO)
-		{
-			error_semantico("Aun no se declaro dicha variable", nro_linea);
-		}
+		printf("No se encontro el elemento %s\n", lexema);
+		exit(ERROR);
 	}
 }

@@ -19,8 +19,8 @@
 |_Prueba.txt LyC Tema 1!            |                                   |Prueba.txt LyC Tema 1!             |22                                 |
 |_mayor que 2 y distinto de cero    |                                   |mayor que 2 y distinto de cero     |30                                 |
 |_no es mayor que 2                 |                                   |no es mayor que 2                  |17                                 |
-|actual                             |Float                              |                                   |                                   |
-|contador                           |Integer                            |                                   |                                   |
-|promedio                           |Float                              |                                   |                                   |
-|suma                               |Float                              |                                   |                                   |
+|actual                             |                                   |                                   |                                   |
+|contador                           |                                   |                                   |                                   |
+|promedio                           |                                   |                                   |                                   |
+|suma                               |                                   |                                   |                                   |
 |-----------------------------------------------------------------------------------------------------------------------------------------------|

@@ -8,7 +8,7 @@ echo Creando el archivo de byson.
 F:\GnuWin32\bin\bison -dyv ./Sintactico.y
 pause
 echo Creando el ejecutable ...
-F:\MinGW\bin\gcc.exe  ./lib/lista.c ./lib/cola.c ./lib/lexico.c ./lib/semantico.c ./lex.yy.c ./y.tab.c -o ./Primera.exe
+F:\MinGW\bin\gcc.exe  ./lib/lista.c ./lib/lexico.c ./lib/semantico.c ./lex.yy.c ./y.tab.c -o ./Primera.exe
 pause
 cls
 echo Ejecutando el Analizador Lexicografico

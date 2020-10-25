@@ -14,10 +14,8 @@ extern FILE *yyin;
 extern int yylineno;
 t_lista tabla_simbolos;
 
-/* VARIABLES DE LA SEMANTICA */
-int contador_variables, contador_tipos;
-t_cola cola_variables;
-t_cola cola_tipos;
-
+/* VARIABLES DE SEMANTICA */
+char *matriz_id[SEMANTICA_MAXIMA_LONGITUD_LISTA_DECLARACION], *matriz_tipo[SEMANTICA_MAXIMA_LONGITUD_LISTA_DECLARACION];
+int contador_elementos;
 
 #endif // CABECERA_H_INCLUDED

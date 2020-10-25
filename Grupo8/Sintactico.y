@@ -101,17 +101,11 @@ factor		: PAR_ABIERTO cuenta PAR_CERRADO	{printf("Regla: <factor> -> PAR_ABIERTO
 		
 /* REGLAS PARA LA DECLARACION DE VARIABLES */
 
-declaracion	: DIM OP_LE listaVariables OP_GE AS OP_LE listaTipos OP_GE {completar_tipos(&tabla_simbolos, &cola_variables, &cola_tipos, &contador_variables, &contador_tipos, yylineno);}
+declaracion	: DIM OP_LE lista_declaracion OP_GE					{resetear_semantica(matriz_id, matriz_tipo, &contador_elementos);}
 		;
 
-listaVariables	: listaVariables COMA ID  		{anadir_elemento(&cola_variables, crear_dato($3), &contador_variables);}
-		| ID									{reiniciar_semantica(&cola_variables, &contador_variables);
-												anadir_elemento(&cola_variables, crear_dato($1), &contador_variables);}
-		;
-
-listaTipos	: listaTipos COMA tipoDeDato 		{anadir_elemento(&cola_tipos, crear_dato($3), &contador_tipos);}
-		|tipoDeDato								{reiniciar_semantica(&cola_tipos, &contador_tipos);
-												anadir_elemento(&cola_tipos, crear_dato($1), &contador_tipos);}
+lista_declaracion : ID COMA lista_declaracion COMA tipoDeDato 	{anadir_elementos(matriz_id, matriz_tipo, $1, $5, &contador_elementos);}
+		| ID OP_GE AS OP_LE tipoDeDato							{anadir_elementos(matriz_id, matriz_tipo, $1, $5, &contador_elementos);}
 		;
 
 tipoDeDato	: FLOAT								
@@ -181,18 +175,18 @@ int main(int argc, char *argv[])
 	yyin = fopen(argv[1], TEXTO_LECTURA);
 	if(yyin == NULL)
 	{	
-		printf("\nNo se pudo abrir el archivo %s\n", argv[1]);
+		printf("No se pudo abrir el archivo %s\n", argv[1]);
 		return ERROR;
 	}
 	
-	inicializar_semantica(&cola_variables, &cola_tipos, &contador_variables, &contador_tipos);
+	iniciar_contador(&contador_elementos);
 	crear_lista(&tabla_simbolos);
 	yyparse();
 	guardar_tabla_simbolos(&tabla_simbolos, PATH_ARCHIVO_TS);
 	
 	vaciar_lista(&tabla_simbolos);
 	fclose(yyin);
-	return TODO_BIEN;
+return TODO_BIEN;
 }
 
 int yyerror(void)

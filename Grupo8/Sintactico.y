@@ -101,7 +101,8 @@ factor		: PAR_ABIERTO cuenta PAR_CERRADO	{printf("Regla: <factor> -> PAR_ABIERTO
 		
 /* REGLAS PARA LA DECLARACION DE VARIABLES */
 
-declaracion	: DIM OP_LE lista_declaracion OP_GE					{resetear_semantica(matriz_id, matriz_tipo, &contador_elementos);}
+declaracion	: DIM OP_LE lista_declaracion OP_GE					{completar_tipos(&tabla_simbolos, matriz_id, matriz_tipo, &contador_elementos);
+																resetear_semantica(matriz_id, matriz_tipo, &contador_elementos);}
 		;
 
 lista_declaracion : ID COMA lista_declaracion COMA tipoDeDato 	{anadir_elementos(matriz_id, matriz_tipo, $1, $5, &contador_elementos);}

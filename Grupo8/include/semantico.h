@@ -12,6 +12,6 @@ void anadir_elementos(char**, char**, const char*, const char*, int*);
 void resetear_semantica (char**, char**, int*);
 
 /* FUNCIONES CON LISTA */
-void completar_tipos(t_lista*, const char*, const char*);
+void completar_tipos(t_lista*, char**, char**, int*);
 
 #endif 

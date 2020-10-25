@@ -33,17 +33,17 @@ int insertar_matriz(char **matriz, const char *string, int indice)
 
 void anadir_elementos(char **matriz_id, char **matriz_tipo, const char *id, const char *tipo, int *pcontador)
 {
+	if( (*pcontador) == SEMANTICA_MAXIMA_LONGITUD_LISTA_DECLARACION)
+	{
+		printf("No se pueden declarar mas de %d variables en una sola linea de declaracion\n", SEMANTICA_MAXIMA_LONGITUD_LISTA_DECLARACION);
+		exit(ERROR);
+	}
 	if(insertar_matriz(matriz_id, id, *pcontador) == ERROR || insertar_matriz(matriz_tipo, tipo, *pcontador) == ERROR)
 	{
 		printf("Problemas con memoria\n");
 		exit(ERROR);
 	}
 	(*pcontador)++;	
-	if( (*pcontador) > SEMANTICA_MAXIMA_LONGITUD_LISTA_DECLARACION)
-	{
-		printf("No se pueden declarar mas de %d variables en una sola linea de declaracion\n", SEMANTICA_MAXIMA_LONGITUD_LISTA_DECLARACION);
-		exit(ERROR);
-	}
 }
 
 /* FUNCIONES CON LISTA */
@@ -58,7 +58,6 @@ int cambiar_campo_tipo(t_lista *pl, const char *lexema, const char *tipo)
 			(*pl)->dato.tipo = (char*) malloc(sizeof(char) * strlen(tipo) + 1);
 			if(&(*pl)->dato.tipo == NULL)
 			{
-				printf("No hay suficiente memoria\n");
 				return LISTA_LLENA;
 			}
 			strcpy((*pl)->dato.tipo, tipo);
@@ -69,18 +68,23 @@ int cambiar_campo_tipo(t_lista *pl, const char *lexema, const char *tipo)
 	return LISTA_NO_EXISTE_ELEMENTO;
 }
 
-void completar_tipos(t_lista *ptabla_simbolos, const char *lexema, const char *tipo)
+void completar_tipos(t_lista *ptabla_simbolos, char **matriz_id, char **matriz_tipo, int *pcontador)
 {
-	int retorno;	
-	retorno = cambiar_campo_tipo(ptabla_simbolos, lexema, tipo);
-	if( retorno == LISTA_LLENA)
+	int retorno, indice_fin = (*pcontador) - 1;
+	while(indice_fin >= 0)
 	{
-		printf("No hay suficiente memoria\n");
-		exit(ERROR);
+		retorno = cambiar_campo_tipo(ptabla_simbolos, matriz_id[indice_fin], matriz_tipo[(*pcontador) - indice_fin - 1]);
+		if( retorno == LISTA_LLENA)
+		{
+			printf("No hay suficiente memoria\n");
+			exit(ERROR);
+		}
+		if( retorno == LISTA_NO_EXISTE_ELEMENTO)
+		{
+			printf("No se encontro el elemento %s\n", matriz_id[indice_fin]);
+			exit(ERROR);
+		}
+		indice_fin --;
 	}
-	if( retorno == LISTA_NO_EXISTE_ELEMENTO)
-	{
-		printf("No se encontro el elemento %s\n", lexema);
-		exit(ERROR);
-	}
+	
 }

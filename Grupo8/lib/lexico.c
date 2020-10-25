@@ -5,9 +5,8 @@ char* sacar_comillas(const char *s)
 	int i, largo = strlen(s);
 	char *inicio, *resultado;
 	resultado = (char*) malloc(sizeof(char) * largo - LEXICO_CANTIDAD_COMILLAS + 1);
-	if(!resultado)
+	if(resultado == NULL)
 	{
-		printf("Problemas con memoria\n");
 		return NULL;
 	}
 	inicio = resultado;
@@ -31,9 +30,8 @@ char* agregar_guion_bajo(const char *s)
 {
 	char* resultado;
 	resultado =(char*) malloc(sizeof(char) * strlen(s) + LEXICO_CANTIDAD_GUIONES_BAJOS + 1);
-	if(!resultado)
+	if(resultado == NULL)
 	{
-		printf("Problemas con memoria\n");
 		return NULL;
 	}
 	strcpy(resultado, "_");
@@ -52,7 +50,6 @@ char* convertir_cadena_decimal(const char *s)
 	aux = (char*) malloc(sizeof(char) * strlen(s) + 1);
 	if(aux == NULL)
 	{
-		printf("Problemas con memoria\n");
 		return NULL;
 	}
 	strcpy(aux, &s[2]);
@@ -208,16 +205,17 @@ void guardar_tabla_simbolos(const t_lista *pl, const char *path)
 	fclose(pf);
 }
 
-int insertar_ts(const char *lexema, const char *valor, int longitud, t_lista *ptabla_simbolos)
+void insertar_ts(const char *lexema, const char *valor, int longitud, t_lista *ptabla_simbolos)
 {
 	int resultado = -1;
 	t_dato_lista *pd;
+	
 	// Reservamos memoria para el t_dato_lista
 	pd = (t_dato_lista*)malloc(sizeof(t_dato_lista));
 	if(pd == NULL)
 	{
 		printf("Problemas de memoria\n");
-		return LISTA_LLENA;
+		exit(ERROR);
 	}
 
 	// El tipo no se completa así que lo dejamos en nulo
@@ -228,7 +226,7 @@ int insertar_ts(const char *lexema, const char *valor, int longitud, t_lista *pt
 	if(pd->lexema == NULL)
 	{
 		printf("Problemas de memoria\n");
-		return LISTA_LLENA;
+		exit(ERROR);
 	}
 	strcpy(pd->lexema, lexema);
 	
@@ -239,10 +237,9 @@ int insertar_ts(const char *lexema, const char *valor, int longitud, t_lista *pt
 		if(pd->valor == NULL)
 		{
 			printf("Problemas de memoria\n");
-			return LISTA_LLENA;
+			exit(ERROR);
 		}
 		strcpy(pd->valor, valor);
-		
 	}
 	else
 	{
@@ -257,9 +254,7 @@ int insertar_ts(const char *lexema, const char *valor, int longitud, t_lista *pt
 	if(resultado == LISTA_LLENA || resultado == LISTA_DUPLICADO)
 	{
 		free(pd);
-		return resultado;
 	}
-	return TODO_BIEN;
 }
 
 int comparacion(const t_dato_lista *pd1,const t_dato_lista *pd2)

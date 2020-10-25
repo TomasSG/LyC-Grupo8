@@ -22,7 +22,7 @@ void verificar_rango_real(char*, const int);
 
 /* FUNCIONES RELACIOANDAS CON LISTA */
 void guardar_tabla_simbolos(const t_lista*, const char*);
-int insertar_ts(const char*, const char*, int, t_lista*);
+void insertar_ts(const char*, const char*, int, t_lista*);
 int comparacion(const t_dato_lista*,const t_dato_lista*);
 void mostrar(const t_dato_lista*);
 

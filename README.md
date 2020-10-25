@@ -3,11 +3,11 @@ Repositorio para el Trabajo Práctico de Lenguajes y Compiladores en 2do Cuatrim
 
 # Integrantes
 
-*Ariana Cárcaba
-*Luciano Garcia Panero
-*Julían Ricci 
-*Sebastían Mayorú
-*Tomás Sánchez Grigioni
+* Ariana Cárcaba
+* Luciano Garcia Panero
+* Julían Ricci 
+* Sebastían Mayorú
+* Tomás Sánchez Grigioni
 
 # Temas Especiales
 

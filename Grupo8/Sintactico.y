@@ -134,10 +134,10 @@ bloqueIf	: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRA
 			| IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO {printf("Regla: <bloque_if> -> IF PAR_ABIERTO <condicion> PAR_CERRADO LLAVE_ABIERTO <bloque> LLAVE_CERRADO\n");}
 			;
 		
-condicion	: expLogica OP_AND expLogica {printf("Regla: <condicion> -> <exp_logica> OP_AND <exp_logica>\n");}
-		| expLogica OP_OR expLogica		{printf("Regla: <condicion> -> <exp_logica> OP_OR <exp_logica>\n");}
-		| OP_NOT expLogica				{printf("Regla: <condicion> -> OP_NOT <exp_logica>\n");}
-		| expLogica						{printf("Regla: <condicion> -> <exp_logica>\n");}
+condicion	: expLogica OP_AND expLogica 	{printf("Regla: <condicion> -> <exp_logica> OP_AND <exp_logica>\n");}
+		| expLogica OP_OR expLogica			{printf("Regla: <condicion> -> <exp_logica> OP_OR <exp_logica>\n");}
+		| OP_NOT expLogica					{printf("Regla: <condicion> -> OP_NOT <exp_logica>\n");}
+		| expLogica							{printf("Regla: <condicion> -> <exp_logica>\n");}
 		;
 
 expLogica	: PAR_ABIERTO condicion PAR_CERRADO	{printf("Regla: <exp_logica> -> PAR_ABIERTO <condicion> PAR_CERRADO\n");}

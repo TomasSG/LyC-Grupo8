@@ -8,7 +8,7 @@ if %todas% == s goto todas
 if %todas% == n goto una
 
 :todas
-set /p dir=Paso 3: Especifique el nombre del directorio con los archivos de testing: 
+set /p dir=(Paso 3): Especifique el nombre del directorio con los archivos de testing: 
 for %%f in (./%dir%/*.txt) do (
 	cls
 	echo Ejecutando %%f

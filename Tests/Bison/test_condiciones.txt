@@ -16,3 +16,12 @@ if( not (a > b))
 
 if ( not (a <b))
 	PUT "next";
+
+if(1 < 2)
+{
+	PUT "Hola";
+	i := 2;
+}
+
+if(1 < 2)
+	PUT "Hola";

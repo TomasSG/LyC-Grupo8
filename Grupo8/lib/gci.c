@@ -33,18 +33,3 @@ char* transformar_indice(int indice)
 	strcat(strcat(resultado, cadena_numero), "]");
 	return resultado;
 }
-
-/*
-t_dato* crear_dato(int indice, int tipo)
-{
-	t_dato *pd;
-	pd = (t_dato*) malloc(sizeof(t_dato));
-	if(pd == NULL)
-	{
-		return NULL;
-	}
-	pd->indice = indice;
-	pd->tipo = tipo;
-	return pd;
-}
-*/

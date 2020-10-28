@@ -4,7 +4,7 @@ int cambiar_campo_tipo(t_lista*, const char*, const char*);
 int insertar_matriz(char**, const char*, int);
 
 
-void iniciar_contador(int *pcontador)
+void iniciar_semantica(int *pcontador)
 {
 	*pcontador = 0;
 }

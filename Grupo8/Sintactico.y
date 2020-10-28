@@ -180,12 +180,12 @@ int main(int argc, char *argv[])
 		return ERROR;
 	}
 	
-	iniciar_contador(&contador_elementos);
-	crear_lista(&tabla_simbolos);
+	iniciar_semantica(&contador_elementos);
+	iniciar_lexico(&tabla_simbolos);
+
 	yyparse();
-	guardar_tabla_simbolos(&tabla_simbolos, PATH_ARCHIVO_TS);
-	
-	vaciar_lista(&tabla_simbolos);
+
+	finalizar_lexico(&tabla_simbolos, PATH_ARCHIVO_TS);
 	fclose(yyin);
 	return TODO_BIEN;
 }

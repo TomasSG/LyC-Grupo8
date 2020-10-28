@@ -7,7 +7,7 @@
 #include "./lista.h"
 #include "./constantes.h"
 
-void iniciar_contador(int*);
+void iniciar_semantica(int*);
 void anadir_elementos(char**, char**, const char*, const char*, int*);
 void resetear_semantica (char**, char**, int*);
 

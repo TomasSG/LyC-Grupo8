@@ -173,7 +173,12 @@ void verificar_rango_entero(char *s, const int nro_linea)
 
 /* FUNCIONES RELACIONADAS CON LSITAS */
 
-void guardar_tabla_simbolos(const t_lista *pl, const char *path)
+void iniciar_lexico(t_lista *pl)
+{
+	crear_lista(pl);
+}
+
+void finalizar_lexico(t_lista *pl, const char *path)
 {
 	t_dato_lista *pd;
 	char auxiliar[CANTIDAD_ITOA];
@@ -203,6 +208,7 @@ void guardar_tabla_simbolos(const t_lista *pl, const char *path)
     }
 	fprintf(pf,"|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 	fclose(pf);
+	vaciar_lista(pl);
 }
 
 void insertar_ts(const char *lexema, const char *valor, int longitud, t_lista *ptabla_simbolos)

@@ -9,7 +9,7 @@ void iniciar_semantica(int *pcontador)
 	*pcontador = 0;
 }
 
-void resetear_semantica (char **matriz_id, char **matriz_tipo, int *pcontador)
+void finalizar_semantica (char **matriz_id, char **matriz_tipo, int *pcontador)
 {
 	while((*pcontador) > 0)
 	{

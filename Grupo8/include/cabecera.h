@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "../y.tab.h"
 #include "./lista.h"
+#include "./pila.h"
 #include "./constantes.h"
 #include "./lexico.h"
 #include "./semantico.h"

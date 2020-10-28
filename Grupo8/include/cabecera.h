@@ -9,6 +9,7 @@
 #include "./constantes.h"
 #include "./lexico.h"
 #include "./semantico.h"
+#include "./gci.h"
 
 /* VARIABLES GLOBALES */
 extern FILE *yyin;

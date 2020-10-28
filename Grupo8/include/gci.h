@@ -7,7 +7,8 @@
 #include "./constantes.h"
 #include "./pila.h"
 
-void crear_archivo_intermedia(const char*);
+void iniciar_gci(t_pila*, t_pila*, int*, int*, int*, int*, int*, const char*);
+void finalizar_gci(t_pila*, t_pila*);
 int crear_terceto(const char*, const char*, const char*, int*, const char*);
 char* transformar_indice(int);
 

@@ -20,4 +20,11 @@ t_lista tabla_simbolos;
 char *matriz_id[SEMANTICA_MAXIMA_LONGITUD_LISTA_DECLARACION], *matriz_tipo[SEMANTICA_MAXIMA_LONGITUD_LISTA_DECLARACION];
 int contador_elementos;
 
+/* VARIABLES PARA GCI */
+int contador_t, contador_e, recuperar_puntero, es_nuevo_token;
+int f_indice, t_indice, e_indice, l_indice, p_indice, a_indice;
+int numeracion_terceto;
+t_pila pila_t, pila_e;
+char aux[CANTIDAD_ITOA];
+
 #endif // CABECERA_H_INCLUDED

@@ -80,12 +80,12 @@ sentencia	: asignacion PUNTO_COMA 	{printf("Regla: <sentencia> -> <asignacion> P
 		;
 
 /* REGLAS PARA LA ASIGNACION */
-asignacion	: ID OP_ASIGNACION cuenta 	{printf("Regla: <asignacion> -> ID OP_ASIGNACION <cuenta>\n");}
+asignacion	: ID OP_ASIGNACION expresion 	{printf("Regla: <asignacion> -> ID OP_ASIGNACION <expresion>\n");}
 		;
 
-cuenta		: cuenta OP_SUMA  termino	{printf("Regla: <cuenta> -> <cuenta> OP_SUMA <termino>\n");}
-		| cuenta OP_RESTA termino		{printf("Regla: <cuenta> -> <cuenta> OP_RESTA <termino>\n");}
-		| termino						{printf("Regla: <cuenta> -> <termino>\n");}
+expresion		: expresion OP_SUMA  termino	{printf("Regla: <expresion> -> <expresion> OP_SUMA <termino>\n");}
+		| expresion OP_RESTA termino		{printf("Regla: <expresion> -> <expresion> OP_RESTA <termino>\n");}
+		| termino						{printf("Regla: <expresion> -> <termino>\n");}
 		;
 
 termino		: termino OP_MULT factor 	{printf("Regla: <termino> -> <termino> OP_MULT <factor>\n");}
@@ -93,7 +93,7 @@ termino		: termino OP_MULT factor 	{printf("Regla: <termino> -> <termino> OP_MUL
 		| factor 						{printf("Regla: <termino> -> <factor>\n");}						
 		;
 
-factor		: PAR_ABIERTO cuenta PAR_CERRADO	{printf("Regla: <factor> -> PAR_ABIERTO <cuenta> PAR_CERRADO\n");}
+factor		: PAR_ABIERTO expresion PAR_CERRADO	{printf("Regla: <factor> -> PAR_ABIERTO <expresion> PAR_CERRADO\n");}
 		| ID 							{printf("Regla: <factor> -> ID\n");}
 		| constante						{printf("Regla: <factor> -> <constante>\n");}
 		| funcionContar					{printf("Regla: <factor> -> <funcion_contar>\n");}
@@ -101,18 +101,18 @@ factor		: PAR_ABIERTO cuenta PAR_CERRADO	{printf("Regla: <factor> -> PAR_ABIERTO
 		
 /* REGLAS PARA LA DECLARACION DE VARIABLES */
 
-declaracion	: DIM OP_LE lista_declaracion OP_GE					{completar_tipos(&tabla_simbolos, matriz_id, matriz_tipo, &contador_elementos);
+declaracion: DIM OP_LE lista_declaracion OP_GE					{completar_tipos(&tabla_simbolos, matriz_id, matriz_tipo, &contador_elementos);
 																finalizar_semantica(matriz_id, matriz_tipo, &contador_elementos);}
-		;
+;
 
-lista_declaracion : ID COMA lista_declaracion COMA tipoDeDato 	{anadir_elementos(matriz_id, matriz_tipo, $1, $5, &contador_elementos);}
-		| ID OP_GE AS OP_LE tipoDeDato							{anadir_elementos(matriz_id, matriz_tipo, $1, $5, &contador_elementos);}
-		;
+lista_declaracion: ID COMA lista_declaracion COMA tipoDeDato 	{anadir_elementos(matriz_id, matriz_tipo, $1, $5, &contador_elementos);}
+| ID OP_GE AS OP_LE tipoDeDato									{anadir_elementos(matriz_id, matriz_tipo, $1, $5, &contador_elementos);}
+;
 
-tipoDeDato	: FLOAT								
-		| INTEGER								
-		| STRING								
-		;
+tipoDeDato: FLOAT								
+| INTEGER								
+| STRING								
+;
 		
 /* REGLAS PARA PUT Y GET */
 
@@ -141,7 +141,7 @@ condicion	: expLogica OP_AND expLogica 	{printf("Regla: <condicion> -> <exp_logi
 		;
 
 expLogica	: PAR_ABIERTO condicion PAR_CERRADO	{printf("Regla: <exp_logica> -> PAR_ABIERTO <condicion> PAR_CERRADO\n");}
-		| cuenta comparador cuenta		{printf("Regla: <exp_logica> -> <cuenta> <comparador> <cuenta>\n");}
+		| expresion comparador expresion		{printf("Regla: <exp_logica> -> <expresion> <comparador> <expresion>\n");}
 		;
 
 comparador	: OP_IGUAL					{printf("Regla: <comparador> -> OP_IGUAL\n");}
@@ -153,7 +153,7 @@ comparador	: OP_IGUAL					{printf("Regla: <comparador> -> OP_IGUAL\n");}
 		;
 /* REGLAS PARA CONTAR */
 
-funcionContar	: CONTAR PAR_ABIERTO cuenta PUNTO_COMA listaConstantes PAR_CERRADO	{printf("Regla: <funcion_contar> -> CONTAR PAR_ABIERTO <cuenta> PUNTO_COMA <lista_constantes> PAR_CERRADO\n");}
+funcionContar	: CONTAR PAR_ABIERTO expresion PUNTO_COMA listaConstantes PAR_CERRADO	{printf("Regla: <funcion_contar> -> CONTAR PAR_ABIERTO <expresion> PUNTO_COMA <lista_constantes> PAR_CERRADO\n");}
 		;
 
 listaConstantes	: COR_ABIERTO constantes COR_CERRADO 	{printf("Regla: <lista_constantes> -> COR_ABIERTO <constantes> COR_CERRADO\n");}
@@ -180,12 +180,14 @@ int main(int argc, char *argv[])
 		return ERROR;
 	}
 	
-	iniciar_semantica(&contador_elementos);
 	iniciar_lexico(&tabla_simbolos);
-
+	iniciar_semantica(&contador_elementos);
+	iniciar_gci(&pila_t, &pila_e, &contador_t, &contador_e, &es_nuevo_token, &recuperar_puntero, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	
 	yyparse();
 
 	finalizar_lexico(&tabla_simbolos, PATH_ARCHIVO_TS);
+	finalizar_gci(&pila_t, &pila_e);
 	fclose(yyin);
 	return TODO_BIEN;
 }

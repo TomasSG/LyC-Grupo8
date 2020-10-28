@@ -1,8 +1,27 @@
 #include "../include/gci.h"
 
-void crear_archivo_intermedia(const char *path)
+void iniciar_gci(t_pila *pt, t_pila *pe, int *pcontador_t, int *pcontador_e, int *pes_nuevo_token, int *precuperar_puntero, int *pnumeracion, const char *path)
 {
-	fclose(fopen(path, TEXTO_ESCRITURA));
+	FILE *pf = fopen(path, TEXTO_ESCRITURA);
+	if(pf == NULL)
+	{
+		printf("No se pudo crear %s\n", path);
+		exit(ERROR);
+	}
+	fclose(pf);
+	crear_pila(pt);
+	crear_pila(pe);
+	*pcontador_t = 0;
+	*pcontador_e = 0;
+	*pes_nuevo_token = 0;
+	*precuperar_puntero = 0;
+	*pnumeracion = -1;
+}
+
+void finalizar_gci(t_pila *pt, t_pila *pe)
+{
+	vaciar_pila(pt);
+	vaciar_pila(pe);
 }
 
 int crear_terceto(const char *p1, const char *p2, const char *p3, int *pnumero, const char *path)

@@ -24,20 +24,6 @@ void finalizar_gci(t_pila *pt, t_pila *pe)
 	vaciar_pila(pe);
 }
 
-int crear_terceto(const char *p1, const char *p2, const char *p3, int *pnumero, const char *path)
-{
-	FILE *pf = fopen(path, TEXTO_APPEND);
-	if(pf == NULL)
-	{
-		printf("No se pudo abrir el archivo de codigo intermedio en %s", path);
-		return ERROR;
-	}
-	(*pnumero)++;
-	fprintf(pf, "[%d] (%s, %s, %s)\n", *pnumero, p1, p2, p3);
-	fclose(pf);
-	return *pnumero;
-}
-
 char* transformar_indice(int indice)
 {
 	char cadena_numero[100], *resultado;
@@ -51,4 +37,18 @@ char* transformar_indice(int indice)
 	strcpy(resultado, "[");
 	strcat(strcat(resultado, cadena_numero), "]");
 	return resultado;
+}
+
+int crear_terceto(const char *p1, const char *p2, const char *p3, int *pnumero, const char *path)
+{
+	FILE *pf = fopen(path, TEXTO_APPEND);
+	if(pf == NULL)
+	{
+		printf("No se pudo abrir el archivo de codigo intermedio en %s", path);
+		return ERROR;
+	}
+	(*pnumero)++;
+	fprintf(pf, "[%d] (%s, %s, %s)\n", *pnumero, p1, p2, p3);
+	fclose(pf);
+	return *pnumero;
 }

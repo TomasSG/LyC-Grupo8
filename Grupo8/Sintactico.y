@@ -47,17 +47,14 @@
 %token	OP_NOT
 
 /* CONSTANTES */
-%token	CONST_ENTERA
-%token	CONST_REAL
-%token	CONST_STRING
-%token	CONST_BINARIA
-%token	CONST_HEXA
+%token <string> CONST_ENTERA CONST_REAL CONST_STRING CONST_BINARIA CONST_HEXA
 
 /* VARIABLES */
-%token	<string> ID
+%token <string> ID
 
 /* DECLARACIONES TIPOS ELEMENTOS NO TERMINALES */
 %type <string> tipoDeDato
+%type <string> constante
 
 /* ______________________________________________________________ */
 
@@ -77,27 +74,130 @@ sentencia	: asignacion PUNTO_COMA 	{printf("Regla: <sentencia> -> <asignacion> P
 			| entrada PUNTO_COMA 		{printf("Regla: <sentencia> -> <entrada> PUNTO_COMA\n");}
 			| bloqueWhile				{printf("Regla: <sentencia> -> <bloque_while>\n");}
 			| bloqueIf					{printf("Regla: <sentencia> -> <bloque_if>\n");}
+			|expresion PUNTO_COMA
 		;
 
 /* REGLAS PARA LA ASIGNACION */
 asignacion	: ID OP_ASIGNACION expresion 	{printf("Regla: <asignacion> -> ID OP_ASIGNACION <expresion>\n");}
 		;
 
-expresion		: expresion OP_SUMA  termino	{printf("Regla: <expresion> -> <expresion> OP_SUMA <termino>\n");}
-		| expresion OP_RESTA termino		{printf("Regla: <expresion> -> <expresion> OP_RESTA <termino>\n");}
-		| termino						{printf("Regla: <expresion> -> <termino>\n");}
+/* REGLAS PARA CONTAR */
+funcionContar	: CONTAR PAR_ABIERTO expresion PUNTO_COMA listaConstantes PAR_CERRADO	{printf("Regla: <funcion_contar> -> CONTAR PAR_ABIERTO <expresion> PUNTO_COMA <lista_constantes> PAR_CERRADO\n");}
 		;
 
-termino		: termino OP_MULT factor 	{printf("Regla: <termino> -> <termino> OP_MULT <factor>\n");}
-		| termino OP_DIVISION factor  	{printf("Regla: <termino> -> <termino> OP_DIVISION <factor>\n");}
-		| factor 						{printf("Regla: <termino> -> <factor>\n");}						
+listaConstantes	: COR_ABIERTO constantes COR_CERRADO 	{printf("Regla: <lista_constantes> -> COR_ABIERTO <constantes> COR_CERRADO\n");}
 		;
 
-factor		: PAR_ABIERTO expresion PAR_CERRADO	{printf("Regla: <factor> -> PAR_ABIERTO <expresion> PAR_CERRADO\n");}
-		| ID 							{printf("Regla: <factor> -> ID\n");}
-		| constante						{printf("Regla: <factor> -> <constante>\n");}
-		| funcionContar					{printf("Regla: <factor> -> <funcion_contar>\n");}
+constantes	: constantes  COMA 	constante	{printf("Regla: <constantes> -> <constantes> COMA <constante>\n");}
+		| constante						{printf("Regla: <constantes> -> <constante>\n");}
 		;
+
+/* REGLAS PARA ARITMETICA */
+expresion : expresion OP_SUMA  termino	
+{
+	contador_e = 0;
+	contador_t = 0;
+	es_nuevo_token = 0;
+	if(recuperar_puntero == 1)
+	{
+		desapilar(&pila_e, &e_indice);
+		recuperar_puntero = 0;
+	}
+	e_indice = crear_terceto(TERCETO_SIGNO_SUMAR, transformar_indice(e_indice), transformar_indice(t_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+}
+
+| expresion OP_RESTA termino 
+{	
+	contador_e = 0;
+	contador_t = 0;
+	es_nuevo_token = 0;
+	if(recuperar_puntero == 1)
+	{
+		desapilar(&pila_e, &e_indice);
+		recuperar_puntero = 0;
+	}
+	e_indice = crear_terceto(TERCETO_SIGNO_RESTAR, transformar_indice(e_indice), transformar_indice(t_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO); 
+}
+
+| termino 
+{	
+	contador_t = 0;
+	contador_e++;
+	if(contador_e > 1)
+	{
+		apilar(&pila_e, &e_indice);
+		es_nuevo_token = 0;
+	}
+	e_indice = t_indice;
+}
+;
+
+termino: termino OP_MULT factor
+{	
+	es_nuevo_token = 0;
+	contador_t = 0;
+	if( recuperar_puntero == 1)
+	{
+		desapilar(&pila_t, &t_indice);
+		recuperar_puntero = 0;
+	}
+	t_indice = crear_terceto(TERCETO_SIGNO_MULT, transformar_indice(t_indice), transformar_indice(f_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO); 
+}
+
+| termino OP_DIVISION factor 
+{	
+	es_nuevo_token = 0;
+	contador_t = 0;
+	if( recuperar_puntero == 1)
+	{
+		desapilar(&pila_t, &t_indice);
+		recuperar_puntero = 0;
+	}
+	t_indice = crear_terceto(TERCETO_SIGNO_DIVISION, transformar_indice(t_indice), transformar_indice(f_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO); 
+}
+
+| factor 
+{	
+	contador_t++;
+	if(contador_t > 1)
+	{
+		apilar(&pila_t, &t_indice);
+		es_nuevo_token = 0;
+	}
+	t_indice = f_indice;
+}						
+;
+
+factor: ID 
+{	
+	es_nuevo_token = 1;
+	f_indice = crear_terceto($1, TERCETO_SIGNO_VACIO, TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+}
+
+| constante 
+{	
+	es_nuevo_token = 1;
+	f_indice = crear_terceto($1, TERCETO_SIGNO_VACIO, TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+}
+
+| PAR_ABIERTO expresion PAR_CERRADO 
+{	
+	contador_e = 0;
+	f_indice = e_indice;	
+	if(es_nuevo_token == 0)
+	{
+		recuperar_puntero = 1;
+	}
+}
+
+| funcionContar							{/* TODO: ver que hacer aca */}
+;
+
+constante : CONST_BINARIA				
+| CONST_HEXA					
+| CONST_REAL					
+| CONST_ENTERA 			
+;
 		
 /* REGLAS PARA LA DECLARACION DE VARIABLES */
 
@@ -151,23 +251,7 @@ comparador	: OP_IGUAL					{printf("Regla: <comparador> -> OP_IGUAL\n");}
 		| OP_GEQ						{printf("Regla: <comparador> -> OP_GEQ\n");}
 		| OP_NE							{printf("Regla: <comparador> -> OP_NE\n");}
 		;
-/* REGLAS PARA CONTAR */
 
-funcionContar	: CONTAR PAR_ABIERTO expresion PUNTO_COMA listaConstantes PAR_CERRADO	{printf("Regla: <funcion_contar> -> CONTAR PAR_ABIERTO <expresion> PUNTO_COMA <lista_constantes> PAR_CERRADO\n");}
-		;
-
-listaConstantes	: COR_ABIERTO constantes COR_CERRADO 	{printf("Regla: <lista_constantes> -> COR_ABIERTO <constantes> COR_CERRADO\n");}
-		;
-
-constantes	: constantes  COMA 	constante	{printf("Regla: <constantes> -> <constantes> COMA <constante>\n");}
-		| constante						{printf("Regla: <constantes> -> <constante>\n");}
-		;
-
-constante : CONST_BINARIA					{printf("Regla: <constante> -> CONST_BINARIA\n");}
-		| CONST_HEXA					{printf("Regla: <constante> -> CONST_HEXA\n");}
-		| CONST_REAL					{printf("Regla: <constante> -> CONST_REAL\n");}
-		| CONST_ENTERA 					{printf("Regla: <constante> -> CONST_ENTERA\n");}
-		;
 %%
 
 int main(int argc, char *argv[]) 

@@ -5,6 +5,7 @@
 %union
 {
 	char *string;
+	char *lexema;
 }
 
 /* PALABRAS RESERVADAS */
@@ -60,7 +61,7 @@
 /* DECLARACION DE REGLAS SINTACTICAS */
 %%
 
-programa	: bloque 					{}
+programa	: bloque 					{puts("COMPILACION EXITOSA!");}
 		;
 
 bloque		: bloque sentencia 			{}
@@ -77,7 +78,8 @@ sentencia	: asignacion PUNTO_COMA 	{}
 		;
 
 /* REGLAS PARA LA ASIGNACION */
-asignacion: ID OP_ASIGNACION expresion 	{printf("A: %s\n", $3);/* verirficar_tipos_compatibles(&tabla_simbolos, $1, );*/}
+asignacion: ID OP_ASIGNACION expresion 	{verirficar_tipos_compatibles(&tabla_simbolos, $1, $3, yylineno);}
+| ID OP_ASIGNACION CONST_STRING 		{verirficar_tipos_compatibles(&tabla_simbolos, $1, LEXICO_TIPO_STRING, yylineno);}
 ;
 
 /* REGLAS PARA CONTAR */
@@ -191,6 +193,7 @@ factor: ID
 	f_indice = crear_terceto($1, TERCETO_SIGNO_VACIO, TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 
 	// Para verificacion de tipos
+	verficiar_declaracion(&tabla_simbolos, $1, yylineno);
 	$$ = strdup(buscar_tipo(&tabla_simbolos, $1));
 }
 
@@ -200,8 +203,7 @@ factor: ID
 	f_indice = crear_terceto($1, TERCETO_SIGNO_VACIO, TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 
 	// Para verificacion de tipos
-	printf("%s\n", buscar_tipo(&tabla_simbolos, "_0"));
-	$$ = strdup(buscar_tipo(&tabla_simbolos, $1));
+	$$ = strdup(buscar_tipo(&tabla_simbolos, yylval.lexema));
 }
 
 | PAR_ABIERTO expresion PAR_CERRADO 
@@ -220,10 +222,10 @@ factor: ID
 | funcionContar							{/* TODO: ver que hacer aca */}
 ;
 
-constante : CONST_BINARIA				
-| CONST_HEXA					
-| CONST_REAL					
-| CONST_ENTERA 							
+constante : CONST_BINARIA				{$$ = yylval.string;}
+| CONST_HEXA							{$$ = yylval.string;}
+| CONST_REAL							{$$ = yylval.string;}
+| CONST_ENTERA 							{$$ = yylval.string;}
 ;
 		
 /* REGLAS PARA LA DECLARACION DE VARIABLES */
@@ -305,6 +307,9 @@ int main(int argc, char *argv[])
 
 int yyerror(void)
 {
-    printf("Linea %d: Error Sintactico\n", yylineno);
+	puts("******************************************");
+	puts("ERROR SINTACTICO");
+    printf("Linea nro %d\n", yylineno);
+	puts("******************************************");
 	exit (ERROR);
 }

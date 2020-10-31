@@ -48,8 +48,10 @@ void anadir_elementos(char **matriz_id, char **matriz_tipo, const char *id, cons
 
 void error(const char *msj, int nro_linea)
 {
+	puts("******************************************");
 	puts("ERROR");
 	printf("Linea nro %d: %s\n", nro_linea, msj);
+	puts("******************************************");
 	exit(ERROR);
 }
 
@@ -109,13 +111,7 @@ char* buscar_tipo(t_lista *pl, const char *lexema)
 
 char* coercion_tipos(char *tipo1, char *tipo2, int nro_linea)
 {
-	puts("Pase por aca");
-	if(strcmp(tipo1, LEXICO_TIPO_STRING) == 0 || strcmp(tipo1, LEXICO_TIPO_STRING) == 0)
-	{
-		error("No se puede usar un String en las operaciones aritmeticas", nro_linea);
-		return NULL;
-	}
-	else if(strcmp(tipo1, tipo2) == 0)
+	if(strcmp(tipo1, tipo2) == 0)
 	{
 		return tipo1;
 	}
@@ -124,4 +120,45 @@ char* coercion_tipos(char *tipo1, char *tipo2, int nro_linea)
 		return tipo1;
 	}
 	return tipo2;
+}
+
+void verirficar_tipos_compatibles(t_lista *pl, const char *lexema, const char *tipo2, int nro_linea)
+{
+	char string_aux[CANTIDAD_ITOA];
+	while(*pl)
+    {
+        if( strcmp((*pl)->dato.lexema, lexema) == 0)
+		{
+			if((*pl)->dato.tipo == NULL)
+			{
+				sprintf(string_aux, "La variable %s aun no se ha declarado", lexema);
+				error(string_aux, nro_linea);
+			}
+			
+			if(strcmp((*pl)->dato.tipo, tipo2) != 0)
+			{
+				sprintf(string_aux, "No se puede asignar a un %s un tipo %s", (*pl)->dato.tipo,tipo2);
+				error(string_aux, nro_linea);
+			}
+			return;
+		}
+        pl=&(*pl)->psig;
+    }
+}
+
+void verficiar_declaracion(t_lista *pl, const char *lexema, int nro_linea)
+{
+	char string_aux[CANTIDAD_ITOA];
+	while(*pl)
+    {
+        if( strcmp((*pl)->dato.lexema, lexema) == 0)
+		{
+			if((*pl)->dato.tipo == NULL)
+			{
+				sprintf(string_aux, "La variable %s aun no se ha declarado", lexema);
+				error(string_aux, nro_linea);
+			}
+		}
+        pl=&(*pl)->psig;
+    }
 }

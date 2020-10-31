@@ -113,8 +113,10 @@ char* adelantar_ceros(char *s)
 
 int error_lexico(const char *msj, int nro_linea)
 {
-	printf("Error lexico\n");
+	puts("******************************************");
+	puts("ERROR LEXICO");
 	printf("Linea nro %d: %s\n", nro_linea, msj);
+	puts("******************************************");
 	exit(ERROR);
 }
 

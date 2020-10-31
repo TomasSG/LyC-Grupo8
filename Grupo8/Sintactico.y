@@ -53,43 +53,42 @@
 %token <string> ID
 
 /* DECLARACIONES TIPOS ELEMENTOS NO TERMINALES */
-%type <string> tipoDeDato
-%type <string> constante
+%type <string> tipoDeDato constante factor termino expresion
 
 /* ______________________________________________________________ */
 
 /* DECLARACION DE REGLAS SINTACTICAS */
 %%
 
-programa	: bloque 					{printf("Regla: <programa> -> <bloque> --- COMPILACION EXITOSA\n");}
+programa	: bloque 					{}
 		;
 
-bloque		: bloque sentencia 			{printf("Regla: <bloque> ->  <bloque> <sentencia>\n");}
-		| sentencia 					{printf("Regla: <bloque> -> <sentencia>\n");}
+bloque		: bloque sentencia 			{}
+		| sentencia 					{}
 		;
 
-sentencia	: asignacion PUNTO_COMA 	{printf("Regla: <sentencia> -> <asignacion> PUNTO_COMA\n");}
-			| declaracion PUNTO_COMA	{printf("Regla: <sentencia> -> <declaracion> PUNTO_COMA\n");} 
-			| salida PUNTO_COMA 		{printf("Regla: <sentencia> -> <salida> PUNTO_COMA\n");} 
-			| entrada PUNTO_COMA 		{printf("Regla: <sentencia> -> <entrada> PUNTO_COMA\n");}
-			| bloqueWhile				{printf("Regla: <sentencia> -> <bloque_while>\n");}
-			| bloqueIf					{printf("Regla: <sentencia> -> <bloque_if>\n");}
+sentencia	: asignacion PUNTO_COMA 	{}
+			| declaracion PUNTO_COMA	{} 
+			| salida PUNTO_COMA 		{} 
+			| entrada PUNTO_COMA 		{}
+			| bloqueWhile				{}
+			| bloqueIf					{}
 			|expresion PUNTO_COMA
 		;
 
 /* REGLAS PARA LA ASIGNACION */
-asignacion	: ID OP_ASIGNACION expresion 	{printf("Regla: <asignacion> -> ID OP_ASIGNACION <expresion>\n");}
-		;
+asignacion: ID OP_ASIGNACION expresion 	{printf("A: %s\n", $3);/* verirficar_tipos_compatibles(&tabla_simbolos, $1, );*/}
+;
 
 /* REGLAS PARA CONTAR */
-funcionContar	: CONTAR PAR_ABIERTO expresion PUNTO_COMA listaConstantes PAR_CERRADO	{printf("Regla: <funcion_contar> -> CONTAR PAR_ABIERTO <expresion> PUNTO_COMA <lista_constantes> PAR_CERRADO\n");}
+funcionContar	: CONTAR PAR_ABIERTO expresion PUNTO_COMA listaConstantes PAR_CERRADO	{}
 		;
 
-listaConstantes	: COR_ABIERTO constantes COR_CERRADO 	{printf("Regla: <lista_constantes> -> COR_ABIERTO <constantes> COR_CERRADO\n");}
+listaConstantes	: COR_ABIERTO constantes COR_CERRADO 	{}
 		;
 
-constantes	: constantes  COMA 	constante	{printf("Regla: <constantes> -> <constantes> COMA <constante>\n");}
-		| constante						{printf("Regla: <constantes> -> <constante>\n");}
+constantes	: constantes  COMA 	constante	{}
+		| constante							{}
 		;
 
 /* REGLAS PARA ARITMETICA */
@@ -104,6 +103,9 @@ expresion : expresion OP_SUMA  termino
 		recuperar_puntero = 0;
 	}
 	e_indice = crear_terceto(TERCETO_SIGNO_SUMAR, transformar_indice(e_indice), transformar_indice(t_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+
+	// Para verificacion de tipos
+	$$ = coercion_tipos($1, $3, yylineno);
 }
 
 | expresion OP_RESTA termino 
@@ -117,6 +119,9 @@ expresion : expresion OP_SUMA  termino
 		recuperar_puntero = 0;
 	}
 	e_indice = crear_terceto(TERCETO_SIGNO_RESTAR, transformar_indice(e_indice), transformar_indice(t_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO); 
+
+	// Para verificacion de tipos
+	$$ = coercion_tipos($1, $3, yylineno);
 }
 
 | termino 
@@ -129,6 +134,9 @@ expresion : expresion OP_SUMA  termino
 		es_nuevo_token = 0;
 	}
 	e_indice = t_indice;
+
+	// Para verificacion de tipos
+	$$ = $1;
 }
 ;
 
@@ -142,6 +150,9 @@ termino: termino OP_MULT factor
 		recuperar_puntero = 0;
 	}
 	t_indice = crear_terceto(TERCETO_SIGNO_MULT, transformar_indice(t_indice), transformar_indice(f_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO); 
+
+	// Para verificacion de tipos
+	$$ = coercion_tipos($1, $3, yylineno);
 }
 
 | termino OP_DIVISION factor 
@@ -153,7 +164,10 @@ termino: termino OP_MULT factor
 		desapilar(&pila_t, &t_indice);
 		recuperar_puntero = 0;
 	}
-	t_indice = crear_terceto(TERCETO_SIGNO_DIVISION, transformar_indice(t_indice), transformar_indice(f_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO); 
+	t_indice = crear_terceto(TERCETO_SIGNO_DIVISION, transformar_indice(t_indice), transformar_indice(f_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+
+	// Para verificacion de tipos
+	$$ = coercion_tipos($1, $3, yylineno);
 }
 
 | factor 
@@ -165,6 +179,9 @@ termino: termino OP_MULT factor
 		es_nuevo_token = 0;
 	}
 	t_indice = f_indice;
+
+	// Para verificacion de tipos	
+	$$ = $1;
 }						
 ;
 
@@ -172,12 +189,19 @@ factor: ID
 {	
 	es_nuevo_token = 1;
 	f_indice = crear_terceto($1, TERCETO_SIGNO_VACIO, TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+
+	// Para verificacion de tipos
+	$$ = strdup(buscar_tipo(&tabla_simbolos, $1));
 }
 
 | constante 
 {	
 	es_nuevo_token = 1;
 	f_indice = crear_terceto($1, TERCETO_SIGNO_VACIO, TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+
+	// Para verificacion de tipos
+	printf("%s\n", buscar_tipo(&tabla_simbolos, "_0"));
+	$$ = strdup(buscar_tipo(&tabla_simbolos, $1));
 }
 
 | PAR_ABIERTO expresion PAR_CERRADO 
@@ -188,6 +212,9 @@ factor: ID
 	{
 		recuperar_puntero = 1;
 	}
+
+	// Para verificacion de tipos
+	$$ = $2;
 }
 
 | funcionContar							{/* TODO: ver que hacer aca */}
@@ -196,7 +223,7 @@ factor: ID
 constante : CONST_BINARIA				
 | CONST_HEXA					
 | CONST_REAL					
-| CONST_ENTERA 			
+| CONST_ENTERA 							
 ;
 		
 /* REGLAS PARA LA DECLARACION DE VARIABLES */
@@ -216,40 +243,40 @@ tipoDeDato: FLOAT
 		
 /* REGLAS PARA PUT Y GET */
 
-salida		: PUT ID							{printf("Regla: <salida> -> PUT ID\n");}
-		| PUT CONST_STRING						{printf("Regla: <salida> -> PUT CONST_STRING\n");}
+salida		: PUT ID							{}
+		| PUT CONST_STRING						{}
 		;
 
-entrada		: GET ID							{printf("Regla: <entrada> -> GET ID\n");}
+entrada		: GET ID							{}
 		;
 
 /* REGLAS PARA LA DECLARACION DE WHILE E IF */
 
-bloqueWhile	: WHILE PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO	{printf("Regla: <bloque_while> -> WHILE PAR_ABIERTO <condicion> PAR_CERRADO LLAVE_ABIERTO <bloque> LLAVE_CERRADO\n");}
-		| WHILE PAR_ABIERTO condicion PAR_CERRADO sentencia		{printf("Regla: <bloque_while> -> WHILE <condicion> <sentencia>\n");}
+bloqueWhile	: WHILE PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO	{}
+		| WHILE PAR_ABIERTO condicion PAR_CERRADO sentencia		{}
 		;
 
-bloqueIf	: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO ELSE LLAVE_ABIERTO bloque LLAVE_CERRADO {printf("Regla: <bloque_if> -> IF PAR_ABIERTO <condicion> PAR_CERRADO LLAVE_ABIERTO <bloque> LLAVE_CERRADO ELSE LLAVE_ABIERTO <bloque> LLAVE_CERRADO\n");}
-			| IF PAR_ABIERTO condicion PAR_CERRADO sentencia {printf("Regla: <bloque_if> -> IF PAR_ABIERTO <condicion> PAR_CERRADO <sentencia>\n");}
-			| IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO {printf("Regla: <bloque_if> -> IF PAR_ABIERTO <condicion> PAR_CERRADO LLAVE_ABIERTO <bloque> LLAVE_CERRADO\n");}
+bloqueIf	: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO ELSE LLAVE_ABIERTO bloque LLAVE_CERRADO {}
+			| IF PAR_ABIERTO condicion PAR_CERRADO sentencia {}
+			| IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO {}
 			;
 		
-condicion	: expLogica OP_AND expLogica 	{printf("Regla: <condicion> -> <exp_logica> OP_AND <exp_logica>\n");}
-		| expLogica OP_OR expLogica			{printf("Regla: <condicion> -> <exp_logica> OP_OR <exp_logica>\n");}
-		| OP_NOT expLogica					{printf("Regla: <condicion> -> OP_NOT <exp_logica>\n");}
-		| expLogica							{printf("Regla: <condicion> -> <exp_logica>\n");}
+condicion	: expLogica OP_AND expLogica 	{}
+		| expLogica OP_OR expLogica			{}
+		| OP_NOT expLogica					{}
+		| expLogica							{}
 		;
 
-expLogica	: PAR_ABIERTO condicion PAR_CERRADO	{printf("Regla: <exp_logica> -> PAR_ABIERTO <condicion> PAR_CERRADO\n");}
-		| expresion comparador expresion		{printf("Regla: <exp_logica> -> <expresion> <comparador> <expresion>\n");}
+expLogica	: PAR_ABIERTO condicion PAR_CERRADO	{}
+		| expresion comparador expresion		{}
 		;
 
-comparador	: OP_IGUAL					{printf("Regla: <comparador> -> OP_IGUAL\n");}
-		| OP_LE							{printf("Regla: <comparador> -> OP_LE\n");}
-		| OP_LEQ						{printf("Regla: <comparador> -> OP_LEQ\n");}
-		| OP_GE							{printf("Regla: <comparador> -> OP_GE\n");}
-		| OP_GEQ						{printf("Regla: <comparador> -> OP_GEQ\n");}
-		| OP_NE							{printf("Regla: <comparador> -> OP_NE\n");}
+comparador	: OP_IGUAL					{}
+		| OP_LE							{}
+		| OP_LEQ						{}
+		| OP_GE							{}
+		| OP_GEQ						{}
+		| OP_NE							{}
 		;
 
 %%

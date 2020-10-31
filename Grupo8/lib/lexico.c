@@ -1,19 +1,5 @@
 #include "../include/lexico.h"
 
-char* duplicar_string(const char*);
-
-char* duplicar_string(const char *string)
-{
-	char *resultado;
-	resultado = (char*) malloc(sizeof(char) * strlen(string) + 1);
-	if(resultado == NULL)
-	{
-		return NULL;
-	}
-	strcpy(resultado, string);
-	return resultado;
-}
-
 char* sacar_comillas(const char *s)
 {
 	int i, largo = strlen(s);
@@ -61,7 +47,7 @@ char* convertir_cadena_decimal(const char *s)
 
 	
 	// Necesitamos el auxiliar solo para dar vuelta la cadena con los números
-	if( (aux = duplicar_string(&s[2])) == NULL)
+	if( (aux = strdup(&s[2])) == NULL)
 	{
 		return NULL;
 	}
@@ -237,7 +223,7 @@ void insertar_ts(const char *lexema, const char *tipo,const char *valor, int lon
 	}
 
 	// El lexema lo copiamos tal cual
-	if( (pd->lexema = duplicar_string(lexema)) == NULL)
+	if( (pd->lexema = strdup(lexema)) == NULL)
 	{
 		puts("Problemas de memoria");
 		exit(ERROR);
@@ -246,7 +232,7 @@ void insertar_ts(const char *lexema, const char *tipo,const char *valor, int lon
 	// El tipo hay que validar que no sea NULL porque hay casos en que no se completa este campo
 	if(tipo != NULL)
 	{
-		if( (pd->tipo = duplicar_string(tipo)) == NULL)
+		if( (pd->tipo = strdup(tipo)) == NULL)
 		{
 			puts("Problemas de memoria");
 			exit(ERROR);
@@ -260,7 +246,7 @@ void insertar_ts(const char *lexema, const char *tipo,const char *valor, int lon
 	// El valor hay que validar que no sea NULL porque hay casos en que no se completa este campo
 	if(valor != NULL)
 	{
-		if( (pd->valor = duplicar_string(valor)) == NULL)
+		if( (pd->valor = strdup(valor)) == NULL)
 		{
 			puts("Problemas de memoria");
 			exit(ERROR);

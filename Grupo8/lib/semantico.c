@@ -46,6 +46,13 @@ void anadir_elementos(char **matriz_id, char **matriz_tipo, const char *id, cons
 	(*pcontador)++;	
 }
 
+void error(const char *msj, int nro_linea)
+{
+	puts("ERROR");
+	printf("Linea nro %d: %s\n", nro_linea, msj);
+	exit(ERROR);
+}
+
 /* FUNCIONES CON LISTA */
 
 int cambiar_campo_tipo(t_lista *pl, const char *lexema, const char *tipo)
@@ -55,12 +62,10 @@ int cambiar_campo_tipo(t_lista *pl, const char *lexema, const char *tipo)
         if( strcmp((*pl)->dato.lexema, lexema) == 0)
 		{
 			free(&(*pl)->dato.tipo);
-			(*pl)->dato.tipo = (char*) malloc(sizeof(char) * strlen(tipo) + 1);
-			if(&(*pl)->dato.tipo == NULL)
+			if(((*pl)->dato.tipo = strdup(tipo)) == NULL)
 			{
 				return LISTA_LLENA;
 			}
-			strcpy((*pl)->dato.tipo, tipo);
 			return TODO_BIEN;
 		}
         pl=&(*pl)->psig;
@@ -87,4 +92,36 @@ void completar_tipos(t_lista *ptabla_simbolos, char **matriz_id, char **matriz_t
 		indice_fin --;
 	}
 	
+}
+
+char* buscar_tipo(t_lista *pl, const char *lexema)
+{
+	while(*pl)
+    {
+        if( strcmp((*pl)->dato.lexema, lexema) == 0)
+		{
+			return (*pl)->dato.tipo;
+		}
+        pl=&(*pl)->psig;
+    }
+	return NULL;
+}
+
+char* coercion_tipos(char *tipo1, char *tipo2, int nro_linea)
+{
+	puts("Pase por aca");
+	if(strcmp(tipo1, LEXICO_TIPO_STRING) == 0 || strcmp(tipo1, LEXICO_TIPO_STRING) == 0)
+	{
+		error("No se puede usar un String en las operaciones aritmeticas", nro_linea);
+		return NULL;
+	}
+	else if(strcmp(tipo1, tipo2) == 0)
+	{
+		return tipo1;
+	}
+	else if(strcmp(tipo1, LEXICO_TIPO_FLOAT) == 0)
+	{
+		return tipo1;
+	}
+	return tipo2;
 }

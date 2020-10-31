@@ -1,5 +1,19 @@
 #include "../include/lexico.h"
 
+char* duplicar_string(const char*);
+
+char* duplicar_string(const char *string)
+{
+	char *resultado;
+	resultado = (char*) malloc(sizeof(char) * strlen(string) + 1);
+	if(resultado == NULL)
+	{
+		return NULL;
+	}
+	strcpy(resultado, string);
+	return resultado;
+}
+
 char* sacar_comillas(const char *s)
 {
 	int i, largo = strlen(s);
@@ -47,12 +61,10 @@ char* convertir_cadena_decimal(const char *s)
 
 	
 	// Necesitamos el auxiliar solo para dar vuelta la cadena con los números
-	aux = (char*) malloc(sizeof(char) * strlen(s) + 1);
-	if(aux == NULL)
+	if( (aux = duplicar_string(&s[2])) == NULL)
 	{
 		return NULL;
 	}
-	strcpy(aux, &s[2]);
 	aux = strrev(aux);
 
 	// Esto determina la base con la letra que se encuentra en segunda posición
@@ -113,7 +125,7 @@ char* adelantar_ceros(char *s)
 	return s;
 }
 
-int error_lexico(const char *msj, const int nro_linea)
+int error_lexico(const char *msj, int nro_linea)
 {
 	printf("Error lexico\n");
 	printf("Linea nro %d: %s\n", nro_linea, msj);
@@ -123,7 +135,7 @@ int error_lexico(const char *msj, const int nro_linea)
 /* FUNCIONES DE VERIFICACION */
 
 
-void verificar_string(const char *s, const int nro_linea)
+void verificar_string(const char *s, int nro_linea)
 {
 	if(strlen(s) > LEXICO_MAXIMA_CANTIDAD_CARACTERES_STRING)
 	{
@@ -131,7 +143,7 @@ void verificar_string(const char *s, const int nro_linea)
 	}
 }
 
-void verificar_rango_real(char *s, const int nro_linea)
+void verificar_rango_real(char *s, int nro_linea)
 {
 	// Rango para 32b en float 3.4*10^-38 a 3.4*10^38
 	double valor = 0;
@@ -151,7 +163,7 @@ void verificar_rango_real(char *s, const int nro_linea)
 	}
 }
 
-void verificar_rango_entero(char *s, const int nro_linea)
+void verificar_rango_entero(char *s, int nro_linea)
 {
 	// Rango para 16b en int -32768 a 32767, pero lo tomamos simétrico el intervalo
 	int valor = 0;
@@ -211,7 +223,7 @@ void finalizar_lexico(t_lista *pl, const char *path)
 	vaciar_lista(pl);
 }
 
-void insertar_ts(const char *lexema, const char *valor, int longitud, t_lista *ptabla_simbolos)
+void insertar_ts(const char *lexema, const char *tipo,const char *valor, int longitud, t_lista *ptabla_simbolos)
 {
 	int resultado = -1;
 	t_dato_lista *pd;
@@ -220,32 +232,39 @@ void insertar_ts(const char *lexema, const char *valor, int longitud, t_lista *p
 	pd = (t_dato_lista*)malloc(sizeof(t_dato_lista));
 	if(pd == NULL)
 	{
-		printf("Problemas de memoria\n");
+		puts("Problemas de memoria");
 		exit(ERROR);
 	}
-
-	// El tipo no se completa así que lo dejamos en nulo
-	pd->tipo = NULL;
 
 	// El lexema lo copiamos tal cual
-	pd->lexema = (char*)malloc(sizeof(char) * strlen(lexema) + 1);
-	if(pd->lexema == NULL)
+	if( (pd->lexema = duplicar_string(lexema)) == NULL)
 	{
-		printf("Problemas de memoria\n");
+		puts("Problemas de memoria");
 		exit(ERROR);
 	}
-	strcpy(pd->lexema, lexema);
-	
-	// El valor hay que validar que no sea NULL porque hay casos en que no se completa el campo
-	if(valor != NULL)
+
+	// El tipo hay que validar que no sea NULL porque hay casos en que no se completa este campo
+	if(tipo != NULL)
 	{
-		pd->valor = (char*) malloc(sizeof(char) * strlen(valor) + 1);
-		if(pd->valor == NULL)
+		if( (pd->tipo = duplicar_string(tipo)) == NULL)
 		{
-			printf("Problemas de memoria\n");
+			puts("Problemas de memoria");
 			exit(ERROR);
 		}
-		strcpy(pd->valor, valor);
+	}
+	else
+	{
+		pd->tipo = NULL;
+	}
+	
+	// El valor hay que validar que no sea NULL porque hay casos en que no se completa este campo
+	if(valor != NULL)
+	{
+		if( (pd->valor = duplicar_string(valor)) == NULL)
+		{
+			puts("Problemas de memoria");
+			exit(ERROR);
+		}
 	}
 	else
 	{
@@ -257,9 +276,14 @@ void insertar_ts(const char *lexema, const char *valor, int longitud, t_lista *p
 	
 	// Ya armado el t_dato_lista insertamos en la tabla
 	resultado = insertar_ordenado(ptabla_simbolos, pd, comparacion);
-	if(resultado == LISTA_LLENA || resultado == LISTA_DUPLICADO)
+	if(resultado == LISTA_DUPLICADO)
 	{
 		free(pd);
+	}
+	else if(resultado == LISTA_LLENA)
+	{
+		puts("Probelmas de memoria");
+		exit(ERROR);
 	}
 }
 

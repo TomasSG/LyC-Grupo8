@@ -110,33 +110,33 @@ COMENTARIO						{APERTURA_COMENTARIO}.*{CIERRE_COMENTARIO}
 
 {CONST_STRING}					{char *string = sacar_comillas(yytext);
 								verificar_string(string, yylineno);
-								insertar_ts(agregar_guion_bajo(string), string, strlen(string), &tabla_simbolos);
+								insertar_ts(agregar_guion_bajo(string), LEXICO_TIPO_STRING, string, strlen(string), &tabla_simbolos);
 								yylval.string = strdup(yytext);
 								return CONST_STRING;}
 
 {CONST_ENTERA}					{verificar_rango_entero(yytext, yylineno);
-								insertar_ts(agregar_guion_bajo(yytext), yytext, 0, &tabla_simbolos);
+								insertar_ts(agregar_guion_bajo(yytext), LEXICO_TIPO_INTEGER, yytext, 0, &tabla_simbolos);
 								yylval.string = strdup(yytext);
 								return CONST_ENTERA;}
 
 {CONST_REAL}					{verificar_rango_real(yytext, yylineno);
-								insertar_ts(agregar_guion_bajo(yytext), yytext, 0, &tabla_simbolos);
+								insertar_ts(agregar_guion_bajo(yytext), LEXICO_TIPO_FLOAT, yytext, 0, &tabla_simbolos);
 								yylval.string = strdup(yytext);
 								return CONST_REAL;}
 
 {CONST_BINARIA}					{char *cadena_valor_decimal = convertir_cadena_decimal(yytext);
 								verificar_rango_entero(cadena_valor_decimal, yylineno);
-								insertar_ts(agregar_guion_bajo(yytext), cadena_valor_decimal, 0, &tabla_simbolos);
+								insertar_ts(agregar_guion_bajo(yytext), LEXICO_TIPO_INTEGER, cadena_valor_decimal, 0, &tabla_simbolos);
 								yylval.string = strdup(cadena_valor_decimal);
 								return CONST_BINARIA;}
 
 {CONST_HEXA}					{char *cadena_valor_decimal = convertir_cadena_decimal(yytext);
 								verificar_rango_entero(cadena_valor_decimal, yylineno);
-								insertar_ts(agregar_guion_bajo(yytext), cadena_valor_decimal, 0, &tabla_simbolos);
+								insertar_ts(agregar_guion_bajo(yytext), LEXICO_TIPO_INTEGER, cadena_valor_decimal, 0, &tabla_simbolos);
 								yylval.string = strdup(cadena_valor_decimal);
 								return CONST_HEXA;}
 
-{ID}							{insertar_ts(yytext, NULL, 0, &tabla_simbolos); yylval.string = strdup(yytext); return ID;}
+{ID}							{insertar_ts(yytext, NULL, NULL, 0, &tabla_simbolos); yylval.string = strdup(yytext); return ID;}
 
 {COMENTARIO}		
 [ \n\t]

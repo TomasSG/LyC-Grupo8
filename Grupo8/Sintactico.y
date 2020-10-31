@@ -48,13 +48,14 @@
 %token	OP_NOT
 
 /* CONSTANTES */
-%token <string> CONST_ENTERA CONST_REAL CONST_STRING CONST_BINARIA CONST_HEXA
+%token <lexema> CONST_ENTERA CONST_REAL CONST_STRING CONST_BINARIA CONST_HEXA
 
 /* VARIABLES */
-%token <string> ID
+%token <lexema> ID
 
 /* DECLARACIONES TIPOS ELEMENTOS NO TERMINALES */
-%type <string> tipoDeDato constante factor termino expresion
+%type <string> tipoDeDato 
+%type <lexema> constante factor termino expresion
 
 /* ______________________________________________________________ */
 
@@ -200,10 +201,10 @@ factor: ID
 | constante 
 {	
 	es_nuevo_token = 1;
-	f_indice = crear_terceto($1, TERCETO_SIGNO_VACIO, TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	f_indice = crear_terceto(buscar_valor(&tabla_simbolos, $1), TERCETO_SIGNO_VACIO, TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 
 	// Para verificacion de tipos
-	$$ = strdup(buscar_tipo(&tabla_simbolos, yylval.lexema));
+	$$ = strdup(buscar_tipo(&tabla_simbolos, $1));
 }
 
 | PAR_ABIERTO expresion PAR_CERRADO 
@@ -222,10 +223,10 @@ factor: ID
 | funcionContar							{/* TODO: ver que hacer aca */}
 ;
 
-constante : CONST_BINARIA				{$$ = yylval.string;}
-| CONST_HEXA							{$$ = yylval.string;}
-| CONST_REAL							{$$ = yylval.string;}
-| CONST_ENTERA 							{$$ = yylval.string;}
+constante : CONST_BINARIA			 	
+| CONST_HEXA							
+| CONST_REAL							
+| CONST_ENTERA 							
 ;
 		
 /* REGLAS PARA LA DECLARACION DE VARIABLES */

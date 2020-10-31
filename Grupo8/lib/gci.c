@@ -39,6 +39,19 @@ char* transformar_indice(int indice)
 	return resultado;
 }
 
+char* buscar_valor(t_lista *pl, const char *lexema)
+{
+	while(*pl)
+    {
+        if( strcmp((*pl)->dato.lexema, lexema) == 0)
+		{
+			return (*pl)->dato.valor;
+		}
+        pl=&(*pl)->psig;
+    }
+	return NULL;
+}
+
 int crear_terceto(const char *p1, const char *p2, const char *p3, int *pnumero, const char *path)
 {
 	FILE *pf = fopen(path, TEXTO_APPEND);

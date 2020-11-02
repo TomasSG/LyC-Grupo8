@@ -1,0 +1,15 @@
+*-BIEN-*
+*-comentario-*
+*-comentario mas complejo-*
+*- comentario con										tabs-*
+*-comentario con 12313123@()/!"#"!=$(=!$-*
+*-comentario anidado *- hola!!-* -*
+*--*
+*-comentario con una string "asdasda"-*
+
+*-MAL-*
+comentiario malo
+*- comentario sin cerrar por derecha
+comentario sin cerrar por izquierda-*
+*-comentario multi
+nivel-*

@@ -1,0 +1,3 @@
+PUT "ewr";
+GET base;
+PUT var1;

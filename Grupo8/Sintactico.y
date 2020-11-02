@@ -55,7 +55,7 @@
 
 /* DECLARACIONES TIPOS ELEMENTOS NO TERMINALES */
 %type <string> tipoDeDato 
-%type <lexema> constante factor termino expresion
+%type <lexema> constante factor termino expresion funcionContar
 
 /* ______________________________________________________________ */
 
@@ -79,20 +79,34 @@ sentencia	: asignacion PUNTO_COMA 	{}
 		;
 
 /* REGLAS PARA LA ASIGNACION */
-asignacion: ID OP_ASIGNACION expresion 	{verirficar_tipos_compatibles(&tabla_simbolos, $1, $3, yylineno);}
+asignacion: ID OP_ASIGNACION expresion 	{verirficar_tipos_compatibles(&tabla_simbolos, $1, $3, yylineno); crear_terceto(":=", $1,transformar_indice(e_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);}
 | ID OP_ASIGNACION CONST_STRING 		{verirficar_tipos_compatibles(&tabla_simbolos, $1, LEXICO_TIPO_STRING, yylineno);}
 ;
 
 /* REGLAS PARA CONTAR */
-funcionContar	: CONTAR PAR_ABIERTO expresion PUNTO_COMA listaConstantes PAR_CERRADO	{}
+funcionContar	: CONTAR PAR_ABIERTO expresion {crear_terceto(":=","@aux",transformar_indice(e_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO); } PUNTO_COMA listaConstantes PAR_CERRADO	{$$ = "Integer"; c_indice = crear_terceto("@cant", TERCETO_SIGNO_VACIO, TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);}
 		;
 
 listaConstantes	: COR_ABIERTO constantes COR_CERRADO 	{}
 		;
 
-constantes	: constantes  COMA 	constante	{}
-		| constante							{}
-		;
+constantes	: constantes  COMA 	constante	
+{
+
+	crear_terceto("CMP","@aux",transformar_indice(constante_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	crear_terceto("BNE",transformar_indice(numeracion_terceto + 4), TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	aux_indice = crear_terceto("+","@cant","1",&numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	c_indice = crear_terceto(":=","@cant",transformar_indice(aux_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+}
+| constante							
+{
+	crear_terceto(":=","@cant","0", &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	crear_terceto("CMP","@aux",transformar_indice(constante_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	crear_terceto("BNE",transformar_indice(numeracion_terceto + 4), TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	aux_indice = crear_terceto("+","@cant","1",&numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	c_indice = crear_terceto(":=","@cant",transformar_indice(aux_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+}
+;
 
 /* REGLAS PARA ARITMETICA */
 expresion : expresion OP_SUMA  termino	
@@ -201,7 +215,7 @@ factor: ID
 | constante 
 {	
 	es_nuevo_token = 1;
-	f_indice = crear_terceto(buscar_valor(&tabla_simbolos, $1), TERCETO_SIGNO_VACIO, TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	f_indice = constante_indice; 
 
 	// Para verificacion de tipos
 	$$ = strdup(buscar_tipo(&tabla_simbolos, $1));
@@ -220,13 +234,21 @@ factor: ID
 	$$ = $2;
 }
 
-| funcionContar							{/* TODO: ver que hacer aca */}
+| funcionContar							
+{
+	f_indice = c_indice;
+	$$ = $1;
+}
 ;
 
-constante : CONST_BINARIA			 	
-| CONST_HEXA							
-| CONST_REAL							
-| CONST_ENTERA 							
+constante : CONST_BINARIA 
+{constante_indice = crear_terceto(buscar_valor(&tabla_simbolos, $1), TERCETO_SIGNO_VACIO, TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);} 	
+| CONST_HEXA			  
+{constante_indice = crear_terceto(buscar_valor(&tabla_simbolos, $1), TERCETO_SIGNO_VACIO, TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);}			
+| CONST_REAL			  
+{constante_indice = crear_terceto(buscar_valor(&tabla_simbolos, $1), TERCETO_SIGNO_VACIO, TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);}				
+| CONST_ENTERA 			  
+{constante_indice = crear_terceto(buscar_valor(&tabla_simbolos, $1), TERCETO_SIGNO_VACIO, TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);}			
 ;
 		
 /* REGLAS PARA LA DECLARACION DE VARIABLES */

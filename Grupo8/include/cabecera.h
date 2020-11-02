@@ -22,7 +22,7 @@ int contador_elementos;
 
 /* VARIABLES PARA GCI */
 int contador_t, contador_e, recuperar_puntero, es_nuevo_token;
-int f_indice, t_indice, e_indice, l_indice, p_indice, a_indice, c_indice, constante_indice;
+int factor_indice, termino_indice, expresion_indice, contar_indice, constante_indice;
 int numeracion_terceto;
 t_pila pila_t, pila_e;
 char aux[CANTIDAD_ITOA];

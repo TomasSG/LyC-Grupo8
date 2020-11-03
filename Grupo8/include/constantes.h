@@ -41,12 +41,20 @@
 /* CONSTANTES DE TERCETOS */
 #define TERCETO_CANTIDAD_CORCHETES 2
 
+#define CANTIDAD_SALTOS_CONTAR 4
+
 #define SIGNO_SUMAR "+"
 #define SIGNO_RESTAR "-"
 #define SIGNO_DIVISION "/"
 #define SIGNO_MULT "*"
 #define SIGNO_IGUAL ":="
 #define SIGNO_VACIO " "
+
+#define VARIABLE_CANT "@cant"
+#define VARIABLE_AUX "@aux"
+
+#define CMP "CMP"
+#define BNE "BNE"
 
 
 /* CONSTANTES GENERALES */

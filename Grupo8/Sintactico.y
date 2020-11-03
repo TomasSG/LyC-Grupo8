@@ -81,19 +81,19 @@ sentencia	: asignacion PUNTO_COMA
 /* REGLAS PARA LA ASIGNACION */
 asignacion: ID OP_ASIGNACION expresion {
 	verirficar_tipos_compatibles(&tabla_simbolos, $1, $3, yylineno); 
-	crear_terceto(":=", $1,transformar_indice(expresion_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	crear_terceto(SIGNO_IGUAL, $1,transformar_indice(expresion_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 }
 
 | ID OP_ASIGNACION CONST_STRING {
 	verirficar_tipos_compatibles(&tabla_simbolos, $1, LEXICO_TIPO_STRING, yylineno);
-	crear_terceto(":=", $1,buscar_valor(&tabla_simbolos, $3), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	crear_terceto(SIGNO_IGUAL, $1,buscar_valor(&tabla_simbolos, $3), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 }
 ;
 
 /* REGLAS PARA CONTAR */
-funcionContar: CONTAR PAR_ABIERTO expresion {crear_terceto(":=","@aux",transformar_indice(expresion_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);} PUNTO_COMA listaConstantes PAR_CERRADO {
-	$$ = "Integer"; 
-	contar_indice = crear_terceto("@cant", SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+funcionContar: CONTAR PAR_ABIERTO expresion {crear_terceto(SIGNO_IGUAL, VARIABLE_AUX, transformar_indice(expresion_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);} PUNTO_COMA listaConstantes PAR_CERRADO {
+	$$ = LEXICO_TIPO_INTEGER; 
+	contar_indice = crear_terceto(VARIABLE_CANT, SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 }
 ;
 
@@ -102,18 +102,19 @@ listaConstantes	: COR_ABIERTO constantes COR_CERRADO
 
 constantes	: constantes  COMA 	constante {
 
-	crear_terceto("CMP","@aux",transformar_indice(constante_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
-	crear_terceto("BNE",transformar_indice(numeracion_terceto + 4), SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
-	aux_indice = crear_terceto("+","@cant","1",&numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
-	contar_indice = crear_terceto(":=","@cant",transformar_indice(aux_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	crear_terceto(CMP, VARIABLE_AUX, transformar_indice(constante_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	crear_terceto(BNE, transformar_indice(numeracion_terceto + CANTIDAD_SALTOS_CONTAR), SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	aux_indice = crear_terceto(SIGNO_SUMAR, VARIABLE_CANT, "1", &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	contar_indice = crear_terceto(SIGNO_IGUAL, VARIABLE_CANT, transformar_indice(aux_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 }
 
 | constante	{
-	crear_terceto(SIGNO_IGUAL,"@cant","0", &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
-	crear_terceto("CMP","@aux",transformar_indice(constante_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
-	crear_terceto("BNE",transformar_indice(numeracion_terceto + 4), SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
-	aux_indice = crear_terceto("+","@cant","1",&numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
-	contar_indice = crear_terceto(":=","@cant",transformar_indice(aux_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	crear_terceto(SIGNO_IGUAL, VARIABLE_CANT,"0", &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+
+	crear_terceto(CMP, VARIABLE_AUX, transformar_indice(constante_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	crear_terceto(BNE,transformar_indice(numeracion_terceto + CANTIDAD_SALTOS_CONTAR), SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	aux_indice = crear_terceto(SIGNO_SUMAR, VARIABLE_CANT, "1", &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	contar_indice = crear_terceto(SIGNO_IGUAL, VARIABLE_CANT, transformar_indice(aux_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 }
 ;
 

@@ -93,7 +93,7 @@ asignacion: ID OP_ASIGNACION expresion {
 /* REGLAS PARA CONTAR */
 funcionContar: CONTAR PAR_ABIERTO expresion {crear_terceto(":=","@aux",transformar_indice(expresion_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);} PUNTO_COMA listaConstantes PAR_CERRADO {
 	$$ = "Integer"; 
-	contar_indice = crear_terceto("@cant", TERCETO_SIGNO_VACIO, TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	contar_indice = crear_terceto("@cant", SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 }
 ;
 
@@ -103,15 +103,15 @@ listaConstantes	: COR_ABIERTO constantes COR_CERRADO
 constantes	: constantes  COMA 	constante {
 
 	crear_terceto("CMP","@aux",transformar_indice(constante_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
-	crear_terceto("BNE",transformar_indice(numeracion_terceto + 4), TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	crear_terceto("BNE",transformar_indice(numeracion_terceto + 4), SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 	aux_indice = crear_terceto("+","@cant","1",&numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 	contar_indice = crear_terceto(":=","@cant",transformar_indice(aux_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 }
 
 | constante	{
-	crear_terceto(":=","@cant","0", &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	crear_terceto(SIGNO_IGUAL,"@cant","0", &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 	crear_terceto("CMP","@aux",transformar_indice(constante_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
-	crear_terceto("BNE",transformar_indice(numeracion_terceto + 4), TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	crear_terceto("BNE",transformar_indice(numeracion_terceto + 4), SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 	aux_indice = crear_terceto("+","@cant","1",&numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 	contar_indice = crear_terceto(":=","@cant",transformar_indice(aux_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 }
@@ -128,7 +128,7 @@ expresion : expresion OP_SUMA  termino
 		desapilar(&pila_e, &expresion_indice);
 		recuperar_puntero = 0;
 	}
-	expresion_indice = crear_terceto(TERCETO_SIGNO_SUMAR, transformar_indice(expresion_indice), transformar_indice(termino_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	expresion_indice = crear_terceto(SIGNO_SUMAR, transformar_indice(expresion_indice), transformar_indice(termino_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 
 	// Para verificacion de tipos
 	$$ = coercion_tipos($1, $3, yylineno);
@@ -144,7 +144,7 @@ expresion : expresion OP_SUMA  termino
 		desapilar(&pila_e, &expresion_indice);
 		recuperar_puntero = 0;
 	}
-	expresion_indice = crear_terceto(TERCETO_SIGNO_RESTAR, transformar_indice(expresion_indice), transformar_indice(termino_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO); 
+	expresion_indice = crear_terceto(SIGNO_RESTAR, transformar_indice(expresion_indice), transformar_indice(termino_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO); 
 
 	// Para verificacion de tipos
 	$$ = coercion_tipos($1, $3, yylineno);
@@ -175,7 +175,7 @@ termino: termino OP_MULT factor
 		desapilar(&pila_t, &termino_indice);
 		recuperar_puntero = 0;
 	}
-	termino_indice = crear_terceto(TERCETO_SIGNO_MULT, transformar_indice(termino_indice), transformar_indice(factor_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO); 
+	termino_indice = crear_terceto(SIGNO_MULT, transformar_indice(termino_indice), transformar_indice(factor_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO); 
 
 	// Para verificacion de tipos
 	$$ = coercion_tipos($1, $3, yylineno);
@@ -190,7 +190,7 @@ termino: termino OP_MULT factor
 		desapilar(&pila_t, &termino_indice);
 		recuperar_puntero = 0;
 	}
-	termino_indice = crear_terceto(TERCETO_SIGNO_DIVISION, transformar_indice(termino_indice), transformar_indice(factor_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	termino_indice = crear_terceto(SIGNO_DIVISION, transformar_indice(termino_indice), transformar_indice(factor_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 
 	// Para verificacion de tipos
 	$$ = coercion_tipos($1, $3, yylineno);
@@ -214,7 +214,7 @@ termino: termino OP_MULT factor
 factor: ID 
 {	
 	es_nuevo_token = 1;
-	factor_indice = crear_terceto($1, TERCETO_SIGNO_VACIO, TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	factor_indice = crear_terceto($1, SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 
 	// Para verificacion de tipos
 	verficiar_declaracion(&tabla_simbolos, $1, yylineno);
@@ -253,18 +253,18 @@ factor: ID
 ;
 
 constante : CONST_BINARIA {
-	constante_indice = crear_terceto(buscar_valor(&tabla_simbolos, $1), TERCETO_SIGNO_VACIO, TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	constante_indice = crear_terceto(buscar_valor(&tabla_simbolos, $1), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 }
  	
 | CONST_HEXA {
-	constante_indice = crear_terceto(buscar_valor(&tabla_simbolos, $1), TERCETO_SIGNO_VACIO, TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	constante_indice = crear_terceto(buscar_valor(&tabla_simbolos, $1), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 }			
 | CONST_REAL {
-	constante_indice = crear_terceto(buscar_valor(&tabla_simbolos, $1), TERCETO_SIGNO_VACIO, TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	constante_indice = crear_terceto(buscar_valor(&tabla_simbolos, $1), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 }
 				
 | CONST_ENTERA {
-	constante_indice = crear_terceto(buscar_valor(&tabla_simbolos, $1), TERCETO_SIGNO_VACIO, TERCETO_SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	constante_indice = crear_terceto(buscar_valor(&tabla_simbolos, $1), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 }			
 ;
 		

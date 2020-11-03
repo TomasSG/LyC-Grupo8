@@ -5,7 +5,6 @@
 %union
 {
 	char *string;
-	char *lexema;
 }
 
 /* PALABRAS RESERVADAS */
@@ -48,14 +47,13 @@
 %token	OP_NOT
 
 /* CONSTANTES */
-%token <lexema> CONST_ENTERA CONST_REAL CONST_STRING CONST_BINARIA CONST_HEXA
+%token <string> CONST_ENTERA CONST_REAL CONST_STRING CONST_BINARIA CONST_HEXA
 
 /* VARIABLES */
-%token <lexema> ID
+%token <string> ID
 
 /* DECLARACIONES TIPOS ELEMENTOS NO TERMINALES */
-%type <string> tipoDeDato 
-%type <lexema> constante factor termino expresion funcionContar
+%type <string> tipoDeDato constante factor termino expresion funcionContar
 
 /* ______________________________________________________________ */
 
@@ -104,16 +102,16 @@ constantes	: constantes  COMA 	constante {
 
 	crear_terceto(CMP, VARIABLE_AUX, transformar_indice(constante_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 	crear_terceto(BNE, transformar_indice(numeracion_terceto + CANTIDAD_SALTOS_CONTAR), SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
-	aux_indice = crear_terceto(SIGNO_SUMAR, VARIABLE_CANT, "1", &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	aux_indice = crear_terceto(SIGNO_SUMAR, VARIABLE_CANT, AUMENTO_VARIABLE_CANT, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 	contar_indice = crear_terceto(SIGNO_IGUAL, VARIABLE_CANT, transformar_indice(aux_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 }
 
 | constante	{
-	crear_terceto(SIGNO_IGUAL, VARIABLE_CANT,"0", &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	crear_terceto(SIGNO_IGUAL, VARIABLE_CANT, INI_VARIABLE_CANT, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 
 	crear_terceto(CMP, VARIABLE_AUX, transformar_indice(constante_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 	crear_terceto(BNE,transformar_indice(numeracion_terceto + CANTIDAD_SALTOS_CONTAR), SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
-	aux_indice = crear_terceto(SIGNO_SUMAR, VARIABLE_CANT, "1", &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	aux_indice = crear_terceto(SIGNO_SUMAR, VARIABLE_CANT, AUMENTO_VARIABLE_CANT, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 	contar_indice = crear_terceto(SIGNO_IGUAL, VARIABLE_CANT, transformar_indice(aux_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 }
 ;

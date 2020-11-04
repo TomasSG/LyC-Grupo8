@@ -92,20 +92,20 @@ COMENTARIO						{APERTURA_COMENTARIO}.*{CIERRE_COMENTARIO}
 {PUNTO_COMA}					{return PUNTO_COMA;}
 {COMA}							{return COMA;}
 
-{OP_ASIGNACION} 				{return OP_ASIGNACION;}
-{OP_SUMA}						{return OP_SUMA;}
-{OP_RESTA}						{return OP_RESTA;}
-{OP_DIVISION}					{return OP_DIVISION;}
-{OP_MULT}						{return OP_MULT;}
-{OP_LE}							{return OP_LE;}
-{OP_LEQ}						{return OP_LEQ;}		
-{OP_GE}							{return OP_GE;}
-{OP_GEQ}						{return OP_GEQ;}	
-{OP_NE}							{return OP_NE;}
-{OP_AND}						{return OP_AND;}
-{OP_OR}							{return OP_OR;}
-{OP_NOT}						{return OP_NOT;}
-{OP_IGUAL}						{return OP_IGUAL;}
+{OP_ASIGNACION} 				{yylval.string = strdup(yytext); return OP_ASIGNACION;}
+{OP_SUMA}						{yylval.string = strdup(yytext); return OP_SUMA;}
+{OP_RESTA}						{yylval.string = strdup(yytext); return OP_RESTA;}
+{OP_DIVISION}					{yylval.string = strdup(yytext); return OP_DIVISION;}
+{OP_MULT}						{yylval.string = strdup(yytext); return OP_MULT;}
+{OP_LE}							{yylval.string = strdup(yytext); return OP_LE;}
+{OP_LEQ}						{yylval.string = strdup(yytext); return OP_LEQ;}		
+{OP_GE}							{yylval.string = strdup(yytext); return OP_GE;}
+{OP_GEQ}						{yylval.string = strdup(yytext); return OP_GEQ;}	
+{OP_NE}							{yylval.string = strdup(yytext); return OP_NE;}
+{OP_AND}						{yylval.string = strdup(yytext); return OP_AND;}
+{OP_OR}							{yylval.string = strdup(yytext); return OP_OR;}
+{OP_NOT}						{yylval.string = strdup(yytext); return OP_NOT;}
+{OP_IGUAL}						{yylval.string = strdup(yytext); return OP_IGUAL;}
 
 
 {CONST_STRING}					{char *string = sacar_comillas(yytext);

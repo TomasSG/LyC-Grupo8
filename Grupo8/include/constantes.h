@@ -54,9 +54,24 @@
 #define AUMENTO_VARIABLE_CANT "1"
 #define VARIABLE_AUX "@aux"
 
+
+
 #define ENTRADA "GET"
 #define SALIDA "PUT"
 #define CMP "CMP"
+
+#define OPERADOR_LE "<"
+#define OPERADOR_LEQ "<="
+#define OPERADOR_GE	">"
+#define OPERADOR_GEQ ">="
+#define OPERADOR_NE	"<>"
+#define OPERADOR_IGUAL "=="
+
+#define BLT "BLT"
+#define BLE "BLE"
+#define BGT "BGT"
+#define BGE "BGE"
+#define BEQ "BEQ"
 #define BNE "BNE"
 
 

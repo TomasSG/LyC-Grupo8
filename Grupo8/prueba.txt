@@ -1,4 +1,2 @@
-DIM <a> AS <Integer>;
-PUT a;
-GET a;
-PUT "asdasd";
+if(2+6*9 == 54*5)
+	PUT "HOLA";

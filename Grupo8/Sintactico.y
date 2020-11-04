@@ -31,20 +31,20 @@
 %token	COMA
 
 /* OPERADORES */
-%token	OP_ASIGNACION
-%token	OP_SUMA
-%token	OP_RESTA
-%token	OP_DIVISION
-%token	OP_MULT
-%token	OP_LE
-%token	OP_LEQ
-%token	OP_GE
-%token	OP_GEQ
-%token	OP_NE
-%token	OP_IGUAL
-%token	OP_AND
-%token	OP_OR
-%token	OP_NOT
+%token <string>	OP_ASIGNACION
+%token <string>	OP_SUMA
+%token <string>	OP_RESTA
+%token <string>	OP_DIVISION
+%token <string>	OP_MULT
+%token <string>	OP_LE
+%token <string>	OP_LEQ
+%token <string>	OP_GE
+%token <string>	OP_GEQ
+%token <string>	OP_NE
+%token <string>	OP_IGUAL
+%token <string>	OP_AND
+%token <string>	OP_OR
+%token <string>	OP_NOT
 
 /* CONSTANTES */
 %token <string> CONST_ENTERA CONST_REAL CONST_STRING CONST_BINARIA CONST_HEXA
@@ -53,7 +53,7 @@
 %token <string> ID
 
 /* DECLARACIONES TIPOS ELEMENTOS NO TERMINALES */
-%type <string> tipoDeDato constante factor termino expresion funcionContar
+%type <string> tipoDeDato constante factor termino expresion funcionContar comparador expLogica
 
 /* ______________________________________________________________ */
 
@@ -124,7 +124,7 @@ expresion : expresion OP_SUMA  termino
 	es_nuevo_token = 0;
 	if(recuperar_puntero == 1)
 	{
-		desapilar(&pila_e, &expresion_indice);
+		desapilar(&pila_expresion, &expresion_indice);
 		recuperar_puntero = 0;
 	}
 	expresion_indice = crear_terceto(SIGNO_SUMAR, transformar_indice(expresion_indice), transformar_indice(termino_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
@@ -140,7 +140,7 @@ expresion : expresion OP_SUMA  termino
 	es_nuevo_token = 0;
 	if(recuperar_puntero == 1)
 	{
-		desapilar(&pila_e, &expresion_indice);
+		desapilar(&pila_expresion, &expresion_indice);
 		recuperar_puntero = 0;
 	}
 	expresion_indice = crear_terceto(SIGNO_RESTAR, transformar_indice(expresion_indice), transformar_indice(termino_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO); 
@@ -155,7 +155,7 @@ expresion : expresion OP_SUMA  termino
 	contador_e++;
 	if(contador_e > 1)
 	{
-		apilar(&pila_e, &expresion_indice);
+		apilar(&pila_expresion, &expresion_indice);
 		es_nuevo_token = 0;
 	}
 	expresion_indice = termino_indice;
@@ -171,7 +171,7 @@ termino: termino OP_MULT factor
 	contador_t = 0;
 	if( recuperar_puntero == 1)
 	{
-		desapilar(&pila_t, &termino_indice);
+		desapilar(&pila_termino, &termino_indice);
 		recuperar_puntero = 0;
 	}
 	termino_indice = crear_terceto(SIGNO_MULT, transformar_indice(termino_indice), transformar_indice(factor_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO); 
@@ -186,7 +186,7 @@ termino: termino OP_MULT factor
 	contador_t = 0;
 	if( recuperar_puntero == 1)
 	{
-		desapilar(&pila_t, &termino_indice);
+		desapilar(&pila_termino, &termino_indice);
 		recuperar_puntero = 0;
 	}
 	termino_indice = crear_terceto(SIGNO_DIVISION, transformar_indice(termino_indice), transformar_indice(factor_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
@@ -200,7 +200,7 @@ termino: termino OP_MULT factor
 	contador_t++;
 	if(contador_t > 1)
 	{
-		apilar(&pila_t, &termino_indice);
+		apilar(&pila_termino, &termino_indice);
 		es_nuevo_token = 0;
 	}
 	termino_indice = factor_indice;
@@ -297,20 +297,23 @@ bloqueWhile	: WHILE PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE
 		| WHILE PAR_ABIERTO condicion PAR_CERRADO sentencia		{}
 		;
 
-bloqueIf	: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO ELSE LLAVE_ABIERTO bloque LLAVE_CERRADO {}
-			| IF PAR_ABIERTO condicion PAR_CERRADO sentencia {}
-			| IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO {}
-			;
+bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO ELSE LLAVE_ABIERTO bloque LLAVE_CERRADO {}
+| IF PAR_ABIERTO condicion PAR_CERRADO sentencia {}
+| IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO {}
+;
 		
 condicion	: expLogica OP_AND expLogica 	{}
-		| expLogica OP_OR expLogica			{}
-		| OP_NOT expLogica					{}
-		| expLogica							{}
-		;
+| expLogica OP_OR expLogica			{}
+| OP_NOT expLogica					{}
+| expLogica							{}
+;
 
-expLogica	: PAR_ABIERTO condicion PAR_CERRADO	{}
-		| expresion comparador expresion		{}
-		;
+expLogica: PAR_ABIERTO condicion PAR_CERRADO	{condicion_indice = exp_logica_indice;}
+| expresion {auxiliar_indice = expresion_indice;} comparador  expresion		
+{
+	exp_logica_indice = crear_terceto(buscar_comparador($2), transformar_indice(auxiliar_indice), transformar_indice(expresion_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+}
+;
 
 comparador	: OP_IGUAL					{}
 		| OP_LE							{}
@@ -334,12 +337,12 @@ int main(int argc, char *argv[])
 	
 	iniciar_lexico(&tabla_simbolos);
 	iniciar_semantica(&contador_elementos);
-	iniciar_gci(&pila_t, &pila_e, &contador_t, &contador_e, &es_nuevo_token, &recuperar_puntero, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	iniciar_gci(&pila_termino, &pila_expresion, &contador_t, &contador_e, &es_nuevo_token, &recuperar_puntero, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 	
 	yyparse();
 
 	finalizar_lexico(&tabla_simbolos, PATH_ARCHIVO_TS);
-	finalizar_gci(&pila_t, &pila_e);
+	finalizar_gci(&pila_termino, &pila_expresion);
 	fclose(yyin);
 	return TODO_BIEN;
 }

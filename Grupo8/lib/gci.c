@@ -52,6 +52,31 @@ char* buscar_valor(t_lista *pl, const char *lexema)
 	return NULL;
 }
 
+char* buscar_comparador(const char *op)
+{
+	switch(op)
+	{
+		case OPERADOR_LE:
+			return BGE;
+			break;
+		case OPERADOR_LEQ:
+			return BGT;
+			break;
+		case OPERADOR_GE:
+			return BLE;
+			break;
+		case OPERADOR_GEQ:
+			return BLT;
+			break;
+		case OPERADOR_NE:
+			return BEQ;
+			break;
+		case OPERADOR_IGUAL:
+			return BNE;
+			break;
+	}
+}
+
 int crear_terceto(const char *p1, const char *p2, const char *p3, int *pnumero, const char *path)
 {
 	FILE *pf = fopen(path, TEXTO_APPEND);
@@ -65,3 +90,4 @@ int crear_terceto(const char *p1, const char *p2, const char *p3, int *pnumero, 
 	fclose(pf);
 	return *pnumero;
 }
+

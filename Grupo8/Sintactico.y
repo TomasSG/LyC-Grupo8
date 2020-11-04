@@ -284,12 +284,12 @@ tipoDeDato: FLOAT
 		
 /* REGLAS PARA PUT Y GET */
 
-salida		: PUT ID							{}
-		| PUT CONST_STRING						{}
-		;
+salida: PUT ID							{put_indice = crear_terceto(SALIDA, $2, SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);}
+| PUT CONST_STRING						{put_indice = crear_terceto(SALIDA, buscar_valor(&tabla_simbolos, $2), SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);}
+;
 
-entrada		: GET ID							{}
-		;
+entrada: GET ID							{get_indice = crear_terceto(ENTRADA, $2, SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);}
+;
 
 /* REGLAS PARA LA DECLARACION DE WHILE E IF */
 

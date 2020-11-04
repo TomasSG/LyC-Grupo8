@@ -54,7 +54,8 @@
 #define AUMENTO_VARIABLE_CANT "1"
 #define VARIABLE_AUX "@aux"
 
-
+#define ENTRADA "GET"
+#define SALIDA "PUT"
 #define CMP "CMP"
 #define BNE "BNE"
 

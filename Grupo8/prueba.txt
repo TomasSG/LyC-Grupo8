@@ -1,2 +1,4 @@
 DIM <a> AS <Integer>;
-a:=contar(2*2;[256,52,0b011,0xAA,4]);
+PUT a;
+GET a;
+PUT "asdasd";

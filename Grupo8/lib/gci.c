@@ -54,27 +54,37 @@ char* buscar_valor(t_lista *pl, const char *lexema)
 
 char* buscar_comparador(const char *op)
 {
-	switch(op)
+	if(strcmp(op, OPERADOR_LE) == 0)
 	{
-		case OPERADOR_LE:
-			return BGE;
-			break;
-		case OPERADOR_LEQ:
-			return BGT;
-			break;
-		case OPERADOR_GE:
-			return BLE;
-			break;
-		case OPERADOR_GEQ:
-			return BLT;
-			break;
-		case OPERADOR_NE:
-			return BEQ;
-			break;
-		case OPERADOR_IGUAL:
-			return BNE;
-			break;
+		return BGE;
 	}
+
+	if(strcmp(op, OPERADOR_LEQ) == 0)
+	{
+		return BGT;
+	}
+
+	if(strcmp(op, OPERADOR_GE) == 0)
+	{
+		return BLE;
+	}
+
+	if(strcmp(op, OPERADOR_GEQ) == 0)
+	{
+		return BLT;
+	}
+
+	if(strcmp(op, OPERADOR_NE) == 0)
+	{
+		return BEQ;
+	}
+
+	if(strcmp(op, OPERADOR_IGUAL) == 0)
+	{
+		return BNE;
+	}
+
+	return NULL;
 }
 
 int crear_terceto(const char *p1, const char *p2, const char *p3, int *pnumero, const char *path)

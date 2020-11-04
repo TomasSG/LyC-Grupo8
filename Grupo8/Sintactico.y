@@ -53,7 +53,8 @@
 %token <string> ID
 
 /* DECLARACIONES TIPOS ELEMENTOS NO TERMINALES */
-%type <string> tipoDeDato constante factor termino expresion funcionContar comparador expLogica
+%type <string> tipoDeDato constante factor termino expresion funcionContar
+%type <string> comparador expLogica
 
 /* ______________________________________________________________ */
 
@@ -309,18 +310,19 @@ condicion	: expLogica OP_AND expLogica 	{}
 ;
 
 expLogica: PAR_ABIERTO condicion PAR_CERRADO	{condicion_indice = exp_logica_indice;}
-| expresion {auxiliar_indice = expresion_indice;} comparador  expresion		
+| expresion {auxiliar_indice = expresion_indice;} comparador expresion		
 {
-	exp_logica_indice = crear_terceto(buscar_comparador($2), transformar_indice(auxiliar_indice), transformar_indice(expresion_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	crear_terceto(CMP, transformar_indice(auxiliar_indice), transformar_indice(expresion_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	exp_logica_indice = crear_terceto(buscar_comparador(operador_comparacion), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 }
 ;
 
-comparador	: OP_IGUAL					{}
-		| OP_LE							{}
-		| OP_LEQ						{}
-		| OP_GE							{}
-		| OP_GEQ						{}
-		| OP_NE							{}
+comparador	: OP_IGUAL					{operador_comparacion = $1;}
+		| OP_LE							{operador_comparacion = $1;}
+		| OP_LEQ						{operador_comparacion = $1;}
+		| OP_GE							{operador_comparacion = $1;}
+		| OP_GEQ						{operador_comparacion = $1;}
+		| OP_NE							{operador_comparacion = $1;}
 		;
 
 %%

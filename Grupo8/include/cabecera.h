@@ -21,20 +21,22 @@ char *matriz_id[SEMANTICA_MAXIMA_LONGITUD_LISTA_DECLARACION], *matriz_tipo[SEMAN
 int contador_elementos;
 
 /* VARIABLES PARA GCI */
-int contador_t, contador_e, recuperar_puntero, es_nuevo_token;
 int numeracion_terceto;
-t_pila pila_termino, pila_expresion, pila_if;
 char aux[CANTIDAD_ITOA];
 int aux_indice;
 
 // ARITMETICA
+t_pila pila_termino, pila_expresion;
 int factor_indice, termino_indice, expresion_indice, constante_indice; 
+int contador_t, contador_e, recuperar_puntero, es_nuevo_token;
 // FUNCION CONTAR 
 int contar_indice; 
 // ENTRADA Y SALIDA
 int put_indice, get_indice;
 // IF
+t_pila pila_if;
 int auxiliar_indice, condicion_indice, exp_logica_indice;
+char *operador_comparacion;
 
 
 #endif // CABECERA_H_INCLUDED

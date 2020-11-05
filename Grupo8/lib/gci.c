@@ -1,7 +1,6 @@
 #include "../include/gci.h"
 
 char* obtener_indice(char*);
-char* obtener_salto(char*);
 char* get_comparador_invertido(const char*);
 
 void iniciar_gci(t_pila *pt, t_pila *pe, int *pcontador_t, int *pcontador_e, int *pes_nuevo_token, int *precuperar_puntero, int *pnumeracion, const char *path)
@@ -109,27 +108,6 @@ char* obtener_indice(char *s)
 	*res = ']';
 	res++;
 	res = '\0';
-	return inicio;
-}
-
-char* obtener_salto(char *s)
-{
-	char *res, *inicio;
-	res = (char*) malloc(sizeof(char) * 3 + 1);
-	if(res == NULL)
-	{
-		return NULL;
-	}
-	
-	inicio = res;
-	
-	while(*s != 'B')
-	{
-		s++;
-	}
-	
-	strncpy(res, s, 3);
-	*(res + 3) = '\0';
 	return inicio;
 }
 

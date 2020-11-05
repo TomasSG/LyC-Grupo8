@@ -298,32 +298,37 @@ bloqueWhile	: WHILE PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE
 		| WHILE PAR_ABIERTO condicion PAR_CERRADO sentencia		{}
 		;
 
-bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO ELSE LLAVE_ABIERTO bloque LLAVE_CERRADO {}
+bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO ELSE {} LLAVE_ABIERTO bloque LLAVE_CERRADO {}
 | IF PAR_ABIERTO condicion PAR_CERRADO sentencia {}
 | IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO {}
 ;
 		
-condicion	: expLogica OP_AND expLogica 	{}
-| expLogica OP_OR expLogica			{}
-| OP_NOT expLogica					{}
-| expLogica							{}
+
+// En el OR el primer salto es hacia la parte verdadera y el segundo hacia la falsa
+condicion	: expLogica OP_AND expLogica 	
+| expLogica {invertir_comparador(exp_logica_indice,  $1, PATH_ARCHIVO_CODIGO_INTERMEDIO);} OP_OR expLogica					
+| OP_NOT expLogica							{invertir_comparador(exp_logica_indice,  $2, PATH_ARCHIVO_CODIGO_INTERMEDIO);}
+| expLogica		
 ;
 
-expLogica: PAR_ABIERTO condicion PAR_CERRADO	{condicion_indice = exp_logica_indice;}
+expLogica: PAR_ABIERTO condicion PAR_CERRADO	{exp_logica_indice = condicion_indice;}
 | expresion {auxiliar_indice = expresion_indice;} comparador expresion		
 {
+	char *aux = buscar_comparador(operador_comparacion);
 	crear_terceto(CMP, transformar_indice(auxiliar_indice), transformar_indice(expresion_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
-	exp_logica_indice = crear_terceto(buscar_comparador(operador_comparacion), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	exp_logica_indice = crear_terceto(aux, SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	apilar(&pila_if, &exp_logica_indice);
+	$$ = aux;
 }
 ;
 
-comparador	: OP_IGUAL					{operador_comparacion = $1;}
-		| OP_LE							{operador_comparacion = $1;}
-		| OP_LEQ						{operador_comparacion = $1;}
-		| OP_GE							{operador_comparacion = $1;}
-		| OP_GEQ						{operador_comparacion = $1;}
-		| OP_NE							{operador_comparacion = $1;}
-		;
+comparador: OP_IGUAL					{operador_comparacion = $1;}
+| OP_LE									{operador_comparacion = $1;}
+| OP_LEQ								{operador_comparacion = $1;}
+| OP_GE									{operador_comparacion = $1;}
+| OP_GEQ								{operador_comparacion = $1;}
+| OP_NE									{operador_comparacion = $1;}
+;
 
 %%
 
@@ -337,6 +342,9 @@ int main(int argc, char *argv[])
 		return ERROR;
 	}
 	
+
+	crear_pila(&pila_if);
+
 	iniciar_lexico(&tabla_simbolos);
 	iniciar_semantica(&contador_elementos);
 	iniciar_gci(&pila_termino, &pila_expresion, &contador_t, &contador_e, &es_nuevo_token, &recuperar_puntero, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
@@ -346,6 +354,9 @@ int main(int argc, char *argv[])
 	finalizar_lexico(&tabla_simbolos, PATH_ARCHIVO_TS);
 	finalizar_gci(&pila_termino, &pila_expresion);
 	fclose(yyin);
+
+	vaciar_pila(&pila_if);
+
 	return TODO_BIEN;
 }
 

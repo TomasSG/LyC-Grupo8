@@ -1,2 +1,9 @@
-if(2+6*9 == 54*5)
-	PUT "HOLA";
+DIM <a,b,c,d> AS <Integer,Integer,Integer,Integer>;
+if(a < b or a > b)
+{
+	PUT "VERDADERO";
+}
+Else
+{
+	PUT "FALSO";
+}

@@ -7,6 +7,7 @@
 #define TEXTO_ESCRITURA "wt"
 #define TEXTO_LECTURA "rt"
 #define TEXTO_APPEND "at"
+#define TEXTO_LECTURA_ESCRITURA "r+"
 
 /* CONSTANTES DE RETORNOS GENERALES */
 #define TODO_BIEN 0

@@ -54,7 +54,7 @@ void error(const char *msj, int nro_linea)
 
 /* FUNCIONES CON LISTA */
 
-void completar_tipos(t_lista *ptabla_simbolos, char **matriz_id, char **matriz_tipo, int *pcontador)
+void completar_tipos(t_lista_ts *ptabla_simbolos, char **matriz_id, char **matriz_tipo, int *pcontador)
 {
 	int retorno, indice_fin = (*pcontador) - 1;
 	while(indice_fin >= 0)
@@ -88,7 +88,7 @@ char* coercion_tipos(char *tipo1, char *tipo2, int nro_linea)
 	return tipo2;
 }
 
-void verirficar_tipos_compatibles(t_lista *pl, const char *lexema, const char *tipo2, int nro_linea)
+void verirficar_tipos_compatibles(t_lista_ts *pl, const char *lexema, const char *tipo2, int nro_linea)
 {
 	char string_aux[CANTIDAD_ITOA], *tipo1;
 	tipo1 = buscar_tipo(pl, lexema);
@@ -105,7 +105,7 @@ void verirficar_tipos_compatibles(t_lista *pl, const char *lexema, const char *t
 	}
 }
 
-void verficiar_declaracion(t_lista *pl, const char *lexema, int nro_linea)
+void verficiar_declaracion(t_lista_ts *pl, const char *lexema, int nro_linea)
 {
 	char string_aux[CANTIDAD_ITOA], *tipo;
 	tipo = buscar_tipo(pl, lexema);

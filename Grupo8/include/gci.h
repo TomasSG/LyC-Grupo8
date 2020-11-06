@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "./constantes.h"
-#include "./lista.h"
+#include "./lista_ts.h"
 #include "./pila.h"
 
 void iniciar_gci(t_pila*, t_pila*, int*, int*, int*, int*, int*, const char*);

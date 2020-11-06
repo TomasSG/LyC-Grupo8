@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../y.tab.h"
-#include "./lista.h"
+#include "./lista_ts.h"
 #include "./pila.h"
 #include "./constantes.h"
 #include "./lexico.h"
@@ -14,7 +14,7 @@
 /* VARIABLES GLOBALES */
 extern FILE *yyin;
 extern int yylineno;
-t_lista tabla_simbolos;
+t_lista_ts tabla_simbolos;
 
 /* VARIABLES DE SEMANTICA */
 char *matriz_id[SEMANTICA_MAXIMA_LONGITUD_LISTA_DECLARACION], *matriz_tipo[SEMANTICA_MAXIMA_LONGITUD_LISTA_DECLARACION];

@@ -1,13 +1,13 @@
-#include "../include/lista.h"
+#include "../include/lista_ts.h"
 
-void crear_lista(t_lista *pl)
+void crear_lista(t_lista_ts *pl)
 {
     *pl=NULL;
 }
 
-void vaciar_lista(t_lista *pl)
+void vaciar_lista(t_lista_ts *pl)
 {
-    t_nodo_lista *pnodo;
+    t_nodo_lista_ts *pnodo;
     while(*pl)
     {
         pnodo=*pl;
@@ -16,14 +16,14 @@ void vaciar_lista(t_lista *pl)
     }
 }
 
-int insertar_ordenado(t_lista *pl,const t_dato_lista *pd,t_cmp cmp)
+int insertar_ordenado(t_lista_ts *pl,const t_dato_lista_ts *pd,t_cmp cmp)
 {
-    t_nodo_lista *pnodo;
+    t_nodo_lista_ts *pnodo;
     while(*pl && cmp(pd,&(*pl)->dato)>0)
         pl=&(*pl)->psig;
     if(*pl && cmp(pd,&(*pl)->dato)==0)
         return LISTA_DUPLICADO;
-    pnodo=(t_nodo_lista*)malloc(sizeof(t_nodo_lista));
+    pnodo=(t_nodo_lista_ts*)malloc(sizeof(t_nodo_lista_ts));
     if(!pnodo)
         return LISTA_LLENA;
     pnodo->dato=*pd;
@@ -32,14 +32,14 @@ int insertar_ordenado(t_lista *pl,const t_dato_lista *pd,t_cmp cmp)
     return TODO_BIEN;
 }
 
-int comparacion(const t_dato_lista *pd1,const t_dato_lista *pd2)
+int comparacion(const t_dato_lista_ts *pd1,const t_dato_lista_ts *pd2)
 {
     return strcmp(pd1->lexema, pd2->lexema);
 }
 
-void guardar_lista_en_archivo(t_lista *pl, const char *path)
+void guardar_lista_en_archivo(t_lista_ts *pl, const char *path)
 {
-	t_dato_lista *pd;
+	t_dato_lista_ts *pd;
 	char auxiliar[CANTIDAD_ITOA];
 	FILE *pf = fopen(path, TEXTO_ESCRITURA);
 	if(pf == NULL)
@@ -70,7 +70,7 @@ void guardar_lista_en_archivo(t_lista *pl, const char *path)
 	fclose(pf);
 }
 
-int cambiar_campo_tipo(t_lista *pl, const char *lexema, const char *tipo)
+int cambiar_campo_tipo(t_lista_ts *pl, const char *lexema, const char *tipo)
 {
 	while(*pl)
     {
@@ -88,7 +88,7 @@ int cambiar_campo_tipo(t_lista *pl, const char *lexema, const char *tipo)
 	return LISTA_NO_EXISTE_ELEMENTO;
 }
 
-char* buscar_tipo(t_lista *pl, const char *lexema)
+char* buscar_tipo(t_lista_ts *pl, const char *lexema)
 {
 	while(*pl)
     {
@@ -101,7 +101,7 @@ char* buscar_tipo(t_lista *pl, const char *lexema)
 	return NULL;
 }
 
-char* buscar_valor(t_lista *pl, const char *lexema)
+char* buscar_valor(t_lista_ts *pl, const char *lexema)
 {
 	while(*pl)
     {

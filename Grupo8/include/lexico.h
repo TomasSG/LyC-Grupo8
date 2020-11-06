@@ -6,7 +6,7 @@
 #include <string.h>
 #include <math.h>
 #include "./constantes.h"
-#include "./lista.h"
+#include "./lista_ts.h"
 
 char* sacar_comillas(const char*);
 char* agregar_guion_bajo(const char*);
@@ -21,8 +21,8 @@ void verificar_rango_entero(char*, int);
 void verificar_rango_real(char*, int);
 
 /* FUNCIONES RELACIOANDAS CON LISTA */
-void iniciar_lexico(t_lista*);
-void finalizar_lexico(t_lista*, const char*);
-void insertar_ts(const char*,const char*, const char*, int, t_lista*);
+void iniciar_lexico(t_lista_ts*);
+void finalizar_lexico(t_lista_ts*, const char*);
+void insertar_ts(const char*,const char*, const char*, int, t_lista_ts*);
 
 #endif // UTILITARIAS_H_INCLUDEDs

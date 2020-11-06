@@ -184,7 +184,7 @@ void finalizar_lexico(t_lista_ts *pl, const char *path)
 	vaciar_lista_ts(pl);
 }
 
-void insertar_ts(const char *lexema, const char *tipo,const char *valor, int longitud, t_lista_ts *ptabla_simbolos)
+void insertar_ts(const char *lexema, const char *tipo, const char *valor, int longitud, t_lista_ts *ptabla_simbolos)
 {
 	int resultado = -1;
 	t_dato_lista_ts *pd;

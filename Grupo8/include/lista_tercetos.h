@@ -31,4 +31,7 @@ void vaciar_lista_tercetos(t_lista_tercetos*);
 int insertar_ordenado_tercetos(t_lista_tercetos*, const t_dato_lista_tercetos*, t_cmp_tercetos);
 void guardar_lista_en_archivo_terceto(t_lista_tercetos*, const char*);
 
+char* buscar_primer_elemento(const t_lista_tercetos*, int);
+void cambiar_primer_elemento(const t_lista_tercetos*, int, const char*);
+
 #endif // LISTA_TERCETOS_H_INCLUDED

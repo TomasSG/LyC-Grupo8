@@ -53,6 +53,36 @@ void guardar_lista_en_archivo_terceto(t_lista_tercetos *pl, const char *path)
 		fprintf(pf,"[%d] (%s, %s, %s)\n", pd->nro, pd->s1, pd->s2, pd->s3);
         pl = &(*pl)->psig;
     }
-	fprintf(pf,"|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 	fclose(pf);
+}
+
+char* buscar_primer_elemento(const t_lista_tercetos *pl, int nro)
+{
+	while(*pl)
+    {
+        if( (*pl)->dato.nro - nro == 0)
+		{
+			return (*pl)->dato.s1;
+		}
+        pl=&(*pl)->psig;
+    }
+	return NULL;
+}
+
+void cambiar_primer_elemento(const t_lista_tercetos *pl, int nro, const char *s1)
+{
+	while(*pl)
+    {
+        if( (*pl)->dato.nro - nro == 0)
+		{
+			free((*pl)->dato.s1);
+			if(((*pl)->dato.s1 = strdup(s1)) == NULL);
+			{
+				puts("Problemas de memoria");
+				exit(ERROR);
+			}
+			return;
+		}
+        pl=&(*pl)->psig;
+    }
 }

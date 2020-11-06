@@ -1,11 +1,11 @@
 #include "../include/lista_ts.h"
 
-void crear_lista(t_lista_ts *pl)
+void crear_lista_ts(t_lista_ts *pl)
 {
     *pl=NULL;
 }
 
-void vaciar_lista(t_lista_ts *pl)
+void vaciar_lista_ts(t_lista_ts *pl)
 {
     t_nodo_lista_ts *pnodo;
     while(*pl)
@@ -16,7 +16,7 @@ void vaciar_lista(t_lista_ts *pl)
     }
 }
 
-int insertar_ordenado(t_lista_ts *pl,const t_dato_lista_ts *pd,t_cmp cmp)
+int insertar_ordenado_ts(t_lista_ts *pl,const t_dato_lista_ts *pd,t_cmp cmp)
 {
     t_nodo_lista_ts *pnodo;
     while(*pl && cmp(pd,&(*pl)->dato)>0)
@@ -32,12 +32,12 @@ int insertar_ordenado(t_lista_ts *pl,const t_dato_lista_ts *pd,t_cmp cmp)
     return TODO_BIEN;
 }
 
-int comparacion(const t_dato_lista_ts *pd1,const t_dato_lista_ts *pd2)
+int comparacion_ts(const t_dato_lista_ts *pd1,const t_dato_lista_ts *pd2)
 {
     return strcmp(pd1->lexema, pd2->lexema);
 }
 
-void guardar_lista_en_archivo(t_lista_ts *pl, const char *path)
+void guardar_lista_en_archivo_ts(t_lista_ts *pl, const char *path)
 {
 	t_dato_lista_ts *pd;
 	char auxiliar[CANTIDAD_ITOA];

@@ -175,13 +175,13 @@ void verificar_rango_entero(char *s, int nro_linea)
 
 void iniciar_lexico(t_lista_ts *pl)
 {
-	crear_lista(pl);
+	crear_lista_ts(pl);
 }
 
 void finalizar_lexico(t_lista_ts *pl, const char *path)
 {
-	guardar_lista_en_archivo(pl, path);
-	vaciar_lista(pl);
+	guardar_lista_en_archivo_ts(pl, path);
+	vaciar_lista_ts(pl);
 }
 
 void insertar_ts(const char *lexema, const char *tipo,const char *valor, int longitud, t_lista_ts *ptabla_simbolos)
@@ -190,7 +190,7 @@ void insertar_ts(const char *lexema, const char *tipo,const char *valor, int lon
 	t_dato_lista_ts *pd;
 	
 	// Reservamos memoria para el t_dato_lista_ts
-	pd = (t_dato_lista_ts*)malloc(sizeof(t_dato_lista_ts));
+	pd = (t_dato_lista_ts*) malloc(sizeof(t_dato_lista_ts));
 	if(pd == NULL)
 	{
 		puts("Problemas de memoria");
@@ -236,7 +236,7 @@ void insertar_ts(const char *lexema, const char *tipo,const char *valor, int lon
 	pd->longitud = longitud;
 	
 	// Ya armado el t_dato_lista_ts insertamos en la tabla
-	resultado = insertar_ordenado(ptabla_simbolos, pd, comparacion);
+	resultado = insertar_ordenado_ts(ptabla_simbolos, pd, comparacion_ts);
 	if(resultado == LISTA_DUPLICADO)
 	{
 		free(pd);

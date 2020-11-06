@@ -298,11 +298,11 @@ bloqueWhile	: WHILE PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE
 		| WHILE PAR_ABIERTO condicion PAR_CERRADO sentencia		{}
 		;
 
+
 bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO ELSE {} LLAVE_ABIERTO bloque LLAVE_CERRADO {}
 | IF PAR_ABIERTO condicion PAR_CERRADO sentencia {}
 | IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO {}
-;
-		
+;					
 
 // En el OR el primer salto es hacia la parte verdadera y el segundo hacia la falsa
 condicion	: expLogica OP_AND expLogica 	

@@ -24,9 +24,5 @@ void verificar_rango_real(char*, int);
 void iniciar_lexico(t_lista*);
 void finalizar_lexico(t_lista*, const char*);
 void insertar_ts(const char*,const char*, const char*, int, t_lista*);
-int comparacion(const t_dato_lista*,const t_dato_lista*);
-void mostrar(const t_dato_lista*);
-
-
 
 #endif // UTILITARIAS_H_INCLUDEDs

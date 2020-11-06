@@ -180,34 +180,7 @@ void iniciar_lexico(t_lista *pl)
 
 void finalizar_lexico(t_lista *pl, const char *path)
 {
-	t_dato_lista *pd;
-	char auxiliar[CANTIDAD_ITOA];
-	FILE *pf = fopen(path, TEXTO_ESCRITURA);
-	if(pf == NULL)
-	{
-		printf("No se pudo abrir el archivo %s\n", path);
-	}
-	fprintf(pf,"|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-	fprintf(pf,"|                                                      TABLA DE SIMBOLOS                                                                        |\n");
-	fprintf(pf,"|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-	fprintf(pf,"|%-35s|%-35s|%-35s|%-35s|\n", "LEXEMA", "TIPO", "VALOR", "LONGITUD");
-	fprintf(pf,"|-----------------------------------|-----------------------------------|-----------------------------------|-----------------------------------|\n");
-    while(*pl)
-    {
-        pd =  &(*pl)->dato;
-		if(pd->longitud == 0)
-		{
-			strcpy(auxiliar, " ");
-		}
-		else
-		{
-			itoa(pd->longitud, auxiliar, 10);
-		}
-		fprintf(pf,"|%-35s|%-35s|%-35s|%-35s|\n", pd->lexema, pd->tipo ? pd->tipo : " ", pd->valor ? pd->valor : " ", auxiliar);
-        pl = &(*pl)->psig;
-    }
-	fprintf(pf,"|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-	fclose(pf);
+	guardar_lista_en_archivo(pl, path);
 	vaciar_lista(pl);
 }
 
@@ -273,14 +246,4 @@ void insertar_ts(const char *lexema, const char *tipo,const char *valor, int lon
 		puts("Probelmas de memoria");
 		exit(ERROR);
 	}
-}
-
-int comparacion(const t_dato_lista *pd1,const t_dato_lista *pd2)
-{
-    return strcmp(pd1->lexema, pd2->lexema);
-}
-
-void mostrar(const t_dato_lista *pd)
-{	
-	printf("|%-35s|%-35s|%-35s|%d|\n", pd->lexema, pd->tipo, pd->valor, pd->longitud);
 }

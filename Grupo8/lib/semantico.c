@@ -1,8 +1,5 @@
 #include "../include/semantico.h"
-
-int cambiar_campo_tipo(t_lista*, const char*, const char*);
 int insertar_matriz(char**, const char*, int);
-
 
 void iniciar_semantica(int *pcontador)
 {
@@ -57,24 +54,6 @@ void error(const char *msj, int nro_linea)
 
 /* FUNCIONES CON LISTA */
 
-int cambiar_campo_tipo(t_lista *pl, const char *lexema, const char *tipo)
-{
-	while(*pl)
-    {
-        if( strcmp((*pl)->dato.lexema, lexema) == 0)
-		{
-			free(&(*pl)->dato.tipo);
-			if(((*pl)->dato.tipo = strdup(tipo)) == NULL)
-			{
-				return LISTA_LLENA;
-			}
-			return TODO_BIEN;
-		}
-        pl=&(*pl)->psig;
-    }
-	return LISTA_NO_EXISTE_ELEMENTO;
-}
-
 void completar_tipos(t_lista *ptabla_simbolos, char **matriz_id, char **matriz_tipo, int *pcontador)
 {
 	int retorno, indice_fin = (*pcontador) - 1;
@@ -96,19 +75,6 @@ void completar_tipos(t_lista *ptabla_simbolos, char **matriz_id, char **matriz_t
 	
 }
 
-char* buscar_tipo(t_lista *pl, const char *lexema)
-{
-	while(*pl)
-    {
-        if( strcmp((*pl)->dato.lexema, lexema) == 0)
-		{
-			return (*pl)->dato.tipo;
-		}
-        pl=&(*pl)->psig;
-    }
-	return NULL;
-}
-
 char* coercion_tipos(char *tipo1, char *tipo2, int nro_linea)
 {
 	if(strcmp(tipo1, tipo2) == 0)
@@ -124,41 +90,28 @@ char* coercion_tipos(char *tipo1, char *tipo2, int nro_linea)
 
 void verirficar_tipos_compatibles(t_lista *pl, const char *lexema, const char *tipo2, int nro_linea)
 {
-	char string_aux[CANTIDAD_ITOA];
-	while(*pl)
-    {
-        if( strcmp((*pl)->dato.lexema, lexema) == 0)
-		{
-			if((*pl)->dato.tipo == NULL)
-			{
-				sprintf(string_aux, "La variable %s aun no se ha declarado", lexema);
-				error(string_aux, nro_linea);
-			}
+	char string_aux[CANTIDAD_ITOA], *tipo1;
+	tipo1 = buscar_tipo(pl, lexema);
+	if(tipo1 == NULL)
+	{
+		sprintf(string_aux, "La variable %s aun no se ha declarado", lexema);
+		error(string_aux, nro_linea);
+	}
 			
-			if(strcmp((*pl)->dato.tipo, tipo2) != 0)
-			{
-				sprintf(string_aux, "No se puede asignar a un %s un tipo %s", (*pl)->dato.tipo,tipo2);
-				error(string_aux, nro_linea);
-			}
-			return;
-		}
-        pl=&(*pl)->psig;
-    }
+	if(strcmp(tipo1, tipo2) != 0)
+	{
+		sprintf(string_aux, "No se puede asignar a un %s un tipo %s", tipo1, tipo2);
+		error(string_aux, nro_linea);
+	}
 }
 
 void verficiar_declaracion(t_lista *pl, const char *lexema, int nro_linea)
 {
-	char string_aux[CANTIDAD_ITOA];
-	while(*pl)
-    {
-        if( strcmp((*pl)->dato.lexema, lexema) == 0)
-		{
-			if((*pl)->dato.tipo == NULL)
-			{
-				sprintf(string_aux, "La variable %s aun no se ha declarado", lexema);
-				error(string_aux, nro_linea);
-			}
-		}
-        pl=&(*pl)->psig;
-    }
+	char string_aux[CANTIDAD_ITOA], *tipo;
+	tipo = buscar_tipo(pl, lexema);
+	if(tipo == NULL)
+	{
+		sprintf(string_aux, "La variable %s aun no se ha declarado", lexema);
+		error(string_aux, nro_linea);
+	}
 }

@@ -14,7 +14,6 @@ void error(const char*, int);
 
 /* FUNCIONES CON LISTA */
 void completar_tipos(t_lista*, char**, char**, int*);
-char* buscar_tipo(t_lista*, const char*);
 char* coercion_tipos(char*, char*, int);
 void verirficar_tipos_compatibles(t_lista*, const char*, const char*, int);
 void verficiar_declaracion(t_lista *, const char*, int);

@@ -42,19 +42,6 @@ char* transformar_indice(int indice)
 	return resultado;
 }
 
-char* buscar_valor(t_lista *pl, const char *lexema)
-{
-	while(*pl)
-    {
-        if( strcmp((*pl)->dato.lexema, lexema) == 0)
-		{
-			return (*pl)->dato.valor;
-		}
-        pl=&(*pl)->psig;
-    }
-	return NULL;
-}
-
 char* buscar_comparador(const char *op)
 {
 	if(strcmp(op, OPERADOR_LE) == 0)

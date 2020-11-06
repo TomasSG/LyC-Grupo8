@@ -317,7 +317,7 @@ expLogica: PAR_ABIERTO condicion PAR_CERRADO	{exp_logica_indice = condicion_indi
 	char *aux = buscar_comparador(operador_comparacion);
 	crear_terceto(CMP, transformar_indice(auxiliar_indice), transformar_indice(expresion_indice), &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 	exp_logica_indice = crear_terceto(aux, SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
-	apilar(&pila_if, &exp_logica_indice);
+	apilar(&pila_condicion, &exp_logica_indice);
 	$$ = aux;
 }
 ;
@@ -343,19 +343,15 @@ int main(int argc, char *argv[])
 	}
 	
 
-	crear_pila(&pila_if);
-
 	iniciar_lexico(&tabla_simbolos);
 	iniciar_semantica(&contador_elementos);
-	iniciar_gci(&pila_termino, &pila_expresion, &contador_t, &contador_e, &es_nuevo_token, &recuperar_puntero, &numeracion_terceto, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	iniciar_gci(&lista_tercetos, &pila_condicion, &pila_termino, &pila_expresion, &contador_t, &contador_e, &es_nuevo_token, &recuperar_puntero, &numeracion_terceto);
 	
 	yyparse();
 
 	finalizar_lexico(&tabla_simbolos, PATH_ARCHIVO_TS);
-	finalizar_gci(&pila_termino, &pila_expresion);
+	finalizar_gci(&lista_tercetos, &pila_condicion, &pila_termino, &pila_expresion, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 	fclose(yyin);
-
-	vaciar_pila(&pila_if);
 
 	return TODO_BIEN;
 }

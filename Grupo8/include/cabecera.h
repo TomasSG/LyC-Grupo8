@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "../y.tab.h"
 #include "./lista_ts.h"
+#include "./lista_tercetos.h"
 #include "./pila.h"
 #include "./constantes.h"
 #include "./lexico.h"
@@ -34,7 +35,8 @@ int contar_indice;
 // ENTRADA Y SALIDA
 int put_indice, get_indice;
 // IF
-t_pila pila_if;
+t_lista_tercetos lista_tercetos;
+t_pila pila_condicion;
 int auxiliar_indice, condicion_indice, exp_logica_indice;
 char *operador_comparacion;
 

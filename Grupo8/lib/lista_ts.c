@@ -16,7 +16,7 @@ void vaciar_lista_ts(t_lista_ts *pl)
     }
 }
 
-int insertar_ordenado_ts(t_lista_ts *pl,const t_dato_lista_ts *pd,t_cmp cmp)
+int insertar_ordenado_ts(t_lista_ts *pl,const t_dato_lista_ts *pd,t_cmp_ts cmp)
 {
     t_nodo_lista_ts *pnodo;
     while(*pl && cmp(pd,&(*pl)->dato)>0)

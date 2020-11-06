@@ -3,15 +3,11 @@
 char* obtener_indice(char*);
 char* get_comparador_invertido(const char*);
 
-void iniciar_gci(t_pila *pt, t_pila *pe, int *pcontador_t, int *pcontador_e, int *pes_nuevo_token, int *precuperar_puntero, int *pnumeracion, const char *path)
+void iniciar_gci(t_lista_tercetos *pl, t_pila *pc, t_pila *pt, t_pila *pe, int *pcontador_t, int *pcontador_e, int *pes_nuevo_token, int *precuperar_puntero, int *pnumeracion)
 {
-	FILE *pf = fopen(path, TEXTO_ESCRITURA);
-	if(pf == NULL)
-	{
-		printf("No se pudo crear %s\n", path);
-		exit(ERROR);
-	}
-	fclose(pf);
+
+	crear_lista_tercetos(pl);
+	crear_pila(pc);
 	crear_pila(pt);
 	crear_pila(pe);
 	*pcontador_t = 0;
@@ -21,8 +17,11 @@ void iniciar_gci(t_pila *pt, t_pila *pe, int *pcontador_t, int *pcontador_e, int
 	*pnumeracion = -1;
 }
 
-void finalizar_gci(t_pila *pt, t_pila *pe)
+void finalizar_gci(t_lista_tercetos *pl, t_pila *pc, t_pila *pt, t_pila *pe, const char *path)
 {
+	guardar_lista_en_archivo_terceto(pl, path);
+	vaciar_lista_tercetos(pl);
+	vaciar_pila(pc);
 	vaciar_pila(pt);
 	vaciar_pila(pe);
 }

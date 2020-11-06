@@ -6,10 +6,11 @@
 #include <string.h>
 #include "./constantes.h"
 #include "./lista_ts.h"
+#include "./lista_tercetos.h"
 #include "./pila.h"
 
-void iniciar_gci(t_pila*, t_pila*, int*, int*, int*, int*, int*, const char*);
-void finalizar_gci(t_pila*, t_pila*);
+void iniciar_gci(t_lista_tercetos*, t_pila*, t_pila*, t_pila*, int*, int*, int*, int*, int*);
+void finalizar_gci(t_lista_tercetos*, t_pila*, t_pila*, t_pila*, const char*);
 char* transformar_indice(int);
 char* buscar_comparador(const char*);
 void invertir_comparador(int, const char*, const char*);

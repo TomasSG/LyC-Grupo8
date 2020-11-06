@@ -63,17 +63,25 @@
 /* DECLARACION DE REGLAS SINTACTICAS */
 %%
 
-programa: listaDeclaraciones bloque 					{puts("COMPILACION EXITOSA!");}
+// De esta forma siempre tiene que comenzar el programa con una lista de declaracione
+programa: listaDeclaraciones bloque 	{puts("COMPILACION EXITOSA!");}
+| bloque 								{puts("COMPILACION EXITOSA!");}			
 ;
 
 bloque: sentencia 
 {
 	bloque_indice = sentencia_indice;
+	
+	// Cada vez que termina una sentencia reinicio los contadores para que no interfieran con la sentencia siguiente
+	contador_e = 0; contador_t = 0;
 }
 
 | bloque sentencia 
 {
 	bloque_indice = crear_terceto(SIGNO_SEPARACION_SENTENCIAS, transformar_indice(bloque_indice), transformar_indice(sentencia_indice), &numeracion_terceto, &lista_tercetos);
+	
+	// Cada vez que termina una sentencia reinicio los contadores para que no interfieran con la sentencia siguiente
+	contador_e = 0; contador_t = 0;
 } 
 ;
 
@@ -255,7 +263,7 @@ factor: ID
 	{
 		recuperar_puntero = 1;
 	}
-	printf("%d\n", es_nuevo_token);
+	
 	// Para verificacion de tipos
 	$$ = $2;
 }

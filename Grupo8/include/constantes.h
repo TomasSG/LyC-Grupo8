@@ -49,6 +49,7 @@
 #define SIGNO_MULT "*"
 #define SIGNO_IGUAL ":="
 #define SIGNO_VACIO " "
+#define SIGNO_SEPARACION_SENTENCIAS ";"
 
 #define VARIABLE_CANT "@cant"
 #define INI_VARIABLE_CANT "0"

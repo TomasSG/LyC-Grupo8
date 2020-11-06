@@ -1,7 +1,5 @@
 DIM <a, b, c, d> AS <Integer, Integer, Integer, Integer>;
 
 ( (a) + ((b) + (c)) );
-( (a) * ((b) + (c)) );
-( (a) * ((b) * (c)) );
 ( (a) * ((b) * ( (c) + d ) ) );
-( (a) * ((b) + ( (c) + d ) ) );
+

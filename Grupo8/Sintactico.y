@@ -56,41 +56,56 @@
 %type <string> tipoDeDato constante factor termino expresion funcionContar
 %type <string> comparador expLogica
 
+%start programa
+
 /* ______________________________________________________________ */
 
 /* DECLARACION DE REGLAS SINTACTICAS */
 %%
 
-programa	: bloque 					{puts("COMPILACION EXITOSA!");}
-		;
+programa: listaDeclaraciones bloque 					{puts("COMPILACION EXITOSA!");}
+;
 
-bloque		: bloque sentencia 			
-		| sentencia 					
-		;
-
-sentencia	: asignacion PUNTO_COMA 	
-			| declaracion PUNTO_COMA	
-			| salida PUNTO_COMA 		
-			| entrada PUNTO_COMA 		
-			| bloqueWhile				
-			| bloqueIf					
-			|expresion PUNTO_COMA
-		;
-
-/* REGLAS PARA LA ASIGNACION */
-asignacion: ID OP_ASIGNACION expresion {
-	verirficar_tipos_compatibles(&tabla_simbolos, $1, $3, yylineno); 
-	crear_terceto(SIGNO_IGUAL, $1,transformar_indice(expresion_indice), &numeracion_terceto, &lista_tercetos);
+bloque: sentencia 
+{
+	bloque_indice = sentencia_indice;
 }
 
-| ID OP_ASIGNACION CONST_STRING {
+| bloque sentencia 
+{
+	bloque_indice = crear_terceto(SIGNO_SEPARACION_SENTENCIAS, transformar_indice(bloque_indice), transformar_indice(sentencia_indice), &numeracion_terceto, &lista_tercetos);
+} 
+;
+
+sentencia: asignacion PUNTO_COMA 		{sentencia_indice = asignacion_indice;}
+| salida PUNTO_COMA 					{sentencia_indice = put_indice;}
+| entrada PUNTO_COMA 					{sentencia_indice = get_indice;}
+| bloqueWhile				
+| bloqueIf					
+|expresion PUNTO_COMA 			 		{sentencia_indice = expresion_indice;}
+;
+
+listaDeclaraciones: declaracion PUNTO_COMA	
+| listaDeclaraciones declaracion PUNTO_COMA	
+;
+
+/* REGLAS PARA LA ASIGNACION */
+asignacion: ID OP_ASIGNACION expresion 
+{
+	verirficar_tipos_compatibles(&tabla_simbolos, $1, $3, yylineno); 
+	asignacion_indice = crear_terceto(SIGNO_IGUAL, $1,transformar_indice(expresion_indice), &numeracion_terceto, &lista_tercetos);
+}
+
+| ID OP_ASIGNACION CONST_STRING 
+{
 	verirficar_tipos_compatibles(&tabla_simbolos, $1, LEXICO_TIPO_STRING, yylineno);
-	crear_terceto(SIGNO_IGUAL, $1,buscar_valor(&tabla_simbolos, $3), &numeracion_terceto, &lista_tercetos);
+	asignacion_indice = crear_terceto(SIGNO_IGUAL, $1,buscar_valor(&tabla_simbolos, $3), &numeracion_terceto, &lista_tercetos);
 }
 ;
 
 /* REGLAS PARA CONTAR */
-funcionContar: CONTAR PAR_ABIERTO expresion {crear_terceto(SIGNO_IGUAL, VARIABLE_AUX, transformar_indice(expresion_indice), &numeracion_terceto, &lista_tercetos);} PUNTO_COMA listaConstantes PAR_CERRADO {
+funcionContar: CONTAR PAR_ABIERTO expresion {crear_terceto(SIGNO_IGUAL, VARIABLE_AUX, transformar_indice(expresion_indice), &numeracion_terceto, &lista_tercetos);} PUNTO_COMA listaConstantes PAR_CERRADO 
+{
 	$$ = LEXICO_TIPO_INTEGER; 
 	contar_indice = crear_terceto(VARIABLE_CANT, SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
 }
@@ -99,7 +114,8 @@ funcionContar: CONTAR PAR_ABIERTO expresion {crear_terceto(SIGNO_IGUAL, VARIABLE
 listaConstantes	: COR_ABIERTO constantes COR_CERRADO 	
 ;
 
-constantes	: constantes  COMA 	constante {
+constantes	: constantes  COMA 	constante 
+{
 
 	crear_terceto(CMP, VARIABLE_AUX, transformar_indice(constante_indice), &numeracion_terceto, &lista_tercetos);
 	crear_terceto(BNE, transformar_indice(numeracion_terceto + CANTIDAD_SALTOS_CONTAR), SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
@@ -107,7 +123,8 @@ constantes	: constantes  COMA 	constante {
 	contar_indice = crear_terceto(SIGNO_IGUAL, VARIABLE_CANT, transformar_indice(aux_indice), &numeracion_terceto, &lista_tercetos);
 }
 
-| constante	{
+| constante	
+{
 	crear_terceto(SIGNO_IGUAL, VARIABLE_CANT, INI_VARIABLE_CANT, &numeracion_terceto, &lista_tercetos);
 
 	crear_terceto(CMP, VARIABLE_AUX, transformar_indice(constante_indice), &numeracion_terceto, &lista_tercetos);
@@ -157,7 +174,7 @@ expresion : expresion OP_SUMA  termino
 	if(contador_e > 1)
 	{
 		apilar(&pila_expresion, &expresion_indice);
-		es_nuevo_token = 0;
+		recuperar_puntero = 1;
 	}
 	expresion_indice = termino_indice;
 
@@ -202,7 +219,7 @@ termino: termino OP_MULT factor
 	if(contador_t > 1)
 	{
 		apilar(&pila_termino, &termino_indice);
-		es_nuevo_token = 0;
+		recuperar_puntero = 1;
 	}
 	termino_indice = factor_indice;
 
@@ -238,7 +255,7 @@ factor: ID
 	{
 		recuperar_puntero = 1;
 	}
-
+	printf("%d\n", es_nuevo_token);
 	// Para verificacion de tipos
 	$$ = $2;
 }

@@ -26,6 +26,10 @@ int numeracion_terceto;
 char aux[CANTIDAD_ITOA];
 int aux_indice;
 
+// SENTENCIA Y BLOQUE
+int sentencia_indice, bloque_indice;
+// ASIGNACION
+int asignacion_indice;
 // ARITMETICA
 t_pila pila_termino, pila_expresion;
 int factor_indice, termino_indice, expresion_indice, constante_indice; 

@@ -1,0 +1,12 @@
+if(1 < 2)
+	PUT "IF 1";
+if(1 <= 2)
+	PUT "IF 2";
+if(1 > 2)
+	PUT "IF 3";
+if(1 >= 2)
+	PUT "IF 4";
+if(1 == 2)
+	PUT "IF 5";
+if(1 <> 2)
+	PUT "IF 6";

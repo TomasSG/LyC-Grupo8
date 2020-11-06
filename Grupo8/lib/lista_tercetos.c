@@ -76,7 +76,7 @@ void cambiar_primer_elemento(const t_lista_tercetos *pl, int nro, const char *s1
         if( (*pl)->dato.nro - nro == 0)
 		{
 			free((*pl)->dato.s1);
-			if(((*pl)->dato.s1 = strdup(s1)) == NULL);
+			if(((*pl)->dato.s1 = strdup(s1)) == NULL)
 			{
 				puts("Problemas de memoria");
 				exit(ERROR);

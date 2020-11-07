@@ -1,0 +1,5 @@
+DIM <a,b> AS <Integer, Integer>
+
+a := 2 + contar(3; [4]);
+a := 2 + (contar(3; [4]));
+a := (b/a) + (contar(3; [4]));

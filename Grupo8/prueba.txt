@@ -1,12 +1,13 @@
-if(not 1 < 2)
+if(2 > 2 and 2 == 6)
+{
+	if(3 == 4)
+	{
+		PUT "IF 2";
+		if(4 <> 2 or 9 == 9)
+		{
+			PUT " IF 3";
+			PUT " IF 3";
+		}
+	}
 	PUT "IF 1";
-if(not 1 <= 2)
-	PUT "IF 2";
-if(not 1 > 2)
-	PUT "IF 3";
-if(not 1 >= 2)
-	PUT "IF 4";
-if(not 1 == 2)
-	PUT "IF 5";
-if(not 1 <> 2)
-	PUT "IF 6";
+}

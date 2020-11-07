@@ -117,7 +117,7 @@ char* obtener_branch_invertido(const char *op)
 void invertir_branch(t_lista_tercetos *pl, int indice)
 {
 	
-	cambiar_primer_elemento(pl, indice, obtener_branch_invertido(buscar_primer_elemento(pl, indice)));
+	cambiar_elemento(pl, indice, obtener_branch_invertido(buscar_primer_elemento(pl, indice)), 1);
 }
 
 
@@ -172,4 +172,3 @@ int crear_terceto(const char *p1, const char *p2, const char *p3, int *pnumero, 
 	
 	return *pnumero;
 }
-

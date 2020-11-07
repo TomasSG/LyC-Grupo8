@@ -69,19 +69,44 @@ char* buscar_primer_elemento(const t_lista_tercetos *pl, int nro)
 	return NULL;
 }
 
-void cambiar_primer_elemento(const t_lista_tercetos *pl, int nro, const char *s1)
+void cambiar_elemento(const t_lista_tercetos *pl, int nro, const char *s ,int nro_elemento )
 {
+	
 	while(*pl)
     {
-        if( (*pl)->dato.nro - nro == 0)
+        if((*pl)->dato.nro - nro == 0)
 		{
-			free((*pl)->dato.s1);
-			if(((*pl)->dato.s1 = strdup(s1)) == NULL)
+			if(nro_elemento == 1)
 			{
-				puts("Problemas de memoria");
-				exit(ERROR);
+				free((*pl)->dato.s1);
+				if(((*pl)->dato.s1 = strdup(s)) == NULL)
+				{
+					puts("Problemas de memoria");
+					exit(ERROR);
+				}
+				return;
 			}
-			return;
+			else if(nro_elemento == 2)
+			{
+				free((*pl)->dato.s2);
+				if(((*pl)->dato.s2 = strdup(s)) == NULL)
+				{
+					puts("Problemas de memoria");
+					exit(ERROR);
+				}
+				return;
+			}
+			else
+			{
+				free((*pl)->dato.s3);
+				if(((*pl)->dato.s3 = strdup(s)) == NULL)
+				{
+					puts("Problemas de memoria");
+					exit(ERROR);
+				}
+				return;
+			}
+			
 		}
         pl=&(*pl)->psig;
     }

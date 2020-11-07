@@ -1,13 +1,26 @@
-if(2 > 2 and 2 == 6)
+if(2<2 or 6 == 2)
 {
-	if(3 == 4)
+	PUT "IF 1 VERDADERO";
+	if(3 > 5 and 5 < 6)
 	{
-		PUT "IF 2";
-		if(4 <> 2 or 9 == 9)
-		{
-			PUT " IF 3";
-			PUT " IF 3";
-		}
+			PUT "IF 2 VERDADERO";
 	}
-	PUT "IF 1";
+	else
+	{
+		PUT "IF 2 FALSO";
+	}
+}
+else
+{
+	PUT "IF 1 FALSO";
+	if(2 == 3)
+	{	
+		PUT "IF 3 VERDADERO";
+	}
+	else
+	{
+		PUT "IF 3 FALSO";
+		if(3 > 2 or 6 == 6)
+			PUT "IF 4 VERDADERO";
+	}
 }

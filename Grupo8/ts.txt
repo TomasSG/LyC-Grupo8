@@ -3,12 +3,15 @@
 |-----------------------------------------------------------------------------------------------------------------------------------------------|
 |LEXEMA                             |TIPO                               |VALOR                              |LONGITUD                           |
 |-----------------------------------|-----------------------------------|-----------------------------------|-----------------------------------|
-|_ IF 3                             |String                             | IF 3                              |5                                  |
 |_2                                 |Integer                            |2                                  |                                   |
 |_3                                 |Integer                            |3                                  |                                   |
-|_4                                 |Integer                            |4                                  |                                   |
+|_5                                 |Integer                            |5                                  |                                   |
 |_6                                 |Integer                            |6                                  |                                   |
-|_9                                 |Integer                            |9                                  |                                   |
-|_IF 1                              |String                             |IF 1                               |4                                  |
-|_IF 2                              |String                             |IF 2                               |4                                  |
+|_IF 1 FALSO                        |String                             |IF 1 FALSO                         |10                                 |
+|_IF 1 VERDADERO                    |String                             |IF 1 VERDADERO                     |14                                 |
+|_IF 2 FALSO                        |String                             |IF 2 FALSO                         |10                                 |
+|_IF 2 VERDADERO                    |String                             |IF 2 VERDADERO                     |14                                 |
+|_IF 3 FALSO                        |String                             |IF 3 FALSO                         |10                                 |
+|_IF 3 VERDADERO                    |String                             |IF 3 VERDADERO                     |14                                 |
+|_IF 4 VERDADERO                    |String                             |IF 4 VERDADERO                     |14                                 |
 |-----------------------------------------------------------------------------------------------------------------------------------------------|

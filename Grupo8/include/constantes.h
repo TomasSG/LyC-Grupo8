@@ -69,6 +69,7 @@
 #define OPERADOR_NE	"<>"
 #define OPERADOR_IGUAL "=="
 
+#define BI "BI"
 #define BLT "BLT"
 #define BLE "BLE"
 #define BGT "BGT"

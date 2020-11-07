@@ -324,7 +324,25 @@ bloqueWhile	: WHILE PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE
 		;
 
 
-bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO ELSE {} LLAVE_ABIERTO bloque LLAVE_CERRADO {}
+bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO ELSE 
+{
+	int auxiliar, cantidad_desapilar, i;
+	desapilar(&pila_cantidad_desapilar, &cantidad_desapilar);
+	for(i = 0; i < cantidad_desapilar; i++)
+	{
+		desapilar(&pila_condicion, &auxiliar);
+		cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(sentencia_indice + 2), 2);	
+	}
+
+	auxiliar = crear_terceto(BI, SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
+	apilar(&pila_condicion, &auxiliar);
+
+} LLAVE_ABIERTO bloque LLAVE_CERRADO 
+{
+	int auxiliar;
+	desapilar(&pila_condicion, &auxiliar);
+	cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(bloque_indice + 1), 2);	
+}
 
 | IF PAR_ABIERTO condicion PAR_CERRADO sentencia 
 {
@@ -341,7 +359,6 @@ bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRAD
 {
 	int auxiliar, cantidad_desapilar, i;
 	desapilar(&pila_cantidad_desapilar, &cantidad_desapilar);
-	printf("%d\n", cantidad_desapilar);
 	for(i = 0; i < cantidad_desapilar; i++)
 	{
 		desapilar(&pila_condicion, &auxiliar);

@@ -326,10 +326,11 @@ PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO
 	for(i = 0; i < cantidad_desapilar; i++)
 	{
 		desapilar(&pila_condicion, &auxiliar);
-		cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(numeracion_terceto + 2), 2);	
+		cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(numeracion_terceto + 2), SEGUNDO_ELEMENTO);	
 	}
 	desapilar(&pila_condicion, &auxiliar);
 	crear_terceto(BI, transformar_indice(auxiliar), SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
+	
 	while_indice = numeracion_terceto;
 }
 ;
@@ -342,7 +343,7 @@ bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRAD
 	for(i = 0; i < cantidad_desapilar; i++)
 	{
 		desapilar(&pila_condicion, &auxiliar);
-		cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(numeracion_terceto + 2), 2);	
+		cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(numeracion_terceto + 2), SEGUNDO_ELEMENTO);	
 	}
 
 	crear_terceto(BI, SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
@@ -353,7 +354,8 @@ bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRAD
 	
 	int auxiliar;
 	desapilar(&pila_condicion, &auxiliar);
-	cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(numeracion_terceto + 1), 2);
+	cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(numeracion_terceto + 1), SEGUNDO_ELEMENTO);
+	
 	if_indice = numeracion_terceto;
 }
 
@@ -364,8 +366,9 @@ bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRAD
 	for(i = 0; i < cantidad_desapilar; i++)
 	{
 		desapilar(&pila_condicion, &auxiliar);
-		cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(numeracion_terceto + 1), 2);	
+		cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(numeracion_terceto + 1), SEGUNDO_ELEMENTO);	
 	}
+	
 	if_indice = numeracion_terceto;
 }
 
@@ -376,13 +379,14 @@ bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRAD
 	for(i = 0; i < cantidad_desapilar; i++)
 	{
 		desapilar(&pila_condicion, &auxiliar);
-		cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(numeracion_terceto + 1), 2);	
+		cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(numeracion_terceto + 1), SEGUNDO_ELEMENTO);	
 	}
+	
 	if_indice = numeracion_terceto;
 }
 ;					
 
-// En el OR el primer salto es hacia la parte verdadera y el segundo hacia la falsa
+
 condicion	: expLogica OP_AND expLogica 												
 {
 	int cant_saltos = 2; 
@@ -397,10 +401,12 @@ condicion	: expLogica OP_AND expLogica
 	// Desapilor 2 veces porque me interesa la primera condicion
 	desapilar(&pila_condicion, &indice_segunda_condicion);
 	desapilar(&pila_condicion, &indice_primera_condicion);
+
 	// Apilo la segunda condición
 	apilar(&pila_condicion, &indice_segunda_condicion);
+
 	// Cambio el terceto de la primera condición para que el branch apunte al siguiente del terceto actual
-	cambiar_elemento(&lista_tercetos, indice_primera_condicion, transformar_indice(exp_logica_indice + 1), 2);	
+	cambiar_elemento(&lista_tercetos, indice_primera_condicion, transformar_indice(exp_logica_indice + 1), SEGUNDO_ELEMENTO);	
 	apilar(&pila_cantidad_desapilar, &cant_saltos);
 
 	
@@ -457,23 +463,16 @@ int main(int argc, char *argv[])
 		printf("No se pudo abrir el archivo %s\n", argv[1]);
 		return ERROR;
 	}
-	
-	crear_pila(&pila_cantidad_desapilar);
-
-
 
 	iniciar_lexico(&tabla_simbolos);
 	iniciar_semantica(&contador_elementos);
-	iniciar_gci(&lista_tercetos, &pila_condicion, &pila_termino, &pila_expresion, &contador_t, &contador_e, &es_nuevo_token, &recuperar_puntero, &numeracion_terceto);
+	iniciar_gci(&lista_tercetos, &pila_condicion, &pila_cantidad_desapilar, &pila_termino, &pila_expresion, &contador_t, &contador_e, &es_nuevo_token, &recuperar_puntero, &numeracion_terceto);
 	
 	yyparse();
 
 	finalizar_lexico(&tabla_simbolos, PATH_ARCHIVO_TS);
-	finalizar_gci(&lista_tercetos, &pila_condicion, &pila_termino, &pila_expresion, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	finalizar_gci(&lista_tercetos, &pila_condicion, &pila_cantidad_desapilar, &pila_termino, &pila_expresion, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 	fclose(yyin);
-
-
-	vaciar_pila(&pila_cantidad_desapilar);
 
 	return TODO_BIEN;
 }

@@ -9,8 +9,8 @@
 #include "./lista_tercetos.h"
 #include "./pila.h"
 
-void iniciar_gci(t_lista_tercetos*, t_pila*, t_pila*, t_pila*, int*, int*, int*, int*, int*);
-void finalizar_gci(t_lista_tercetos*, t_pila*, t_pila*, t_pila*, const char*);
+void iniciar_gci(t_lista_tercetos*, t_pila*, t_pila*, t_pila*, t_pila*, int*, int*, int*, int*, int*);
+void finalizar_gci(t_lista_tercetos*, t_pila*, t_pila*, t_pila*, t_pila*, const char*);
 char* transformar_indice(int);
 char* obtener_branch(const char*);
 void invertir_branch(t_lista_tercetos*, int);

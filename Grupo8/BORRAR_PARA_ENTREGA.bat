@@ -8,18 +8,18 @@ echo Creando el archivo de byson.
 F:\GnuWin32\bin\bison -dyv ./Sintactico.y
 pause
 echo Creando el ejecutable ...
-F:\MinGW\bin\gcc.exe  ./lib/lista_ts.c ./lib/lista_tercetos.c ./lib/pila.c ./lib/lexico.c ./lib/semantico.c ./lib/gci.c ./lex.yy.c ./y.tab.c -o ./Primera.exe
+F:\MinGW\bin\gcc.exe  ./lib/lista_ts.c ./lib/lista_tercetos.c ./lib/pila.c ./lib/lexico.c ./lib/semantico.c ./lib/gci.c ./lex.yy.c ./y.tab.c -o ./Segunda.exe
 pause
 cls
 echo Ejecutando el Analizador Lexicografico
 echo RESULTADOS:
 echo -----------------------------------------------------------------
-Primera.exe ./prueba.txt
+Segunda.exe ./prueba.txt
 echo.
 echo -----------------------------------------------------------------
 pause
 del lex.yy.c
-del Primera.exe
+del Segunda.exe
 del y.output
 del y.tab.c
 del y.tab.h

@@ -56,27 +56,38 @@ void guardar_lista_en_archivo_terceto(t_lista_tercetos *pl, const char *path)
 	fclose(pf);
 }
 
-char* buscar_primer_elemento(const t_lista_tercetos *pl, int nro)
+char* buscar_elemento(const t_lista_tercetos *pl, int nro_terceto, int nro_elemento)
 {
 	while(*pl)
     {
-        if( (*pl)->dato.nro - nro == 0)
+        if( (*pl)->dato.nro - nro_terceto == 0)
 		{
-			return (*pl)->dato.s1;
+			if(nro_elemento == PRIMER_ELEMENTO)
+			{
+				return (*pl)->dato.s1;
+			}
+			else if(nro_elemento == SEGUNDO_ELEMENTO)
+			{
+				return (*pl)->dato.s2;
+			}
+			else
+			{
+				return (*pl)->dato.s3;
+			}
 		}
         pl=&(*pl)->psig;
     }
 	return NULL;
 }
 
-void cambiar_elemento(const t_lista_tercetos *pl, int nro, const char *s ,int nro_elemento )
+void cambiar_elemento(const t_lista_tercetos *pl, int nro_terceto, const char *s ,int nro_elemento )
 {
 	
 	while(*pl)
     {
-        if((*pl)->dato.nro - nro == 0)
+        if((*pl)->dato.nro - nro_terceto == 0)
 		{
-			if(nro_elemento == 1)
+			if(nro_elemento == PRIMER_ELEMENTO)
 			{
 				free((*pl)->dato.s1);
 				if(((*pl)->dato.s1 = strdup(s)) == NULL)
@@ -86,7 +97,7 @@ void cambiar_elemento(const t_lista_tercetos *pl, int nro, const char *s ,int nr
 				}
 				return;
 			}
-			else if(nro_elemento == 2)
+			else if(nro_elemento == SEGUNDO_ELEMENTO)
 			{
 				free((*pl)->dato.s2);
 				if(((*pl)->dato.s2 = strdup(s)) == NULL)

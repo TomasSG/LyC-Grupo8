@@ -1,7 +1,14 @@
-DIM <a, b, c, d> AS <Integer, Integer, Integer, Integer>;
+DIM <a,b> AS <String, String>
 
-( (a) + ((b) + (c)) );
-( (a) * ((b) + (c)) );
-( (a) * ((b) * (c)) );
-( (a) * ((b) * ( (c) + d ) ) );
-( (a) * ((b) + ( (c) + d ) ) );
+if(1 < 2 or a == b)
+	PUT "IF 1";
+if(1 <= 2 or a == b)
+	PUT "IF 2";
+if(1 > 2 or a == b)
+	PUT "IF 3";
+if(1 >= 2 or a == b)
+	PUT "IF 4";
+if(1 == 2 or a == b)
+	PUT "IF 5";
+if(1 <> 2 or a == b)
+	PUT "IF 6";

@@ -1,0 +1,14 @@
+DIM <a,b> AS <String, String>
+
+if(1 < 2 or a == b)
+	PUT "IF 1";
+if(1 <= 2 or a == b)
+	PUT "IF 2";
+if(1 > 2 or a == b)
+	PUT "IF 3";
+if(1 >= 2 or a == b)
+	PUT "IF 4";
+if(1 == 2 or a == b)
+	PUT "IF 5";
+if(1 <> 2 or a == b)
+	PUT "IF 6";

@@ -1,5 +1,6 @@
-AS <
+DIM <a,b> AS <Integer, Integer>
 
+*- IFs SIMPLES -*
 if(a < b)
 	PUT "IF 1";
 
@@ -15,4 +16,27 @@ if(a < b)
 else
 {
 	PUT "IF 3 FALSO";
+}
+
+*- IFs ANIDADOS -*
+
+
+if(a < b)
+{
+	PUT "IF 1 VERDADERO";
+	if(a < b)
+	{
+		PUT "IF 2";
+	}
+	if(a < b)
+		PUT "IF 3";
+
+}
+else
+{
+	PUT "IF 1 FALSO";
+	if(a < b)
+	{
+		PUT "IF 4";
+	}
 }

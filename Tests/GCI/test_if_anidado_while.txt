@@ -1,1 +1,35 @@
+DIM <a,b> AS <Integer, Integer>
 
+*- IF CON UN WHILE ADENTRO -*
+
+if(a < b)
+{
+	PUT "IF 1 COMIENZO VERDADERO";
+	
+	while(not 2 == 5)
+	{
+		PUT "WHILE 1";
+		GET a;
+	}
+	
+	PUT "IF 1 FIN VERDADERO";
+}
+else
+{
+	PUT "IF 1 COMIENZO FALSO";
+	
+	while(2 == 5 and a == 2)
+	{
+		PUT "WHILE 2";
+		GET b;
+	}
+
+	PUT "IF 1 FIN FALSO";
+}
+
+if(a < b)
+	while(not 2 == 5)
+	{
+		PUT "WHILE 1";
+		GET a;
+	}

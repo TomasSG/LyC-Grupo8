@@ -64,8 +64,7 @@
 %%
 
 // De esta forma siempre tiene que comenzar el programa con una lista de declaracione
-programa: listaDeclaraciones bloque 	{puts("COMPILACION EXITOSA!");}
-| bloque 								{puts("COMPILACION EXITOSA!");}			
+programa: bloque 				{puts("COMPILACION EXITOSA!");}
 ;
 
 bloque: sentencia 
@@ -89,7 +88,7 @@ sentencia: asignacion PUNTO_COMA 		{sentencia_indice = asignacion_indice;}
 | bloqueWhile							{sentencia_indice = while_indice;}
 | bloqueIf								{sentencia_indice = if_indice;}
 |expresion PUNTO_COMA 			 		{sentencia_indice = expresion_indice;}
-| declaracion PUNTO_COMA				{}
+| declaracion							{}
 ;
 
 

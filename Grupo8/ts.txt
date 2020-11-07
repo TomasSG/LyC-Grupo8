@@ -5,12 +5,12 @@
 |-----------------------------------|-----------------------------------|-----------------------------------|-----------------------------------|
 |_1                                 |Integer                            |1                                  |                                   |
 |_2                                 |Integer                            |2                                  |                                   |
-|_COMIENZO WHILE                    |String                             |COMIENZO WHILE                     |14                                 |
-|_FIN WHILE                         |String                             |FIN WHILE                          |9                                  |
-|_IF                                |String                             |IF                                 |2                                  |
-|_IF2                               |String                             |IF2                                |3                                  |
-|_IF3 FALSO                         |String                             |IF3 FALSO                          |9                                  |
-|_IF3 VERDADERO                     |String                             |IF3 VERDADERO                      |13                                 |
-|a                                  |Integer                            |                                   |                                   |
-|b                                  |Integer                            |                                   |                                   |
+|_IF 1                              |String                             |IF 1                               |4                                  |
+|_IF 2                              |String                             |IF 2                               |4                                  |
+|_IF 3                              |String                             |IF 3                               |4                                  |
+|_IF 4                              |String                             |IF 4                               |4                                  |
+|_IF 5                              |String                             |IF 5                               |4                                  |
+|_IF 6                              |String                             |IF 6                               |4                                  |
+|a                                  |String                             |                                   |                                   |
+|b                                  |String                             |                                   |                                   |
 |-----------------------------------------------------------------------------------------------------------------------------------------------|

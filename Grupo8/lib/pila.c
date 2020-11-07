@@ -32,7 +32,7 @@ int apilar (t_pila* pila ,const t_dato_pila* dato)
 
 int desapilar(t_pila* pila ,t_dato_pila* dato )
 {
-    t_nodo_pila *nodo;
+	t_nodo_pila *nodo;
     if(!*pila)
         return PILA_VACIA;
     nodo=*pila;

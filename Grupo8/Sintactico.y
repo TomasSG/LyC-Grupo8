@@ -63,22 +63,17 @@
 /* DECLARACION DE REGLAS SINTACTICAS */
 %%
 
-// De esta forma siempre tiene que comenzar el programa con una lista de declaracione
 programa: bloque 				{puts("COMPILACION EXITOSA!");}
 ;
 
 bloque: sentencia 
 {
 	bloque_indice = sentencia_indice;
-	// Cada vez que termina una sentencia reinicio los contadores para que no interfieran con la sentencia siguiente
-	contador_e = 0; contador_t = 0, recuperar_puntero = 0;
 }
 
 | bloque sentencia 
 {
 	bloque_indice = sentencia_indice;
-	// Cada vez que termina una sentencia reinicio los contadores para que no interfieran con la sentencia siguiente
-	contador_e = 0; contador_t = 0, recuperar_puntero = 0;
 } 
 ;
 
@@ -87,7 +82,7 @@ sentencia: asignacion PUNTO_COMA 		{sentencia_indice = asignacion_indice;}
 | entrada PUNTO_COMA 					{sentencia_indice = get_indice;}
 | bloqueWhile							{sentencia_indice = while_indice;}
 | bloqueIf								{sentencia_indice = if_indice;}
-|expresion PUNTO_COMA 			 		{sentencia_indice = expresion_indice;}
+|expresion PUNTO_COMA 			 		{sentencia_indice = expresion_indice; contador_e = 0; contador_t = 0, recuperar_puntero = 0;}
 | declaracion							{}
 ;
 
@@ -142,14 +137,13 @@ expresion : expresion OP_SUMA  termino
 {
 	contador_e = 0;
 	contador_t = 0;
-	es_nuevo_token = 0;
-	if(recuperar_puntero == 1)
+	if(recuperar_puntero == 1 && es_nuevo_token == 0)
 	{
 		desapilar(&pila_expresion, &expresion_indice);
-		recuperar_puntero = 0;
+		//recuperar_puntero = 0;
 	}
 	expresion_indice = crear_terceto(SIGNO_SUMAR, transformar_indice(expresion_indice), transformar_indice(termino_indice), &numeracion_terceto, &lista_tercetos);
-
+	es_nuevo_token = 0;
 	// Para verificacion de tipos
 	$$ = coercion_tipos($1, $3, yylineno);
 }
@@ -158,13 +152,14 @@ expresion : expresion OP_SUMA  termino
 {	
 	contador_e = 0;
 	contador_t = 0;
-	es_nuevo_token = 0;
-	if(recuperar_puntero == 1)
+	
+	if(recuperar_puntero == 1 && es_nuevo_token == 0)
 	{
 		desapilar(&pila_expresion, &expresion_indice);
-		recuperar_puntero = 0;
+		//recuperar_puntero = 0;
 	}
 	expresion_indice = crear_terceto(SIGNO_RESTAR, transformar_indice(expresion_indice), transformar_indice(termino_indice), &numeracion_terceto, &lista_tercetos); 
+	es_nuevo_token = 0;
 
 	// Para verificacion de tipos
 	$$ = coercion_tipos($1, $3, yylineno);
@@ -177,7 +172,7 @@ expresion : expresion OP_SUMA  termino
 	if(contador_e > 1)	
 	{
 		apilar(&pila_expresion, &expresion_indice);
-		recuperar_puntero = 1;
+		//recuperar_puntero = 1;
 	}
 	expresion_indice = termino_indice;
 
@@ -188,14 +183,14 @@ expresion : expresion OP_SUMA  termino
 
 termino: termino OP_MULT factor
 {	
-	es_nuevo_token = 0;
 	contador_t = 0;
-	if( recuperar_puntero == 1)
+	if(recuperar_puntero == 1 && es_nuevo_token == 0)
 	{
 		desapilar(&pila_termino, &termino_indice);
-		recuperar_puntero = 0;
+		//recuperar_puntero = 0;
 	}
 	termino_indice = crear_terceto(SIGNO_MULT, transformar_indice(termino_indice), transformar_indice(factor_indice), &numeracion_terceto, &lista_tercetos); 
+	es_nuevo_token = 0;
 
 	// Para verificacion de tipos
 	$$ = coercion_tipos($1, $3, yylineno);
@@ -203,15 +198,15 @@ termino: termino OP_MULT factor
 
 | termino OP_DIVISION factor 
 {	
-	es_nuevo_token = 0;
 	contador_t = 0;
-	if( recuperar_puntero == 1)
+	if(recuperar_puntero == 1 && es_nuevo_token == 0)
 	{
 		desapilar(&pila_termino, &termino_indice);
-		recuperar_puntero = 0;
+		//recuperar_puntero = 0;
 	}
 	termino_indice = crear_terceto(SIGNO_DIVISION, transformar_indice(termino_indice), transformar_indice(factor_indice), &numeracion_terceto, &lista_tercetos);
-
+	es_nuevo_token = 0;
+		
 	// Para verificacion de tipos
 	$$ = coercion_tipos($1, $3, yylineno);
 }
@@ -222,7 +217,7 @@ termino: termino OP_MULT factor
 	if(contador_t > 1)
 	{
 		apilar(&pila_termino, &termino_indice);
-		recuperar_puntero = 1;
+		//recuperar_puntero = 1;
 	}
 	termino_indice = factor_indice;
 
@@ -266,6 +261,9 @@ factor: ID
 | funcionContar							
 {
 	factor_indice = contar_indice;
+	
+	recuperar_puntero = 1;
+	es_nuevo_token = 0;
 
 	// Para verificacion de tipos
 	$$ = $1;

@@ -73,15 +73,16 @@ bloque: sentencia
 	bloque_indice = sentencia_indice;
 	
 	// Cada vez que termina una sentencia reinicio los contadores para que no interfieran con la sentencia siguiente
-	contador_e = 0; contador_t = 0;
+	contador_e = 0; contador_t = 0, recuperar_puntero = 0;
 }
 
 | bloque sentencia 
 {
+	bloque_indice = sentencia_indice;
 	//bloque_indice = crear_terceto(SIGNO_SEPARACION_SENTENCIAS, transformar_indice(bloque_indice), transformar_indice(sentencia_indice), &numeracion_terceto, &lista_tercetos);
 	
 	// Cada vez que termina una sentencia reinicio los contadores para que no interfieran con la sentencia siguiente
-	contador_e = 0; contador_t = 0;
+	contador_e = 0; contador_t = 0, recuperar_puntero = 0;
 } 
 ;
 
@@ -89,7 +90,7 @@ sentencia: asignacion PUNTO_COMA 		{sentencia_indice = asignacion_indice;}
 | salida PUNTO_COMA 					{sentencia_indice = put_indice;}
 | entrada PUNTO_COMA 					{sentencia_indice = get_indice;}
 | bloqueWhile				
-| bloqueIf					
+| bloqueIf								{sentencia_indice = if_indice;}
 |expresion PUNTO_COMA 			 		{sentencia_indice = expresion_indice;}
 ;
 
@@ -179,7 +180,7 @@ expresion : expresion OP_SUMA  termino
 {	
 	contador_t = 0;
 	contador_e++;
-	if(contador_e > 1)
+	if(contador_e > 1)	
 	{
 		apilar(&pila_expresion, &expresion_indice);
 		recuperar_puntero = 1;
@@ -339,9 +340,11 @@ bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRAD
 
 } LLAVE_ABIERTO bloque LLAVE_CERRADO 
 {
+	
 	int auxiliar;
 	desapilar(&pila_condicion, &auxiliar);
-	cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(bloque_indice + 1), 2);	
+	cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(bloque_indice + 1), 2);
+	if_indice = bloque_indice;
 }
 
 | IF PAR_ABIERTO condicion PAR_CERRADO sentencia 
@@ -353,6 +356,7 @@ bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRAD
 		desapilar(&pila_condicion, &auxiliar);
 		cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(sentencia_indice + 1), 2);	
 	}
+	if_indice = sentencia_indice;
 }
 
 | IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO 
@@ -364,6 +368,7 @@ bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRAD
 		desapilar(&pila_condicion, &auxiliar);
 		cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(sentencia_indice + 1), 2);	
 	}
+	if_indice = bloque_indice;
 }
 ;					
 
@@ -387,6 +392,8 @@ condicion	: expLogica OP_AND expLogica
 	// Cambio el terceto de la primera condición para que el branch apunte al siguiente del terceto actual
 	cambiar_elemento(&lista_tercetos, indice_primera_condicion, transformar_indice(exp_logica_indice + 1), 2);	
 	apilar(&pila_cantidad_desapilar, &cant_saltos);
+
+	
 }
 
 | OP_NOT expLogica 
@@ -400,6 +407,11 @@ condicion	: expLogica OP_AND expLogica
 {
 	int cant_saltos = 1; 
 	apilar(&pila_cantidad_desapilar, &cant_saltos);
+
+	//Ver que pasa 
+	contador_e = 0;
+	contador_t = 0;
+	recuperar_puntero = 0;
 }
 ;
 

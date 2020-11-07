@@ -2,13 +2,14 @@
 
 char* obtener_branch_invertido(const char*);
 
-void iniciar_gci(t_lista_tercetos *pl, t_pila *pc, t_pila *pt, t_pila *pe, int *pcontador_t, int *pcontador_e, int *pes_nuevo_token, int *precuperar_puntero, int *pnumeracion)
+void iniciar_gci(t_lista_tercetos *pl, t_pila *pcondiciones, t_pila *pcantidad_salto, t_pila *pterminos, t_pila *pexpresiones, int *pcontador_t, int *pcontador_e, int *pes_nuevo_token, int *precuperar_puntero, int *pnumeracion)
 {
 
 	crear_lista_tercetos(pl);
-	crear_pila(pc);
-	crear_pila(pt);
-	crear_pila(pe);
+	crear_pila(pcondiciones);
+	crear_pila(pcantidad_salto);
+	crear_pila(pterminos);
+	crear_pila(pexpresiones);
 	*pcontador_t = 0;
 	*pcontador_e = 0;
 	*pes_nuevo_token = 0;
@@ -16,13 +17,14 @@ void iniciar_gci(t_lista_tercetos *pl, t_pila *pc, t_pila *pt, t_pila *pe, int *
 	*pnumeracion = -1;
 }
 
-void finalizar_gci(t_lista_tercetos *pl, t_pila *pc, t_pila *pt, t_pila *pe, const char *path)
+void finalizar_gci(t_lista_tercetos *pl, t_pila *pcondiciones, t_pila *pcantidad_salto, t_pila *pterminos, t_pila *pexpresiones, const char *path)
 {
 	guardar_lista_en_archivo_terceto(pl, path);
 	vaciar_lista_tercetos(pl);
-	vaciar_pila(pc);
-	vaciar_pila(pt);
-	vaciar_pila(pe);
+	vaciar_pila(pcondiciones);
+	vaciar_pila(pcantidad_salto);
+	vaciar_pila(pterminos);
+	vaciar_pila(pexpresiones);
 }
 
 char* transformar_indice(int indice)

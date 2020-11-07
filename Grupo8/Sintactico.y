@@ -71,7 +71,6 @@ programa: listaDeclaraciones bloque 	{puts("COMPILACION EXITOSA!");}
 bloque: sentencia 
 {
 	bloque_indice = sentencia_indice;
-	
 	// Cada vez que termina una sentencia reinicio los contadores para que no interfieran con la sentencia siguiente
 	contador_e = 0; contador_t = 0, recuperar_puntero = 0;
 }
@@ -79,8 +78,6 @@ bloque: sentencia
 | bloque sentencia 
 {
 	bloque_indice = sentencia_indice;
-	//bloque_indice = crear_terceto(SIGNO_SEPARACION_SENTENCIAS, transformar_indice(bloque_indice), transformar_indice(sentencia_indice), &numeracion_terceto, &lista_tercetos);
-	
 	// Cada vez que termina una sentencia reinicio los contadores para que no interfieran con la sentencia siguiente
 	contador_e = 0; contador_t = 0, recuperar_puntero = 0;
 } 
@@ -89,14 +86,12 @@ bloque: sentencia
 sentencia: asignacion PUNTO_COMA 		{sentencia_indice = asignacion_indice;}
 | salida PUNTO_COMA 					{sentencia_indice = put_indice;}
 | entrada PUNTO_COMA 					{sentencia_indice = get_indice;}
-| bloqueWhile				
+| bloqueWhile							{sentencia_indice = while_indice;}
 | bloqueIf								{sentencia_indice = if_indice;}
 |expresion PUNTO_COMA 			 		{sentencia_indice = expresion_indice;}
+| declaracion PUNTO_COMA				{}
 ;
 
-listaDeclaraciones: declaracion PUNTO_COMA	
-| listaDeclaraciones declaracion PUNTO_COMA	
-;
 
 /* REGLAS PARA LA ASIGNACION */
 asignacion: ID OP_ASIGNACION expresion 
@@ -320,9 +315,25 @@ entrada: GET ID							{get_indice = crear_terceto(ENTRADA, $2, SIGNO_VACIO, &num
 
 /* REGLAS PARA LA DECLARACION DE WHILE E IF */
 
-bloqueWhile	: WHILE PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO	{}
-		| WHILE PAR_ABIERTO condicion PAR_CERRADO sentencia		{}
-		;
+bloqueWhile	: WHILE 
+{
+	crear_terceto(ETIQUETA_WHILE, SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos); 
+	apilar(&pila_condicion, &numeracion_terceto);
+} 
+PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO
+{
+	int auxiliar, cantidad_desapilar, i;
+	desapilar(&pila_cantidad_desapilar, &cantidad_desapilar);
+	for(i = 0; i < cantidad_desapilar; i++)
+	{
+		desapilar(&pila_condicion, &auxiliar);
+		cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(numeracion_terceto + 2), 2);	
+	}
+	desapilar(&pila_condicion, &auxiliar);
+	crear_terceto(BI, transformar_indice(auxiliar), SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
+	while_indice = numeracion_terceto;
+}
+;
 
 
 bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO ELSE 
@@ -332,19 +343,19 @@ bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRAD
 	for(i = 0; i < cantidad_desapilar; i++)
 	{
 		desapilar(&pila_condicion, &auxiliar);
-		cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(sentencia_indice + 2), 2);	
+		cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(numeracion_terceto + 2), 2);	
 	}
 
-	auxiliar = crear_terceto(BI, SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
-	apilar(&pila_condicion, &auxiliar);
+	crear_terceto(BI, SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
+	apilar(&pila_condicion, &numeracion_terceto);
 
 } LLAVE_ABIERTO bloque LLAVE_CERRADO 
 {
 	
 	int auxiliar;
 	desapilar(&pila_condicion, &auxiliar);
-	cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(bloque_indice + 1), 2);
-	if_indice = bloque_indice;
+	cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(numeracion_terceto + 1), 2);
+	if_indice = numeracion_terceto;
 }
 
 | IF PAR_ABIERTO condicion PAR_CERRADO sentencia 
@@ -354,9 +365,9 @@ bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRAD
 	for(i = 0; i < cantidad_desapilar; i++)
 	{
 		desapilar(&pila_condicion, &auxiliar);
-		cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(sentencia_indice + 1), 2);	
+		cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(numeracion_terceto + 1), 2);	
 	}
-	if_indice = sentencia_indice;
+	if_indice = numeracion_terceto;
 }
 
 | IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO 
@@ -366,9 +377,9 @@ bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRAD
 	for(i = 0; i < cantidad_desapilar; i++)
 	{
 		desapilar(&pila_condicion, &auxiliar);
-		cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(sentencia_indice + 1), 2);	
+		cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(numeracion_terceto + 1), 2);	
 	}
-	if_indice = bloque_indice;
+	if_indice = numeracion_terceto;
 }
 ;					
 

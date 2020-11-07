@@ -1,0 +1,24 @@
+
+DIM <a,b> AS <Integer, Integer>;
+
+while(2==2 or 2 > 1)
+{
+	PUT "COMIENZO WHILE";
+	
+	if(a <b)
+		PUT "IF";
+	if(a == b)
+	{
+		PUT "IF2";
+	}
+	if(a == b)
+	{
+		PUT "IF3 VERDADERO";
+	}
+	else
+	{
+		PUT "IF3 FALSO";
+	}
+	
+	PUT "FIN WHILE";
+}

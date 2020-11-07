@@ -1,0 +1,41 @@
+
+*- WHILE SIMPLE -*
+while(2==2)
+{
+	PUT "VERDADERO1";
+	PUT "VERDADERO2";
+}
+
+*- WHILE CON CONDICIONES -*
+while(2==2 or 2 > 1)
+{
+	PUT "VERDADERO while1 1";
+	PUT "VERDADERO while1 2";
+}
+
+while(2==2 and 2 > 1)
+{
+	PUT "VERDADERO while2 1";
+	PUT "VERDADERO while2 2";
+}
+
+while(not 2 > 1)
+{
+	PUT "VERDADERO while2 1";
+	PUT "VERDADERO while2 2";
+}
+
+*- WHILE ANIDADOS CON IFS -*
+DIM <a,b> AS <Integer, Integer>;
+
+while(2==2 or 2 > 1)
+{
+	PUT "VERDADERO while1 1";
+	PUT "VERDADERO while1 2";
+
+	while(2==2 and 2 > 1)
+	{
+		PUT "VERDADERO while2 1";
+		PUT "VERDADERO while2 2";
+	}
+}

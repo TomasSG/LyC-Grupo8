@@ -1,0 +1,18 @@
+AS <
+
+if(a < b)
+	PUT "IF 1";
+
+if(a < b)
+{
+	PUT "IF 2";
+}
+
+if(a < b)
+{
+	PUT "IF 3 VERDADERO";
+}
+else
+{
+	PUT "IF 3 FALSO";
+}

@@ -41,7 +41,7 @@ int put_indice, get_indice;
 // IF
 t_lista_tercetos lista_tercetos;
 t_pila pila_condicion, pila_cantidad_desapilar;
-int auxiliar_indice, condicion_indice, exp_logica_indice, if_indice;
+int auxiliar_indice, condicion_indice, exp_logica_indice, if_indice, while_indice;
 char *operador_comparacion;
 
 

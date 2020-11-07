@@ -264,7 +264,8 @@ factor: ID
 	
 	recuperar_puntero = 1;
 	es_nuevo_token = 0;
-
+	contador_e = 0;
+	contador_t = 0;
 	// Para verificacion de tipos
 	$$ = $1;
 }

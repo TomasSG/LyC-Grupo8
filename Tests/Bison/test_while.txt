@@ -1,3 +1,5 @@
+DIM <a, b, i> AS <String, String, Integer>
+
 while(1 < 2)
 {
 	PUT "Hola";
@@ -5,7 +7,11 @@ while(1 < 2)
 }
 
 while(1 < 2)
+{
 	PUT "Hola";
+}
 
-while(1 < 2 anb a >= b)
+while(1 < 2 and a >= b)
+{
 	PUT "Hola";
+}

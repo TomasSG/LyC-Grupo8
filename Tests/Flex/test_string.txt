@@ -1,14 +1,14 @@
 *-BIEN-*
-""
-"string"
-"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-"@asdasdas%fgjhfgjf"
-"kjkj lkjmklj "
-"1313123"
-"123-_-asd	1 		"
+PUT "";
+PUT "string";
+PUT "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+PUT "@asdasdas%fgjhfgjf";
+PUT "kjkj lkjmklj ";
+PUT "1313123";
+PUT "123-_-asd	1 		";
 
 *-MAL-*
-azaasd
-"string sin cerrar por derecha
-string sin cerrar por izquierda"
-"Comentario muy largoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaaaaaaa"
+*- azaasd -*
+*- "string sin cerrar por derecha -*
+*- string sin cerrar por izquierda" -*
+ *- "Comentario muy largoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaaaaaaa" -*

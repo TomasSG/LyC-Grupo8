@@ -1,2 +1,2 @@
-DIM <contador,promedio,actual,suma> AS <Integer,Float,Float,Float>;
-DIM <a> AS <String>;
+DIM <contador,promedio,actual,suma> AS <Integer,Float,Float,Float>
+DIM <a> AS <String>

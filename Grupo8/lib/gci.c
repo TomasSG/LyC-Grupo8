@@ -34,7 +34,7 @@ char* transformar_indice(int indice)
 	resultado = (char*) malloc(sizeof(cadena_numero) + TERCETO_CANTIDAD_CORCHETES + 1);
 	if(resultado == NULL)
 	{
-		printf("Problemas de memoria\n");
+		puts("Problemas de memoria");
 		return NULL;
 	}
 	strcpy(resultado, "[");

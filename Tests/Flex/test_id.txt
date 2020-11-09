@@ -1,5 +1,7 @@
-aaaaaaaaaaaaaaaaa
-aa_aaa
-a1231331_1231
-a
-a_b_A
+DIM <aaaaaaaaaaaaaaaaa, aa_aaa, a1231331_1231,a ,a_b_A> AS <String, String, String, String, String>
+
+aaaaaaaaaaaaaaaaa;
+aa_aaa;
+a1231331_1231;
+a;
+a_b_A;

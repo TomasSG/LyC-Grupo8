@@ -1,3 +1,5 @@
+DIM <base, var1> AS <String, String>
+
 PUT "ewr";
 GET base;
 PUT var1;

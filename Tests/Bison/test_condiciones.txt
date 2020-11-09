@@ -1,3 +1,5 @@
+DIM <a, b, c, d, i> AS <Integer, Integer, Integer, Integer, Integer>
+
 
 if(a < b or c > d)
 	PUT "next";
@@ -8,13 +10,13 @@ if(a < b)
 if(c > d)
 	PUT "next";
 
-if ( a == b)
+if(a == b)
 	PUT "next";
 
-if( not (a > b))
+if(not a > b)
 	PUT "next";
 
-if ( not (a <b))
+if(not a < b)
 	PUT "next";
 
 if(1 < 2)

@@ -1,3 +1,4 @@
+DIM <f1, a> AS <Integer, Integer>
 f1 := contar (5;[2,2,2,2]);
 f1 := contar (5;[2,0b1,0x1]);
 f1 := contar (5;[2]);

@@ -1,4 +1,4 @@
-DIM <i, f, s> AS <Integer, Float, String>;
+DIM <i, f, s> AS <Integer, Float, String>
 
 *- CASOS BUENOS -*
 i := 2 + 6 *( 8 + 4);
@@ -7,15 +7,15 @@ f := i / 2.6;
 s := "Hola";
 
 *- CASOS MALOS -*
-i := 2 + 4 / 2.5; 
-i := "s";
-i := f;
-i := s;
-f := 12 + 56;
-f := "a";
-f := s;
-f := i;
-s := 1 + 2;
-s := 3.5 + 6;
-s := i;
-s := f;
+*- i := 2 + 4 / 2.5;  -*
+*- i := "s"; -*
+*- i := f; -*
+*- i := s; -*
+*- f := 12 + 56; -*
+*- f := "a"; -*
+*- f := s; -*
+*- f := i; -*
+*- s := 1 + 2; -*
+*- s := 3.5 + 6; -*
+*- s := i; -*
+*- s := f; -*

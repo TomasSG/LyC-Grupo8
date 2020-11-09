@@ -1,3 +1,5 @@
+DIM <a, b, c> AS <Integer, Integer, Integer>
+
 a := 0b111 + 35 + 0xFF;
 a := 0b111;
 a := 0b111 * (35 + 0xFF);

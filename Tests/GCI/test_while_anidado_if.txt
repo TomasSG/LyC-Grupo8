@@ -1,5 +1,5 @@
 
-DIM <a,b> AS <Integer, Integer>;
+DIM <a,b> AS <Integer, Integer>
 
 while(2==2 or 2 > 1)
 {

@@ -1,7 +1,7 @@
 *- CASOS BUENOS -*
-DIM <contador,promedio,actual,suma> AS <Integer,String,Integer,Float>;
-DIM <a> AS <String>;
+DIM <contador,promedio,actual,suma> AS <Integer,String,Integer,Float>
+DIM <a> AS <String>
 
 *- CASOS MALOS -*
-b;
-DIM <d, e> AS <Integer,String,Integer>;
+*- b; -*
+*- DIM <d, e> AS <Integer,String,Integer>; -*

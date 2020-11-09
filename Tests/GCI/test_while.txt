@@ -25,8 +25,8 @@ while(not 2 > 1)
 	PUT "VERDADERO while2 2";
 }
 
-*- WHILE ANIDADOS CON IFS -*
-DIM <a,b> AS <Integer, Integer>;
+*- WHILE ANIDADOS CON WHILES -*
+DIM <a,b> AS <Integer, Integer>
 
 while(2==2 or 2 > 1)
 {

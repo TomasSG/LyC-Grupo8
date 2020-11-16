@@ -73,7 +73,7 @@
 #define OPERADOR_NE	"<>"
 #define OPERADOR_IGUAL "=="
 
-#define ETIQUETA_WHILE "ET"
+#define ETIQUETA "_ET_"
 #define BI "BI"
 #define BLT "BLT"
 #define BLE "BLE"
@@ -82,6 +82,7 @@
 #define BEQ "BEQ"
 #define BNE "BNE"
 
+#define CANTIDAD_DIGITOS_NUMERO 5
 
 /* CONSTANTES GENERALES */
 #define CANTIDAD_ITOA 1000

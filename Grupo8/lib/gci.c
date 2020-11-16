@@ -122,6 +122,17 @@ void invertir_branch(t_lista_tercetos *pl, int indice)
 	cambiar_elemento(pl, indice, obtener_branch_invertido(buscar_elemento(pl, indice, PRIMER_ELEMENTO)), 1);
 }
 
+char* crear_etiqueta(int nro_terceto_prev)
+{
+	char *res;
+	res = (char*) malloc(strlen(ETIQUETA) * sizeof(char) + CANTIDAD_DIGITOS_NUMERO);
+	if(res == NULL)
+	{
+		return NULL;
+	}
+	sprintf(res,"%s%d", ETIQUETA, nro_terceto_prev + 1);
+	return res;
+}
 
 
 int crear_terceto(const char *p1, const char *p2, const char *p3, int *pnumero, t_lista_tercetos *pl)

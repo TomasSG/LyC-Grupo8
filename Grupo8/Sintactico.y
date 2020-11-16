@@ -97,7 +97,7 @@ asignacion: ID OP_ASIGNACION expresion
 | ID OP_ASIGNACION CONST_STRING 
 {
 	verirficar_tipos_compatibles(&tabla_simbolos, $1, LEXICO_TIPO_STRING, yylineno);
-	asignacion_indice = crear_terceto(SIGNO_IGUAL, $1,buscar_valor(&tabla_simbolos, $3), &numeracion_terceto, &lista_tercetos);
+	asignacion_indice = crear_terceto(SIGNO_IGUAL, $1, $3, &numeracion_terceto, &lista_tercetos);
 }
 ;
 
@@ -272,18 +272,18 @@ factor: ID
 ;
 
 constante : CONST_BINARIA {
-	constante_indice = crear_terceto(buscar_valor(&tabla_simbolos, $1), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
+	constante_indice = crear_terceto($1, SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
 }
  	
 | CONST_HEXA {
-	constante_indice = crear_terceto(buscar_valor(&tabla_simbolos, $1), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
+	constante_indice = crear_terceto($1, SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
 }			
 | CONST_REAL {
-	constante_indice = crear_terceto(buscar_valor(&tabla_simbolos, $1), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
+	constante_indice = crear_terceto($1, SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
 }
 				
 | CONST_ENTERA {
-	constante_indice = crear_terceto(buscar_valor(&tabla_simbolos, $1), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
+	constante_indice = crear_terceto($1, SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
 }			
 ;
 		
@@ -305,7 +305,7 @@ tipoDeDato: FLOAT
 /* REGLAS PARA PUT Y GET */
 
 salida: PUT ID							{put_indice = crear_terceto(SALIDA, $2, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);}
-| PUT CONST_STRING						{put_indice = crear_terceto(SALIDA, buscar_valor(&tabla_simbolos, $2), SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);}
+| PUT CONST_STRING						{put_indice = crear_terceto(SALIDA, $2, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);}
 ;
 
 entrada: GET ID							{get_indice = crear_terceto(ENTRADA, $2, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);}
@@ -315,7 +315,7 @@ entrada: GET ID							{get_indice = crear_terceto(ENTRADA, $2, SIGNO_VACIO, &num
 
 bloqueWhile	: WHILE 
 {
-	crear_terceto(ETIQUETA_WHILE, SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos); 
+	crear_terceto(crear_etiqueta(numeracion_terceto), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos); 
 	apilar(&pila_condicion, &numeracion_terceto);
 } 
 PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO

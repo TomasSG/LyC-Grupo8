@@ -100,16 +100,3 @@ char* buscar_tipo(t_lista_ts *pl, const char *lexema)
     }
 	return NULL;
 }
-
-char* buscar_valor(t_lista_ts *pl, const char *lexema)
-{
-	while(*pl)
-    {
-        if( strcmp((*pl)->dato.lexema, lexema) == 0)
-		{
-			return (*pl)->dato.valor;
-		}
-        pl=&(*pl)->psig;
-    }
-	return NULL;
-}

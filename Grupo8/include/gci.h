@@ -14,6 +14,7 @@ void finalizar_gci(t_lista_tercetos*, t_pila*, t_pila*, t_pila*, t_pila*, const 
 char* transformar_indice(int);
 char* obtener_branch(const char*);
 void invertir_branch(t_lista_tercetos*, int);
+char* crear_etiqueta(int);
 int crear_terceto(const char*, const char*, const char*, int*, t_lista_tercetos*);
 
 #endif

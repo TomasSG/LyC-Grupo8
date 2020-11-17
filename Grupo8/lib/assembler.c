@@ -1,10 +1,5 @@
 #include "../include/assembler.h"
 
-void generar_encabezado(FILE*);
-void generar_declaraciones(FILE*, t_lista_ts*);
-void generar_codigo(FILE*, const char*);
-void generar_final(FILE*);
-
 
 
 void generar_assembler(const char *path_assembler, const char *path_intermedio, t_lista_ts *pl)
@@ -34,6 +29,34 @@ void generar_encabezado(FILE *pf)
 
 void generar_declaraciones(FILE *pf, t_lista_ts *pl)
 {
+	fprintf(pf, "\n.DATA\n");
+	while(*pl)
+    {
+		if(es_constante((*pl)->dato.lexema))
+		{
+			if(strcmp((*pl)->dato.tipo, LEXICO_TIPO_STRING) == 0)
+			{
+				fprintf(pf, "%-35s\tdb\t\"%-35s\", \'$\', %d dup (?)\n",(*pl)->dato.lexema, (*pl)->dato.valor, (*pl)->dato.longitud);
+			}
+			else
+			{
+				if(strcmp((*pl)->dato.tipo, LEXICO_TIPO_INTEGER) == 0)
+				{
+					fprintf(pf, "%-35s\tdd\t%-10s.00\n",(*pl)->dato.lexema, (*pl)->dato.valor);
+				}
+				else
+				{
+					fprintf(pf, "%-35s\tdd\t%-10s\n",(*pl)->dato.lexema, (*pl)->dato.valor);
+				}
+			}
+		}
+		else
+		{
+			fprintf(pf, "%-35s\tdd\t?\n",(*pl)->dato.lexema);
+		}
+
+        pl=&(*pl)->psig;
+    }
 }
 
 void generar_codigo(FILE *pf, const char *path_intermedio)
@@ -42,4 +65,9 @@ void generar_codigo(FILE *pf, const char *path_intermedio)
 
 void generar_final(FILE *pf)
 {
+}
+
+int es_constante(const char *s)
+{
+	return *s == '_';
 }

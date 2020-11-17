@@ -9,4 +9,12 @@
 
 void generar_assembler(const char*, const char*, t_lista_ts*);
 
+
+void generar_encabezado(FILE*);
+void generar_declaraciones(FILE*, t_lista_ts*);
+void generar_codigo(FILE*, const char*);
+void generar_final(FILE*);
+
+int es_constante(const char*);
+
 #endif //ASSEMBLER_H_INCLUDED

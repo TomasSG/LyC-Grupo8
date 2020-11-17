@@ -66,7 +66,7 @@
 programa: bloque 				
 {
 	puts("COMPILACION EXITOSA!");
-	generar_assembler(PATH_ARCHIVO_ASSEMBLER, PATH_ARCHIVO_CODIGO_INTERMEDIO, &tabla_simbolos);
+	generar_assembler(PATH_ARCHIVO_ASSEMBLER, &lista_tercetos, &tabla_simbolos);
 }
 ;
 

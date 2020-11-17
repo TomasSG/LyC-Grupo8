@@ -2,7 +2,7 @@
 
 
 
-void generar_assembler(const char *path_assembler, const char *path_intermedio, t_lista_ts *pl)
+void generar_assembler(const char *path_assembler, const t_lista_tercetos *p_tercetos, const t_lista_ts *p_ts)
 {
 	FILE *pf = fopen(path_assembler, TEXTO_ESCRITURA);
 	if(pf == NULL)
@@ -12,10 +12,9 @@ void generar_assembler(const char *path_assembler, const char *path_intermedio, 
 	}
 	
 	generar_encabezado(pf);
-	generar_declaraciones(pf, pl);
-	generar_codigo(pf, path_intermedio);
+	generar_declaraciones(pf, p_ts);
+	generar_codigo(pf, p_tercetos);
 	generar_final(pf);
-	puts("Sopa de verduras");
 	
 	fclose(pf);
 }
@@ -27,7 +26,7 @@ void generar_encabezado(FILE *pf)
 	fprintf(pf, ".STACK 200h\n");
 }
 
-void generar_declaraciones(FILE *pf, t_lista_ts *pl)
+void generar_declaraciones(FILE *pf, const t_lista_ts *pl)
 {
 	fprintf(pf, "\n.DATA\n");
 	while(*pl)
@@ -59,7 +58,7 @@ void generar_declaraciones(FILE *pf, t_lista_ts *pl)
     }
 }
 
-void generar_codigo(FILE *pf, const char *path_intermedio)
+void generar_codigo(FILE *pf, const t_lista_tercetos *pl)
 {
 }
 

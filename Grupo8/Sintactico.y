@@ -144,7 +144,6 @@ expresion : expresion OP_SUMA  termino
 	if(recuperar_puntero == 1 && es_nuevo_token == 0)
 	{
 		desapilar(&pila_expresion, &expresion_indice);
-		//recuperar_puntero = 0;
 	}
 	expresion_indice = crear_terceto(SIGNO_SUMAR, transformar_indice(expresion_indice), transformar_indice(termino_indice), &numeracion_terceto, &lista_tercetos);
 	es_nuevo_token = 0;
@@ -160,7 +159,6 @@ expresion : expresion OP_SUMA  termino
 	if(recuperar_puntero == 1 && es_nuevo_token == 0)
 	{
 		desapilar(&pila_expresion, &expresion_indice);
-		//recuperar_puntero = 0;
 	}
 	expresion_indice = crear_terceto(SIGNO_RESTAR, transformar_indice(expresion_indice), transformar_indice(termino_indice), &numeracion_terceto, &lista_tercetos); 
 	es_nuevo_token = 0;
@@ -176,7 +174,6 @@ expresion : expresion OP_SUMA  termino
 	if(contador_e > 1)	
 	{
 		apilar(&pila_expresion, &expresion_indice);
-		//recuperar_puntero = 1;
 	}
 	expresion_indice = termino_indice;
 
@@ -191,7 +188,6 @@ termino: termino OP_MULT factor
 	if(recuperar_puntero == 1 && es_nuevo_token == 0)
 	{
 		desapilar(&pila_termino, &termino_indice);
-		//recuperar_puntero = 0;
 	}
 	termino_indice = crear_terceto(SIGNO_MULT, transformar_indice(termino_indice), transformar_indice(factor_indice), &numeracion_terceto, &lista_tercetos); 
 	es_nuevo_token = 0;
@@ -206,7 +202,6 @@ termino: termino OP_MULT factor
 	if(recuperar_puntero == 1 && es_nuevo_token == 0)
 	{
 		desapilar(&pila_termino, &termino_indice);
-		//recuperar_puntero = 0;
 	}
 	termino_indice = crear_terceto(SIGNO_DIVISION, transformar_indice(termino_indice), transformar_indice(factor_indice), &numeracion_terceto, &lista_tercetos);
 	es_nuevo_token = 0;
@@ -221,7 +216,6 @@ termino: termino OP_MULT factor
 	if(contador_t > 1)
 	{
 		apilar(&pila_termino, &termino_indice);
-		//recuperar_puntero = 1;
 	}
 	termino_indice = factor_indice;
 

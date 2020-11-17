@@ -14,11 +14,11 @@
 |_4                                 |Integer                            |4                                  |                                   |
 |_52                                |Integer                            |52                                 |                                   |
 |_92                                |Integer                            |92                                 |                                   |
-|_Ingrese un valor para actual:     |String                             |Ingrese un valor para actual:      |30                                 |
-|_La suma es:                       |String                             |La suma es:                        |12                                 |
-|_Prueba.txt LyC Tema 1!            |String                             |Prueba.txt LyC Tema 1!             |22                                 |
-|_mayor que 2 y distinto de cero    |String                             |mayor que 2 y distinto de cero     |30                                 |
-|_no es mayor que 2                 |String                             |no es mayor que 2                  |17                                 |
+|_Ingrese un valor para actual:     |String                             |"Ingrese un valor para actual: "   |30                                 |
+|_La suma es:                       |String                             |"La suma es: "                     |12                                 |
+|_Prueba.txt LyC Tema 1!            |String                             |"Prueba.txt LyC Tema 1!"           |22                                 |
+|_mayor que 2 y distinto de cero    |String                             |"mayor que 2 y distinto de cero"   |30                                 |
+|_no es mayor que 2                 |String                             |"no es mayor que 2"                |17                                 |
 |actual                             |Float                              |                                   |                                   |
 |contador                           |Integer                            |                                   |                                   |
 |promedio                           |Float                              |                                   |                                   |

@@ -108,10 +108,11 @@ COMENTARIO						{APERTURA_COMENTARIO}.*{CIERRE_COMENTARIO}
 {OP_IGUAL}						{yylval.string = strdup(yytext); return OP_IGUAL;}
 
 
-{CONST_STRING}					{char *string = sacar_comillas(yytext);
-								verificar_string(string, yylineno);
-								insertar_ts(agregar_guion_bajo(string), LEXICO_TIPO_STRING, string, strlen(string), &tabla_simbolos);
-								yylval.string = strdup(agregar_guion_bajo(string));
+{CONST_STRING}					{char *string_sin_comillas = sacar_comillas(yytext);
+								char *string_guion_bajo = agregar_guion_bajo(string_sin_comillas);
+								verificar_string(string_sin_comillas, yylineno);
+								insertar_ts(string_guion_bajo, LEXICO_TIPO_STRING, yytext, strlen(string_sin_comillas), &tabla_simbolos);
+								yylval.string = strdup(string_guion_bajo);
 								return CONST_STRING;}
 
 {CONST_ENTERA}					{verificar_rango_entero(yytext, yylineno);

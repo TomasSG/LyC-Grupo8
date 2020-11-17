@@ -36,23 +36,23 @@ void generar_declaraciones(FILE *pf, t_lista_ts *pl)
 		{
 			if(strcmp((*pl)->dato.tipo, LEXICO_TIPO_STRING) == 0)
 			{
-				fprintf(pf, "%-35s\tdb\t\"%-35s\", \'$\', %d dup (?)\n",(*pl)->dato.lexema, (*pl)->dato.valor, (*pl)->dato.longitud);
+				fprintf(pf, "%-35s\t%-2s\t%-35s, \'$\', %d dup (?)\n",(*pl)->dato.lexema, PRECISION_STRING, (*pl)->dato.valor, (*pl)->dato.longitud);
 			}
 			else
 			{
 				if(strcmp((*pl)->dato.tipo, LEXICO_TIPO_INTEGER) == 0)
 				{
-					fprintf(pf, "%-35s\tdd\t%-10s.00\n",(*pl)->dato.lexema, (*pl)->dato.valor);
+					fprintf(pf, "%-35s\t%-2s\t%s.00\n",(*pl)->dato.lexema, PRECISION_INTEGER, (*pl)->dato.valor);
 				}
 				else
 				{
-					fprintf(pf, "%-35s\tdd\t%-10s\n",(*pl)->dato.lexema, (*pl)->dato.valor);
+					fprintf(pf, "%-35s\t%-2s\t%s\n",(*pl)->dato.lexema, PRECISION_FLOAT, (*pl)->dato.valor);
 				}
 			}
 		}
 		else
 		{
-			fprintf(pf, "%-35s\tdd\t?\n",(*pl)->dato.lexema);
+			fprintf(pf, "%-35s\t%-2s\t?\n", (*pl)->dato.lexema, PRECISION_VARIABLE);
 		}
 
         pl=&(*pl)->psig;

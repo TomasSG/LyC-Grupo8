@@ -61,11 +61,9 @@
 #define AUMENTO_VARIABLE_CANT "1"
 #define VARIABLE_AUX "@aux"
 
-
-
 #define ENTRADA "GET"
 #define SALIDA "PUT"
-#define CMP "CMP"
+#define ETIQUETA "_ET_"
 
 #define OPERADOR_LE "<"
 #define OPERADOR_LEQ "<="
@@ -74,7 +72,7 @@
 #define OPERADOR_NE	"<>"
 #define OPERADOR_IGUAL "=="
 
-#define ETIQUETA "_ET_"
+#define CMP "CMP"
 #define BI "BI"
 #define BLT "BLT"
 #define BLE "BLE"
@@ -84,6 +82,12 @@
 #define BNE "BNE"
 
 #define CANTIDAD_DIGITOS_NUMERO 5
+
+/* CONSTANTES DE ASSEMBLER */
+#define PRECISION_STRING "db"
+#define PRECISION_INTEGER "dd"
+#define PRECISION_FLOAT "dd"
+#define PRECISION_VARIABLE "dd"
 
 /* CONSTANTES GENERALES */
 #define CANTIDAD_ITOA 1000

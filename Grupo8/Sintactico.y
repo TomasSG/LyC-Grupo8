@@ -63,7 +63,12 @@
 /* DECLARACION DE REGLAS SINTACTICAS */
 %%
 
-programa: bloque 				{puts("COMPILACION EXITOSA!");}
+programa: bloque 				
+{
+	puts("COMPILACION EXITOSA!");
+	finalizar_gci(&lista_tercetos, &pila_condicion, &pila_cantidad_desapilar, &pila_termino, &pila_expresion, PATH_ARCHIVO_CODIGO_INTERMEDIO);
+	generar_assembler(PATH_ARCHIVO_ASSEMBLER, PATH_ARCHIVO_CODIGO_INTERMEDIO, &tabla_simbolos);
+}
 ;
 
 bloque: sentencia 
@@ -329,6 +334,7 @@ PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRADO
 	}
 	desapilar(&pila_condicion, &auxiliar);
 	crear_terceto(BI, transformar_indice(auxiliar), SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
+	crear_terceto(crear_etiqueta(numeracion_terceto), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
 	
 	while_indice = numeracion_terceto;
 }
@@ -347,6 +353,8 @@ bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRAD
 
 	crear_terceto(BI, SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
 	apilar(&pila_condicion, &numeracion_terceto);
+	
+	crear_terceto(crear_etiqueta(numeracion_terceto), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
 
 } LLAVE_ABIERTO bloque LLAVE_CERRADO 
 {
@@ -354,7 +362,8 @@ bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRAD
 	int auxiliar;
 	desapilar(&pila_condicion, &auxiliar);
 	cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(numeracion_terceto + 1), SEGUNDO_ELEMENTO);
-	
+	crear_terceto(crear_etiqueta(numeracion_terceto), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
+
 	if_indice = numeracion_terceto;
 }
 
@@ -367,6 +376,7 @@ bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRAD
 		desapilar(&pila_condicion, &auxiliar);
 		cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(numeracion_terceto + 1), SEGUNDO_ELEMENTO);	
 	}
+	crear_terceto(crear_etiqueta(numeracion_terceto), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
 	
 	if_indice = numeracion_terceto;
 }
@@ -380,16 +390,19 @@ bloqueIf: IF PAR_ABIERTO condicion PAR_CERRADO LLAVE_ABIERTO bloque LLAVE_CERRAD
 		desapilar(&pila_condicion, &auxiliar);
 		cambiar_elemento(&lista_tercetos, auxiliar, transformar_indice(numeracion_terceto + 1), SEGUNDO_ELEMENTO);	
 	}
+	crear_terceto(crear_etiqueta(numeracion_terceto), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
 	
 	if_indice = numeracion_terceto;
 }
 ;					
 
-
 condicion	: expLogica OP_AND expLogica 												
 {
 	int cant_saltos = 2; 
 	apilar(&pila_cantidad_desapilar, &cant_saltos);
+
+	// Para poner etiqueta de inicio de parte verdadera
+	crear_terceto(crear_etiqueta(numeracion_terceto), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
 }
 
 | expLogica {invertir_branch(&lista_tercetos, exp_logica_indice);} OP_OR expLogica		
@@ -408,7 +421,8 @@ condicion	: expLogica OP_AND expLogica
 	cambiar_elemento(&lista_tercetos, indice_primera_condicion, transformar_indice(exp_logica_indice + 1), SEGUNDO_ELEMENTO);	
 	apilar(&pila_cantidad_desapilar, &cant_saltos);
 
-	
+	// Para poner etiqueta de inicio de parte verdadera
+	crear_terceto(crear_etiqueta(numeracion_terceto), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
 }
 
 | OP_NOT expLogica 
@@ -416,6 +430,9 @@ condicion	: expLogica OP_AND expLogica
 	int cant_saltos = 1; 
 	invertir_branch(&lista_tercetos, exp_logica_indice); 
 	apilar(&pila_cantidad_desapilar, &cant_saltos);
+
+	// Para poner etiqueta de inicio de parte verdadera
+	crear_terceto(crear_etiqueta(numeracion_terceto), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
 }
 
 | expLogica		
@@ -427,6 +444,9 @@ condicion	: expLogica OP_AND expLogica
 	contador_e = 0;
 	contador_t = 0;
 	recuperar_puntero = 0;
+
+	// Para poner etiqueta de inicio de parte verdadera
+	crear_terceto(crear_etiqueta(numeracion_terceto), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
 }
 ;
 
@@ -470,7 +490,6 @@ int main(int argc, char *argv[])
 	yyparse();
 
 	finalizar_lexico(&tabla_simbolos, PATH_ARCHIVO_TS);
-	finalizar_gci(&lista_tercetos, &pila_condicion, &pila_cantidad_desapilar, &pila_termino, &pila_expresion, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 	fclose(yyin);
 
 	return TODO_BIEN;

@@ -4,6 +4,7 @@
 /* CONSTATNES DE ARCHIVOS */
 #define PATH_ARCHIVO_TS "./ts.txt"
 #define PATH_ARCHIVO_CODIGO_INTERMEDIO "./intermedio.txt"
+#define PATH_ARCHIVO_ASSEMBLER "./Final.asm"
 #define TEXTO_ESCRITURA "wt"
 #define TEXTO_LECTURA "rt"
 #define TEXTO_APPEND "at"

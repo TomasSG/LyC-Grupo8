@@ -11,6 +11,7 @@
 #include "./lexico.h"
 #include "./semantico.h"
 #include "./gci.h"
+#include "./assembler.h"
 
 /* VARIABLES GLOBALES */
 extern FILE *yyin;

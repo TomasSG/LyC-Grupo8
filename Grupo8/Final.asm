@@ -3,6 +3,8 @@
 .STACK 200h
 
 .DATA
+@aux                               	dd	?
+@cant                              	dd	?
 _0                                 	dd	0.00
 _0.342                             	dd	0.342
 _02.5                              	dd	02.5

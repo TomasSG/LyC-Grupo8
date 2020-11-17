@@ -66,7 +66,6 @@
 programa: bloque 				
 {
 	puts("COMPILACION EXITOSA!");
-	finalizar_gci(&lista_tercetos, &pila_condicion, &pila_cantidad_desapilar, &pila_termino, &pila_expresion, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 	generar_assembler(PATH_ARCHIVO_ASSEMBLER, PATH_ARCHIVO_CODIGO_INTERMEDIO, &tabla_simbolos);
 }
 ;
@@ -487,9 +486,14 @@ int main(int argc, char *argv[])
 	iniciar_semantica(&contador_elementos);
 	iniciar_gci(&lista_tercetos, &pila_condicion, &pila_cantidad_desapilar, &pila_termino, &pila_expresion, &contador_t, &contador_e, &es_nuevo_token, &recuperar_puntero, &numeracion_terceto);
 	
+	// Agregamos las variables auxiliares a la TS
+	insertar_ts(VARIABLE_AUX, LEXICO_TIPO_FLOAT, NULL, 0, &tabla_simbolos);
+	insertar_ts(VARIABLE_CANT, LEXICO_TIPO_INTEGER, NULL, 0, &tabla_simbolos);
+
 	yyparse();
 
 	finalizar_lexico(&tabla_simbolos, PATH_ARCHIVO_TS);
+	finalizar_gci(&lista_tercetos, &pila_condicion, &pila_cantidad_desapilar, &pila_termino, &pila_expresion, PATH_ARCHIVO_CODIGO_INTERMEDIO);
 	fclose(yyin);
 
 	return TODO_BIEN;

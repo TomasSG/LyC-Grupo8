@@ -5,9 +5,5 @@
 |--------------------------------|--------|--------------------------------|--------|
 |@aux                            |Float   |                                |        |
 |@cant                           |Integer |                                |        |
-|_0123456789                     |String  |"0123456789"                    |10      |
-|_abcdefghijklmnopqrstuvwyxz     |String  |"abcdefghijklmnopqrstuvwyxz"    |26      |
-|_correcto_                      |String  |"Correcto!"                     |9       |
 |_hola_mundo_                    |String  |"Hola Mundo!"                   |11      |
-|_ingrese_el_numero__            |String  |"Ingrese el numero: "           |19      |
 |-----------------------------------------------------------------------------------|

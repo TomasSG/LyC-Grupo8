@@ -8,11 +8,7 @@ include macros2.asm
 .DATA
 @aux                               	dd	?
 @cant                              	dd	?
-_0123456789                        	db	"0123456789"                       , '$', 10 dup (?)
-_abcdefghijklmnopqrstuvwyxz        	db	"abcdefghijklmnopqrstuvwyxz"       , '$', 26 dup (?)
-_correcto_                         	db	"Correcto!"                        , '$', 9 dup (?)
 _hola_mundo_                       	db	"Hola Mundo!"                      , '$', 11 dup (?)
-_ingrese_el_numero__               	db	"Ingrese el numero: "              , '$', 19 dup (?)
 
 .CODE
 START:
@@ -21,16 +17,6 @@ MOV DS, EAX
 MOV ES, EAX
 
 displayString _hola_mundo_
-newline 1
-displayString _abcdefghijklmnopqrstuvwyxz
-newline 1
-displayString _abcdefghijklmnopqrstuvwyxz
-newline 1
-displayString _0123456789
-newline 1
-displayString _ingrese_el_numero__
-newline 1
-displayString _correcto_
 newline 1
 
 MOV EAX, 4C00H

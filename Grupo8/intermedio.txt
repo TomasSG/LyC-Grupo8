@@ -1,6 +1,1 @@
 [0] (PUT, _hola_mundo_,  )
-[1] (PUT, _abcdefghijklmnopqrstuvwyxz,  )
-[2] (PUT, _abcdefghijklmnopqrstuvwyxz,  )
-[3] (PUT, _0123456789,  )
-[4] (PUT, _ingrese_el_numero__,  )
-[5] (PUT, _correcto_,  )

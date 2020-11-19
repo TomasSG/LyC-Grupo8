@@ -89,6 +89,14 @@
 #define PRECISION_FLOAT "dd"
 #define PRECISION_VARIABLE "dd"
 
+#define FADD "FAAD"
+#define FDIV "FDIV"
+#define FSUB "FSUB"
+#define FMUL "FMUL"
+
+#define FLD "FLD";
+
+
 /* CONSTANTES GENERALES */
 #define CANTIDAD_ITOA 1000
 

@@ -52,9 +52,9 @@
 #define SIGNO_RESTAR "-"
 #define SIGNO_DIVISION "/"
 #define SIGNO_MULT "*"
+
 #define SIGNO_IGUAL ":="
 #define SIGNO_VACIO " "
-#define SIGNO_SEPARACION_SENTENCIAS ";"
 
 #define VARIABLE_CANT "@cant"
 #define INI_VARIABLE_CANT "0"
@@ -94,7 +94,8 @@
 #define FSUB "FSUB"
 #define FMUL "FMUL"
 
-#define FLD "FLD";
+#define FLD "FLD"
+#define FSTP "FSTP"
 
 
 /* CONSTANTES GENERALES */

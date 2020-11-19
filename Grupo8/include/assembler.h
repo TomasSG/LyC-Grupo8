@@ -23,5 +23,6 @@ int es_constante(const char*);
 int es_operador_aritmetico(const char*);
 int es_etiqueta(const char*);
 int es_factor(const char*, const char*);
+int es_asignacion(const char*);
 
 #endif //ASSEMBLER_H_INCLUDED

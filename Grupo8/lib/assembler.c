@@ -63,22 +63,36 @@ void generar_declaraciones(FILE *pf, const t_lista_ts *pl)
 
 void generar_codigo(FILE *pf, const t_lista_tercetos *pl)
 {
+	fprintf(pf, "\n.CODE\n");
+	fprintf(pf, "START:\n");
+	fprintf(pf, "MOV EAX, @DATA\n");
+	fprintf(pf, "MOV DS, EAX\n");
+	fprintf(pf, "MOV ES, EAX\n\n");
+
 	while(*pl)
     {
+		
         if(es_operador_aritmetico((*pl)->dato.s1))
 		{
+			//printf("Entro1 %s\n", (*pl)->dato.s1);
 			operacion_aritmetica(pf, (*pl)->dato.s1);
 		} 
 		else if(es_etiqueta((*pl)->dato.s1))
 		{
+			//printf("Entro2 %s\n", (*pl)->dato.s1);
 			fprintf(pf, "%s:\n", (*pl)->dato.s1);
 		}
 		else if(es_factor((*pl)->dato.s2, (*pl)->dato.s3))
 		{
+			//printf("Entro3 %s\n", (*pl)->dato.s1);
 			fprintf(pf, "%s %s\n", FLD, (*pl)->dato.s1);
 		}
+		else if(es_asignacion((*pl)->dato.s1))
+		{
+			//printf("Entro3 %s\n", (*pl)->dato.s1);
+			fprintf(pf, "%s %s\n", FSTP, (*pl)->dato.s2);
+		}
         
-
 		pl=&(*pl)->psig;
     }
 }
@@ -119,7 +133,7 @@ int es_constante(const char *s)
 
 int es_operador_aritmetico(const char *s)
 {
-	return *s == SIGNO_SUMAR || *s == SIGNO_RESTAR ||*s == SIGNO_DIVISION ||*s == SIGNO_MULT; 
+	return strcmp(s, SIGNO_SUMAR) == 0 || strcmp(s, SIGNO_RESTAR) == 0 || strcmp(s, SIGNO_DIVISION) == 0 || strcmp(s, SIGNO_MULT) == 0; 
 }
 
 int es_etiqueta(const char *s)
@@ -129,5 +143,10 @@ int es_etiqueta(const char *s)
 
 int es_factor(const char *s1, const char *s2)
 {
-	return s1 == NULL && s2 == NULL;
+	return strcmp(s1, SIGNO_VACIO) == 0 && strcmp(s2, SIGNO_VACIO) == 0;
+}
+
+int es_asignacion(const char *s)
+{
+	return strcmp(s, SIGNO_IGUAL) == 0;
 }

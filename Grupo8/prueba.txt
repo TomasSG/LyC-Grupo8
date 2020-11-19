@@ -1,4 +1,1 @@
-DIM <a> AS <Integer>
-a := 2 + 3;
-PUT "Este es el valor:";
-PUT a;
+PUT "Hola_Mundo";

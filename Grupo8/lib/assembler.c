@@ -24,7 +24,6 @@ void generar_encabezado(FILE *pf)
 	fprintf(pf, "include number.asm\n");
 	fprintf(pf, "include macros2.asm\n\n");
 	fprintf(pf, ".MODEL LARGE\n");
-	fprintf(pf, ".MODEL LARGE\n");
 	fprintf(pf, ".386\n");
 	fprintf(pf, ".STACK 200h\n");
 }
@@ -139,7 +138,7 @@ void operacion_salida(FILE *pf, const char *s)
 	}
 	else
 	{	
-		fprintf(pf, "%s %s\n", OUT_FLOAT, s);
+		fprintf(pf, "%s %s, 2\n", OUT_FLOAT, s);
 	}
 }
 

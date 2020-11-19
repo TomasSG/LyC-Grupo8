@@ -89,7 +89,7 @@
 #define PRECISION_FLOAT "dd"
 #define PRECISION_VARIABLE "dd"
 
-#define FADD "FAAD"
+#define FADD "FADD"
 #define FDIV "FDIV"
 #define FSUB "FSUB"
 #define FMUL "FMUL"
@@ -98,7 +98,7 @@
 #define FSTP "FSTP"
 
 #define OUT_FLOAT "DisplayFloat"
-#define OUT_STRING "displayStirng"
+#define OUT_STRING "displayString"
 
 
 /* CONSTANTES GENERALES */

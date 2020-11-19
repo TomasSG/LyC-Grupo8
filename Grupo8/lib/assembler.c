@@ -135,6 +135,7 @@ void operacion_salida(FILE *pf, const char *s)
 	{	
 		fprintf(pf, "%s %s, 2\n", OUT_FLOAT, s);
 	}
+	fprintf(pf, "%s\n", NUEVA_LINEA);
 }
 
 

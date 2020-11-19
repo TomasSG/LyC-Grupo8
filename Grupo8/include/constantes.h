@@ -108,6 +108,7 @@
 
 #define OUT_FLOAT "DisplayFloat"
 #define OUT_STRING "displayString"
+#define NUEVA_LINEA "newline 1"
 
 /* CONSTANTES GENERALES */
 #define CANTIDAD_ITOA 1000

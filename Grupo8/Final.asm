@@ -22,11 +22,17 @@ MOV DS, EAX
 MOV ES, EAX
 
 displayString _Hola_Mundo_
+newline 1
 displayString _abcdefghijklmnopqrstuvwyxz
+newline 1
 displayString _ABCDEFGHIJKLMNOPQRSTUVWYXZ
+newline 1
 displayString _0123456789
+newline 1
 displayString _Ingrese_el_numero__
+newline 1
 displayString _Correcto_
+newline 1
 
 MOV EAX, 4C00H
 INT 21h

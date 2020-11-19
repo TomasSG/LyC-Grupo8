@@ -54,6 +54,10 @@ char* estandarizar_cadena(const char *s)
 		if(!es_caracter_valido(*paux))
 		{
 			*paux = '_';
+		} 
+		else if(es_letra_mayus(*paux))
+		{
+			*paux = tolower(*paux);
 		}
 		paux++;
 	}

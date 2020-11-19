@@ -1,6 +1,6 @@
 PUT "Hola Mundo!";
 PUT "abcdefghijklmnopqrstuvwyxz";
-PUT "ABCDEFGHIJKLMNÑOPQRSTUVWYXZ";
+PUT "ABCDEFGHIJKLMNOPQRSTUVWYXZ";
 PUT "0123456789";
 PUT "Ingrese el numero: ";
 PUT "Correcto!";

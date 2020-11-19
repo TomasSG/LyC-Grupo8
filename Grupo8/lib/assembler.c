@@ -73,27 +73,22 @@ void generar_codigo(FILE *pf, const t_lista_tercetos *pl)
 		
         if(es_operador_aritmetico((*pl)->dato.s1))
 		{
-			//printf("Entro1 %s\n", (*pl)->dato.s1);
 			operacion_aritmetica(pf, (*pl)->dato.s1);
 		} 
 		else if(es_etiqueta((*pl)->dato.s1))
 		{
-			//printf("Entro2 %s\n", (*pl)->dato.s1);
 			fprintf(pf, "%s:\n", (*pl)->dato.s1);
 		}
 		else if(es_factor((*pl)->dato.s2, (*pl)->dato.s3))
 		{
-			//printf("Entro3 %s\n", (*pl)->dato.s1);
 			fprintf(pf, "%s %s\n", FLD, (*pl)->dato.s1);
 		}
 		else if(es_asignacion((*pl)->dato.s1))
 		{
-			//printf("Entro3 %s\n", (*pl)->dato.s1);
 			fprintf(pf, "%s %s\n", FSTP, (*pl)->dato.s2);
 		}
 		else if(es_salida((*pl)->dato.s1))
 		{
-			//printf("Entro3 %s\n", (*pl)->dato.s1);
 			operacion_salida(pf, (*pl)->dato.s2);
 		}
         

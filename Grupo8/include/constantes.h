@@ -41,6 +41,15 @@
 #define LEXICO_TIPO_FLOAT "Float"
 #define LEXICO_TIPO_INTEGER "Integer"
 
+#define ASCII_0 48
+#define ASCII_9 57
+
+#define ASCII_A 65
+#define ASCII_Z 90
+
+#define ASCII_a 97
+#define ASCII_z 122
+
 /* CONSTANTES DE SEMANTICA */
 #define SEMANTICA_MAXIMA_LONGITUD_LISTA_DECLARACION 100
 
@@ -99,7 +108,6 @@
 
 #define OUT_FLOAT "DisplayFloat"
 #define OUT_STRING "displayString"
-
 
 /* CONSTANTES GENERALES */
 #define CANTIDAD_ITOA 1000

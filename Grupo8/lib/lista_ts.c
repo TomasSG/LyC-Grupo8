@@ -50,7 +50,7 @@ void guardar_lista_en_archivo_ts(t_lista_ts *pl, const char *path)
 	fprintf(pf,"|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 	fprintf(pf,"|                                                      TABLA DE SIMBOLOS                                                                        |\n");
 	fprintf(pf,"|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-	fprintf(pf,"|%-35s|%-35s|%-35s|%-35s|\n", "LEXEMA", "TIPO", "VALOR", "LONGITUD");
+	fprintf(pf,"|%-32s|%-8s|%-32s|%-6s|\n", "LEXEMA", "TIPO", "VALOR", "LONGITUD");
 	fprintf(pf,"|-----------------------------------|-----------------------------------|-----------------------------------|-----------------------------------|\n");
     while(*pl)
     {
@@ -63,7 +63,7 @@ void guardar_lista_en_archivo_ts(t_lista_ts *pl, const char *path)
 		{
 			itoa(pd->longitud, auxiliar, 10);
 		}
-		fprintf(pf,"|%-35s|%-35s|%-35s|%-35s|\n", pd->lexema, pd->tipo ? pd->tipo : " ", pd->valor ? pd->valor : " ", auxiliar);
+		fprintf(pf,"|%-32s|%-8s|%-32s|%-6s|\n", pd->lexema, pd->tipo ? pd->tipo : " ", pd->valor ? pd->valor : " ", auxiliar);
         pl = &(*pl)->psig;
     }
 	fprintf(pf,"|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");

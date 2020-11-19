@@ -28,7 +28,7 @@ char* sacar_comillas(const char *s)
 
 char* agregar_guion_bajo(const char *s)
 {
-	char* resultado;
+	char *resultado;
 	resultado =(char*) malloc(sizeof(char) * strlen(s) + LEXICO_CANTIDAD_GUIONES_BAJOS + 1);
 	if(resultado == NULL)
 	{
@@ -37,6 +37,47 @@ char* agregar_guion_bajo(const char *s)
 	strcpy(resultado, "_");
 	strcat(resultado, s);
 	return resultado;
+}
+
+char* estandarizar_cadena(const char *s)
+{
+	char *resultado, *paux;
+	resultado = (char*) malloc(sizeof(char)* strlen(s) + 1);
+	if(resultado == NULL)
+	{
+		return NULL;
+	}
+	strcpy(resultado, s);
+	paux = resultado;
+	while(*paux != '\0')
+	{
+		if(!es_caracter_valido(*paux))
+		{
+			*paux = '_';
+		}
+		paux++;
+	}
+	return resultado;
+}
+
+int es_caracter_valido(const char c)
+{
+	return es_numero(c) || es_letra_min(c) || es_letra_mayus(c) || c == '_';
+}	
+
+int es_numero(const char c)
+{
+	return c >= ASCII_0 && c <= ASCII_9;
+}
+
+int es_letra_min(const char c)
+{
+	return c >= ASCII_a && c <= ASCII_z;
+}
+
+int es_letra_mayus(const char c)
+{
+	return c >= ASCII_A && c <= ASCII_Z;
 }
 
 char* convertir_cadena_decimal(const char *s)

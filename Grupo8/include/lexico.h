@@ -10,6 +10,7 @@
 
 char* sacar_comillas(const char*);
 char* agregar_guion_bajo(const char*);
+char* estandarizar_cadena(const char*);
 char* convertir_cadena_decimal(const char*);
 int convertir_caracter_decimal(const char);
 char* adelantar_ceros(char*);
@@ -19,6 +20,11 @@ int error_lexico(const char*, int);
 void verificar_string(const char*, int);
 void verificar_rango_entero(char*, int);
 void verificar_rango_real(char*, int);
+
+int es_caracter_valido(const char);
+int es_numero(const char);
+int es_letra_min(const char);
+int es_letra_mayus(const char);
 
 /* FUNCIONES RELACIOANDAS CON LISTA */
 void iniciar_lexico(t_lista_ts*);

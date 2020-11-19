@@ -109,10 +109,10 @@ COMENTARIO						{APERTURA_COMENTARIO}.*{CIERRE_COMENTARIO}
 
 
 {CONST_STRING}					{char *string_sin_comillas = sacar_comillas(yytext);
-								char *string_guion_bajo = agregar_guion_bajo(string_sin_comillas);
+								char *string_guion_bajo_est = estandarizar_cadena(agregar_guion_bajo(string_sin_comillas));
 								verificar_string(string_sin_comillas, yylineno);
-								insertar_ts(string_guion_bajo, LEXICO_TIPO_STRING, yytext, strlen(string_sin_comillas), &tabla_simbolos);
-								yylval.string = strdup(string_guion_bajo);
+								insertar_ts(string_guion_bajo_est, LEXICO_TIPO_STRING, yytext, strlen(string_sin_comillas), &tabla_simbolos);
+								yylval.string = strdup(string_guion_bajo_est);
 								return CONST_STRING;}
 
 {CONST_ENTERA}					{verificar_rango_entero(yytext, yylineno);

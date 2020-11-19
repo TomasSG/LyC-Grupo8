@@ -11,6 +11,7 @@ include macros2.asm
 @cant                              	dd	?
 _2                                 	dd	2.00
 _3                                 	dd	3.00
+_Este es el valor:                 	db	"Este es el valor:"                , '$', 17 dup (?)
 a                                  	dd	?
 
 .CODE
@@ -23,6 +24,8 @@ FLD _2
 FLD _3
 FAAD
 FSTP a
+displayStirng _Este es el valor:
+DisplayFloat a
 
 MOV EAX, 4C00H
 INT 21h

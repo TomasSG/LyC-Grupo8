@@ -18,11 +18,13 @@ void generar_final(FILE*);
 
 
 void operacion_aritmetica(FILE*, const char*);
+void operacion_salida(FILE*, const char*);
 
 int es_constante(const char*);
 int es_operador_aritmetico(const char*);
 int es_etiqueta(const char*);
 int es_factor(const char*, const char*);
 int es_asignacion(const char*);
+int es_salida(const char*);
 
 #endif //ASSEMBLER_H_INCLUDED

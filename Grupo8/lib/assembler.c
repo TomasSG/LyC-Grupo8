@@ -92,6 +92,11 @@ void generar_codigo(FILE *pf, const t_lista_tercetos *pl)
 			//printf("Entro3 %s\n", (*pl)->dato.s1);
 			fprintf(pf, "%s %s\n", FSTP, (*pl)->dato.s2);
 		}
+		else if(es_salida((*pl)->dato.s1))
+		{
+			//printf("Entro3 %s\n", (*pl)->dato.s1);
+			operacion_salida(pf, (*pl)->dato.s2);
+		}
         
 		pl=&(*pl)->psig;
     }
@@ -126,6 +131,21 @@ void operacion_aritmetica(FILE *pf, const char *op)
 }
 
 
+void operacion_salida(FILE *pf, const char *s)
+{
+	if(es_constante(s))
+	{
+		fprintf(pf, "%s %s\n", OUT_STRING, s);
+	}
+	else
+	{	
+		fprintf(pf, "%s %s\n", OUT_FLOAT, s);
+	}
+}
+
+
+
+
 int es_constante(const char *s)
 {
 	return *s == '_';
@@ -149,4 +169,9 @@ int es_factor(const char *s1, const char *s2)
 int es_asignacion(const char *s)
 {
 	return strcmp(s, SIGNO_IGUAL) == 0;
+}
+
+int es_salida(const char *s)
+{
+	return strcmp(s, SALIDA) == 0;
 }

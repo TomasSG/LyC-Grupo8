@@ -97,6 +97,9 @@
 #define FLD "FLD"
 #define FSTP "FSTP"
 
+#define OUT_FLOAT "DisplayFloat"
+#define OUT_STRING "displayStirng"
+
 
 /* CONSTANTES GENERALES */
 #define CANTIDAD_ITOA 1000

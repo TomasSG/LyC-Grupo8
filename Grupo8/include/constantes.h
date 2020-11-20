@@ -82,6 +82,7 @@
 #define OPERADOR_IGUAL "=="
 
 #define CMP "CMP"
+
 #define BI "BI"
 #define BLT "BLT"
 #define BLE "BLE"
@@ -93,22 +94,42 @@
 #define CANTIDAD_DIGITOS_NUMERO 5
 
 /* CONSTANTES DE ASSEMBLER */
+
+// Cantidad de bits para representación
 #define PRECISION_STRING "db"
 #define PRECISION_INTEGER "dd"
 #define PRECISION_FLOAT "dd"
 #define PRECISION_VARIABLE "dd"
 
-#define FADD "FADD"
-#define FDIV "FDIV"
-#define FSUB "FSUB"
-#define FMUL "FMUL"
+// Aritmética
+#define CMD_SUMAR "FADD"
+#define CMD_RESTAR "FSUB"
+#define CMD_DIVIDIR "FDIV"
+#define CMD_MULTIPLICAR "FMUL"
 
-#define FLD "FLD"
-#define FSTP "FSTP"
+// Operaciones con pila
+#define CMD_PUSH "FLD"
+#define CMD_POP "FSTP"
+#define CMD_XCH "FXCH"
 
-#define OUT_FLOAT "DisplayFloat"
-#define OUT_STRING "displayString"
-#define NUEVA_LINEA "newline 1"
+// Operaciones input/output
+#define CMD_OUT_FLOAT "DisplayFloat"
+#define CMD_OUT_STRING "DisplayString"
+#define CMD_NUEVA_LINEA "newline 1"
+#define CMD_IN_FLOAT "GetFloat"
+
+// Comparaciones
+#define CMD_CMP "FCOM"
+#define CMD_STSW "FSTSW AX"
+#define CMD_SAHF "SAHF"
+
+#define CMD_BI "JMP"
+#define CMD_BLT "JNAE"
+#define CMD_BLE "JBE"
+#define CMD_BGT "JNBE"
+#define CMD_BGE "JNB"
+#define CMD_BEQ "JE"
+#define CMD_BNE "JNE"
 
 /* CONSTANTES GENERALES */
 #define CANTIDAD_ITOA 1000

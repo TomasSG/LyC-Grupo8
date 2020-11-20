@@ -81,11 +81,11 @@ void generar_codigo(FILE *pf, const t_lista_tercetos *pl)
 		}
 		else if(es_factor((*pl)->dato.s2, (*pl)->dato.s3))
 		{
-			fprintf(pf, "%s %s\n", FLD, (*pl)->dato.s1);
+			fprintf(pf, "%s %s\n", CMD_PUSH, (*pl)->dato.s1);
 		}
 		else if(es_asignacion((*pl)->dato.s1))
 		{
-			fprintf(pf, "%s %s\n", FSTP, (*pl)->dato.s2);
+			fprintf(pf, "%s %s\n", CMD_POP, (*pl)->dato.s2);
 		}
 		else if(es_salida((*pl)->dato.s1))
 		{
@@ -108,38 +108,34 @@ void operacion_aritmetica(FILE *pf, const char *op)
 {
 	if(strcmp(op, SIGNO_SUMAR) == 0)
 	{
-		fprintf(pf, "%s\n", FADD);
+		fprintf(pf, "%s\n", CMD_SUMAR);
 	}
 	else if(strcmp(op, SIGNO_RESTAR) == 0)
 	{
-		fprintf(pf, "%s\n", FSUB);
+		fprintf(pf, "%s\n", CMD_RESTAR);
 	}
 	else if(strcmp(op, SIGNO_DIVISION) == 0)
 	{
-		fprintf(pf, "%s\n", FDIV);
+		fprintf(pf, "%s\n", CMD_DIVIDIR);
 	}
 	else if(strcmp(op, SIGNO_MULT) == 0)
 	{
-		fprintf(pf, "%s\n", FMUL);
+		fprintf(pf, "%s\n", CMD_MULTIPLICAR);
 	}
 }
-
 
 void operacion_salida(FILE *pf, const char *s)
 {
 	if(es_constante(s))
 	{
-		fprintf(pf, "%s %s\n", OUT_STRING, s);
+		fprintf(pf, "%s %s\n", CMD_OUT_STRING, s);
 	}
 	else
 	{	
-		fprintf(pf, "%s %s, 2\n", OUT_FLOAT, s);
+		fprintf(pf, "%s %s, 2\n", CMD_OUT_FLOAT, s);
 	}
-	fprintf(pf, "%s\n", NUEVA_LINEA);
+	fprintf(pf, "%s\n", CMD_NUEVA_LINEA);
 }
-
-
-
 
 int es_constante(const char *s)
 {

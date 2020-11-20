@@ -28,5 +28,6 @@ int es_asignacion(const char*);
 int es_salida(const char*);
 
 char* obtener_cmd_salto(const char*);
+char* transformar_a_etiqueta(const char*);
 
 #endif //ASSEMBLER_H_INCLUDED

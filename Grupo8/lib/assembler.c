@@ -199,3 +199,26 @@ char* obtener_cmd_salto(const char *s)
 	}
 	return NULL;
 }
+
+char* transformar_a_etiqueta(const char *s)
+{
+	char *resultado, *paux;
+	int len_etiqueta = strlen(ETIQUETA);
+	resultado = (char*) malloc(sizeof(char) * (len_etiqueta + strlen(s) - CANTIDAD_CORCHETES + CANTIDAD_DOS_PUNTOS) + 1);
+	if(resultado == NULL)
+	{
+		return NULL;
+	}
+	strcpy(resultado, ETIQUETA);
+	paux = resultado + len_etiqueta;
+	s++;
+	while(*s != ']' && *s != '\0')
+	{
+		*paux = *s;
+		paux++;
+		s++;
+	}
+	*paux = ':';
+	*(paux + 1) = '\0';
+	return resultado;
+}

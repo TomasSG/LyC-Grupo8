@@ -8,13 +8,9 @@ include macros2.asm
 .DATA
 @aux                               	dd	?
 @cant                              	dd	?
-_1                                 	dd	1.00
-_2                                 	dd	2.00
-_4                                 	dd	4.00
 _5                                 	dd	5.00
-_8_0                               	dd	8.0
-_9_0                               	dd	9.0
 _el_valor_es__                     	db	"El valor es: "                    , '$', 13 dup (?)
+_ingrese_a_                        	db	"Ingrese a:"                       , '$', 10 dup (?)
 a                                  	dd	?
 b                                  	dd	?
 c                                  	dd	?
@@ -25,23 +21,12 @@ MOV EAX, @DATA
 MOV DS, EAX
 MOV ES, EAX
 
-FLD _2
-FLD _1
-FADD
-FLD _1
-FADD
-FLD _1
-FADD
-FLD _1
-FADD
-FSTP a
+DisplayString _ingrese_a_
+newline 1
+GetFloat a
 FLD _5
-FLD _9_0
-FDIV
-FLD _8_0
-FSUB
 FSTP b
-FLD _4
+FLD _5
 FLD a
 FMUL
 FLD b

@@ -121,8 +121,9 @@ COMENTARIO						{APERTURA_COMENTARIO}.*{CIERRE_COMENTARIO}
 								return CONST_ENTERA;}
 
 {CONST_REAL}					{verificar_rango_real(yytext, yylineno);
-								insertar_ts(agregar_guion_bajo(yytext), LEXICO_TIPO_FLOAT, yytext, 0, &tabla_simbolos);
-								yylval.string = strdup(agregar_guion_bajo(yytext));
+								char *string_est = estandarizar_real(agregar_guion_bajo(yytext));
+								insertar_ts(string_est, LEXICO_TIPO_FLOAT, yytext, 0, &tabla_simbolos);
+								yylval.string = strdup(string_est);
 								return CONST_REAL;}
 
 {CONST_BINARIA}					{char *cadena_valor_decimal = convertir_cadena_decimal(yytext);

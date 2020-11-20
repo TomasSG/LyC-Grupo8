@@ -8,17 +8,17 @@ echo Creando el archivo de byson.
 bison -dyv ./Sintactico.y
 pause
 echo Creando el ejecutable ...
-gcc  ./lib/lista_ts.c ./lib/lista_tercetos.c ./lib/pila.c ./lib/lexico.c ./lib/semantico.c ./lib/gci.c ./lib/assembler.c ./lex.yy.c ./y.tab.c -o ./Segunda.exe
+gcc  ./lib/lista_ts.c ./lib/lista_tercetos.c ./lib/pila.c ./lib/lexico.c ./lib/semantico.c ./lib/gci.c ./lib/assembler.c ./lex.yy.c ./y.tab.c -o ./Grupo8.exe
 pause
 cls
 echo Ejecutando el Compilador
 echo RESULTADOS:
 echo -----------------------------------------------------------------
-Segunda.exe ./prueba.txt
+Grupo8.exe ./prueba.txt
 echo.
 echo -----------------------------------------------------------------
 pause
-del Segunda.exe
+del Grupo8.exe
 del lex.yy.c
 del y.output
 del y.tab.c

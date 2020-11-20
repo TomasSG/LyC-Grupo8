@@ -1,3 +1,7 @@
-PUT "Hola Mundo!";
+DIM <a,b, c> AS <Integer, Float, Float>
 
-
+a := 2 + 1 + 1 + 1 + 1;
+b := 5 / 9.0 - 8.0;
+c := 4 * a / b;
+PUT "El valor es: ";
+PUT c;

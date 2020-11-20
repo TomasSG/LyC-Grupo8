@@ -11,6 +11,7 @@
 char* sacar_comillas(const char*);
 char* agregar_guion_bajo(const char*);
 char* estandarizar_cadena(const char*);
+char* estandarizar_real(const char*);
 char* convertir_cadena_decimal(const char*);
 int convertir_caracter_decimal(const char);
 char* adelantar_ceros(char*);

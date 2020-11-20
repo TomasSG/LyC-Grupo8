@@ -64,6 +64,23 @@ char* estandarizar_cadena(const char *s)
 	return resultado;
 }
 
+char* estandarizar_real(const char *s)
+{
+	char *resultado = (char*) malloc(sizeof(char) * strlen(s) + 1), *paux;
+	if(resultado == NULL)
+	{
+		return NULL;
+	}
+	strcpy(resultado, s);
+	paux = resultado;
+	while(*paux != '.')
+	{
+		paux++;
+	}
+	*paux = '_';
+	return resultado;
+}
+
 int es_caracter_valido(const char c)
 {
 	return es_numero(c) || es_letra_min(c) || es_letra_mayus(c) || c == '_';

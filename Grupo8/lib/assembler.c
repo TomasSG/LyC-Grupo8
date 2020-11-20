@@ -91,6 +91,10 @@ void generar_codigo(FILE *pf, const t_lista_tercetos *pl)
 		{
 			operacion_salida(pf, (*pl)->dato.s2);
 		}
+		else if(es_entrada((*pl)->dato.s1))
+		{
+			fprintf(pf, "%s %s\n", CMD_IN_FLOAT, (*pl)->dato.s2);
+		}
         
 		pl=&(*pl)->psig;
     }
@@ -121,7 +125,8 @@ void operacion_aritmetica(FILE *pf, const char *op)
 	else if(strcmp(op, SIGNO_MULT) == 0)
 	{
 		fprintf(pf, "%s\n", CMD_MULTIPLICAR);
-	}
+	} 
+	
 }
 
 void operacion_salida(FILE *pf, const char *s)
@@ -165,6 +170,11 @@ int es_asignacion(const char *s)
 int es_salida(const char *s)
 {
 	return strcmp(s, SALIDA) == 0;
+}
+
+int es_entrada(const char *s)
+{
+	return strcmp(s, ENTRADA) == 0;
 }
 
 char* obtener_cmd_salto(const char *s)

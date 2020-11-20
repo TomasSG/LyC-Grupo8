@@ -16,7 +16,7 @@ MOV EAX, @DATA
 MOV DS, EAX
 MOV ES, EAX
 
-displayString _hola_mundo_
+DisplayString _hola_mundo_
 newline 1
 
 MOV EAX, 4C00H

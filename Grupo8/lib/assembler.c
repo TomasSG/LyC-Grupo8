@@ -166,3 +166,36 @@ int es_salida(const char *s)
 {
 	return strcmp(s, SALIDA) == 0;
 }
+
+char* obtener_cmd_salto(const char *s)
+{
+	if(strcmp(s, BI) == 0)
+	{
+		return CMD_BI;
+	}
+	else if(strcmp(s, BLT) == 0)
+	{
+		return CMD_BLT;
+	}
+	else if(strcmp(s, BLE) == 0)
+	{
+		return CMD_BLE;
+	}
+	else if(strcmp(s, BGT) == 0)
+	{
+		return CMD_BGT;
+	}
+	else if(strcmp(s, BGE) == 0)
+	{
+		return CMD_BGE;
+	}
+	else if(strcmp(s, BEQ) == 0)
+	{
+		return CMD_BEQ;
+	}
+	else if(strcmp(s, BNE) == 0)
+	{
+		return CMD_BNE;
+	}
+	return NULL;
+}

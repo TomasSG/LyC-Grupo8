@@ -27,4 +27,6 @@ int es_factor(const char*, const char*);
 int es_asignacion(const char*);
 int es_salida(const char*);
 
+char* obtener_cmd_salto(const char*);
+
 #endif //ASSEMBLER_H_INCLUDED

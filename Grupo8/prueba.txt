@@ -1,9 +1,5 @@
 DIM <a,b, c> AS <Integer, Integer, Integer>
 
-PUT "Ingrese un valor a";
-GET a;
-while(a < 2)
-{
-	PUT "WHILE";
-	a := a + 1;
-}
+a := contar(2; [2, 2, 2, 4]);
+PUT "El valor de a es";
+PUT a;

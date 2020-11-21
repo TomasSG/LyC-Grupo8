@@ -1,0 +1,20 @@
+DIM <a,b, c> AS <Integer, Integer, Integer>
+
+PUT "Ingrese un valor a";
+GET a;
+PUT "Ingrese un valor b";
+GET b;
+
+while(a < 2 or b == 2)
+{
+	PUT "WHILE";
+	a := a + 1;
+	b := 3;
+}
+
+while(a < 2 and b == 2)
+{
+	PUT "WHILE";
+	a := a + 1;
+	b := 3;
+}

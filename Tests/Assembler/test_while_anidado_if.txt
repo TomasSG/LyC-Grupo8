@@ -1,0 +1,29 @@
+DIM <a,b, c> AS <Integer, Integer, Integer>
+
+PUT "Ingrese un valor a";
+GET a;
+PUT "Ingrese un valor b";
+GET b;
+while(a < 2)
+{
+	PUT "WHILE";
+	a := a + 1;
+	
+	if(b == 1)
+	{
+		PUT "Lu";
+		PUT "Ingrese un valor para c";
+		GET c;
+		while(c >= 4 and c <= 10)
+		{
+			PUT "Me encanta LyC!";
+			PUT "Ingrese un valor para c";
+			GET c;	
+		}
+	}
+	else
+	{
+		PUT "Mayo";
+	}
+	b := b + 1;
+}

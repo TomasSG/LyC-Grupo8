@@ -6,9 +6,15 @@
 |@aux                            |Float   |                                |        |
 |@cant                           |Integer |                                |        |
 |_1                              |Integer |1                               |        |
+|_10                             |Integer |10                              |        |
 |_2                              |Integer |2                               |        |
-|_a_es_menor_2                   |String  |"a es menor 2"                  |12      |
+|_4                              |Integer |4                               |        |
 |_ingrese_un_valor_a             |String  |"Ingrese un valor a"            |18      |
+|_ingrese_un_valor_b             |String  |"Ingrese un valor b"            |18      |
+|_ingrese_un_valor_para_c        |String  |"Ingrese un valor para c"       |23      |
+|_la_tenes_adentro_lu            |String  |"La tenes adentro LU"           |19      |
+|_la_tenes_adentro_mayoru        |String  |"La tenes adentro Mayoru"       |23      |
+|_me_encanta_lyc_                |String  |"Me encanta LyC!"               |15      |
 |_while                          |String  |"WHILE"                         |5       |
 |a                               |Integer |                                |        |
 |b                               |Integer |                                |        |

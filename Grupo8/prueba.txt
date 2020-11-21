@@ -1,9 +1,27 @@
-DIM <a,b, c> AS <Integer, Integer, Integer>
-PUT "Ingrese a";
-GET a;
-PUT "Ingrese b";
-GET b;
-
-a := contar(a*b; [2, 1, 2, 36, 3.4, 2.5, 2, 4, 5]);
-PUT "El valor de a es";
-PUT a;
+DIM <contador,promedio,actual,suma> AS < Integer,Float,Float,Float >
+PUT "Prueba.txt LyC Tema 1!";
+PUT "Ingrese un valor para actual: ";
+GET actual;
+if(actual <> 0)
+{
+	if(actual > 2)
+		PUT "Mayoru la tiene adentro";
+}
+else
+{
+	contador := 0;
+	while(contador <= 2)
+	{
+		contador := contador + 1;
+		PUT "Lu la tiene adentro";
+		if(contar(contador; [2, 3, 4]) == 1)
+		{
+			PUT "Tomas la tiene adentro";
+		}
+		else
+		{
+			PUT "Ari la tiene adentro";
+		}
+	}
+	
+}

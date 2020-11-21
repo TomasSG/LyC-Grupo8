@@ -113,7 +113,7 @@ void generar_final(FILE *pf)
 {
 	fprintf(pf, "\nMOV EAX, 4C00H\n");
 	fprintf(pf, "INT 21h\n");
-	fprintf(pf, "END START \n");
+	fprintf(pf, "END START");
 }
 
 

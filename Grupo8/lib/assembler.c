@@ -95,6 +95,15 @@ void generar_codigo(FILE *pf, const t_lista_tercetos *pl)
 		{
 			fprintf(pf, "%s %s\n", CMD_IN_FLOAT, (*pl)->dato.s2);
 		}
+		else if(es_comparacion((*pl)->dato.s1))
+		{
+			operacion_comparacion(pf, (*pl)->dato.s2);
+		}
+		else if(es_salto((*pl)->dato.s1))
+		{
+			fprintf(pf, "%s %s\n", obtener_cmd_salto((*pl)->dato.s1), transformar_a_etiqueta((*pl)->dato.s2));
+		}
+		
         
 		pl=&(*pl)->psig;
     }
@@ -142,6 +151,19 @@ void operacion_salida(FILE *pf, const char *s)
 	fprintf(pf, "%s\n", CMD_NUEVA_LINEA);
 }
 
+void operacion_comparacion(FILE *pf, const char *s2)
+{
+	if(*s2 != '[')
+	{
+		fprintf(pf, "%s %s\n", CMD_PUSH, s2);
+	}
+	fprintf(pf, "%s\n", CMD_XCH);
+	fprintf(pf, "%s\n", CMD_CMP);
+	fprintf(pf, "%s\n", CMD_STSW);
+	fprintf(pf, "%s\n", CMD_SAHF);
+	fprintf(pf, "%s\n", CMD_LIBERAR);
+}
+
 int es_constante(const char *s)
 {
 	return *s == '_';
@@ -176,6 +198,16 @@ int es_entrada(const char *s)
 {
 	return strcmp(s, ENTRADA) == 0;
 }
+
+int es_comparacion(const char *s)
+{
+	return strcmp(s, CMP) == 0;
+}
+int es_salto(const char *s)
+{
+	return strcmp(s, BI) == 0 || strcmp(s, BLT) == 0 || strcmp(s, BLE) == 0 || strcmp(s, BGT) == 0 || strcmp(s, BGE) == 0 || strcmp(s, BEQ) == 0 || strcmp(s, BNE) == 0; 
+}
+
 
 char* obtener_cmd_salto(const char *s)
 {
@@ -214,7 +246,7 @@ char* transformar_a_etiqueta(const char *s)
 {
 	char *resultado, *paux;
 	int len_etiqueta = strlen(ETIQUETA);
-	resultado = (char*) malloc(sizeof(char) * (len_etiqueta + strlen(s) - CANTIDAD_CORCHETES + CANTIDAD_DOS_PUNTOS) + 1);
+	resultado = (char*) malloc(sizeof(char) * (len_etiqueta + strlen(s) - CANTIDAD_CORCHETES) + 1);
 	if(resultado == NULL)
 	{
 		return NULL;
@@ -228,7 +260,6 @@ char* transformar_a_etiqueta(const char *s)
 		paux++;
 		s++;
 	}
-	*paux = ':';
-	*(paux + 1) = '\0';
+	*paux = '\0';
 	return resultado;
 }

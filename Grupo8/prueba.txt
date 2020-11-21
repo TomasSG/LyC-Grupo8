@@ -1,8 +1,9 @@
 DIM <a,b, c> AS <Integer, Integer, Integer>
 
-PUT "Ingrese a:";
+PUT "Ingrese un valor a";
 GET a;
-b := 5;
-c := 5 * a / b;
-PUT "El valor es: ";
-PUT c;
+while(a < 2)
+{
+	PUT "WHILE";
+	a := a + 1;
+}

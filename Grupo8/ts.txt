@@ -5,9 +5,11 @@
 |--------------------------------|--------|--------------------------------|--------|
 |@aux                            |Float   |                                |        |
 |@cant                           |Integer |                                |        |
-|_5                              |Integer |5                               |        |
-|_el_valor_es__                  |String  |"El valor es: "                 |13      |
-|_ingrese_a_                     |String  |"Ingrese a:"                    |10      |
+|_1                              |Integer |1                               |        |
+|_2                              |Integer |2                               |        |
+|_a_es_menor_2                   |String  |"a es menor 2"                  |12      |
+|_ingrese_un_valor_a             |String  |"Ingrese un valor a"            |18      |
+|_while                          |String  |"WHILE"                         |5       |
 |a                               |Integer |                                |        |
 |b                               |Integer |                                |        |
 |c                               |Integer |                                |        |

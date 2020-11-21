@@ -73,7 +73,7 @@ void generar_codigo(FILE *pf, const t_lista_tercetos *pl)
 		
         if(es_operador_aritmetico((*pl)->dato.s1))
 		{
-			operacion_aritmetica(pf, (*pl)->dato.s1);
+			operacion_aritmetica(pf, (*pl)->dato.s1, (*pl)->dato.s2, (*pl)->dato.s3);
 		} 
 		else if(es_etiqueta((*pl)->dato.s1))
 		{
@@ -85,7 +85,7 @@ void generar_codigo(FILE *pf, const t_lista_tercetos *pl)
 		}
 		else if(es_asignacion((*pl)->dato.s1))
 		{
-			fprintf(pf, "%s %s\n", CMD_POP, (*pl)->dato.s2);
+			operacion_asignacion(pf, (*pl)->dato.s2, (*pl)->dato.s3);
 		}
 		else if(es_salida((*pl)->dato.s1))
 		{
@@ -117,8 +117,16 @@ void generar_final(FILE *pf)
 }
 
 
-void operacion_aritmetica(FILE *pf, const char *op)
+void operacion_aritmetica(FILE *pf, const char *op, const char *s1, const char *s2)
 {
+	if(*s1 != '[')
+	{
+		fprintf(pf, "%s %s\n", CMD_PUSH, s1);
+	}
+	if(*s2 != '[')
+	{
+		fprintf(pf, "%s %s\n", CMD_PUSH, s2);
+	}
 	if(strcmp(op, SIGNO_SUMAR) == 0)
 	{
 		fprintf(pf, "%s\n", CMD_SUMAR);
@@ -162,6 +170,15 @@ void operacion_comparacion(FILE *pf, const char *s2)
 	fprintf(pf, "%s\n", CMD_STSW);
 	fprintf(pf, "%s\n", CMD_SAHF);
 	fprintf(pf, "%s\n", CMD_LIBERAR);
+}
+
+void operacion_asignacion(FILE *pf, const char *s1, const char *s2)
+{
+	if(*s2 != '[')
+	{
+		fprintf(pf, "%s %s\n", CMD_PUSH, s2);
+	}
+	fprintf(pf, "%s %s\n", CMD_POP, s1);
 }
 
 int es_constante(const char *s)

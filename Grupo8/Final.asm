@@ -8,17 +8,17 @@ include macros2.asm
 .DATA
 @aux                               	dd	?
 @cant                              	dd	?
+_0                                 	dd	0.00
 _1                                 	dd	1.00
-_10                                	dd	10.00
 _2                                 	dd	2.00
+_2_5                               	dd	2.5
+_36                                	dd	36.00
+_3_4                               	dd	3.4
 _4                                 	dd	4.00
-_ingrese_un_valor_a                	db	"Ingrese un valor a"               , '$', 18 dup (?)
-_ingrese_un_valor_b                	db	"Ingrese un valor b"               , '$', 18 dup (?)
-_ingrese_un_valor_para_c           	db	"Ingrese un valor para c"          , '$', 23 dup (?)
-_la_tenes_adentro_lu               	db	"La tenes adentro LU"              , '$', 19 dup (?)
-_la_tenes_adentro_mayoru           	db	"La tenes adentro Mayoru"          , '$', 23 dup (?)
-_me_encanta_lyc_                   	db	"Me encanta LyC!"                  , '$', 15 dup (?)
-_while                             	db	"WHILE"                            , '$', 5 dup (?)
+_5                                 	dd	5.00
+_el_valor_de_a_es                  	db	"El valor de a es"                 , '$', 16 dup (?)
+_ingrese_a                         	db	"Ingrese a"                        , '$', 9 dup (?)
+_ingrese_b                         	db	"Ingrese b"                        , '$', 9 dup (?)
 a                                  	dd	?
 b                                  	dd	?
 c                                  	dd	?
@@ -29,78 +29,141 @@ MOV EAX, @DATA
 MOV DS, EAX
 MOV ES, EAX
 
-DisplayString _ingrese_un_valor_a
+DisplayString _ingrese_a
 newline 1
 GetFloat a
-DisplayString _ingrese_un_valor_b
+DisplayString _ingrese_b
 newline 1
 GetFloat b
-_ET_4:
 FLD a
+FLD b
+FMUL
+FSTP @aux
 FLD _2
+FLD _0
+FSTP @cant
+FLD @aux
 FXCH
 FCOM
 FSTSW AX
 SAHF
 FFREE
-JNB _ET_47
-_ET_9:
-DisplayString _while
-newline 1
-FLD a
+JNE _ET_14
+FLD @cant
 FLD _1
 FADD
-FSTP a
-FLD b
+FSTP @cant
+_ET_14:
 FLD _1
+FLD @aux
 FXCH
 FCOM
 FSTSW AX
 SAHF
 FFREE
-JNE _ET_39
-_ET_19:
-DisplayString _la_tenes_adentro_lu
-newline 1
-DisplayString _ingrese_un_valor_para_c
-newline 1
-GetFloat c
-_ET_23:
-FLD c
-FLD _4
+JNE _ET_20
+FLD @cant
+FLD _1
+FADD
+FSTP @cant
+_ET_20:
+FLD _2
+FLD @aux
 FXCH
 FCOM
 FSTSW AX
 SAHF
 FFREE
-JNAE _ET_37
-FLD c
-FLD _10
+JNE _ET_26
+FLD @cant
+FLD _1
+FADD
+FSTP @cant
+_ET_26:
+FLD _36
+FLD @aux
 FXCH
 FCOM
 FSTSW AX
 SAHF
 FFREE
-JNBE _ET_37
+JNE _ET_32
+FLD @cant
+FLD _1
+FADD
+FSTP @cant
 _ET_32:
-DisplayString _me_encanta_lyc_
-newline 1
-DisplayString _ingrese_un_valor_para_c
-newline 1
-GetFloat c
-JMP _ET_23
-_ET_37:
-JMP _ET_41
-_ET_39:
-DisplayString _la_tenes_adentro_mayoru
-newline 1
-_ET_41:
-FLD b
+FLD _3_4
+FLD @aux
+FXCH
+FCOM
+FSTSW AX
+SAHF
+FFREE
+JNE _ET_38
+FLD @cant
 FLD _1
 FADD
-FSTP b
-JMP _ET_4
-_ET_47:
+FSTP @cant
+_ET_38:
+FLD _2_5
+FLD @aux
+FXCH
+FCOM
+FSTSW AX
+SAHF
+FFREE
+JNE _ET_44
+FLD @cant
+FLD _1
+FADD
+FSTP @cant
+_ET_44:
+FLD _2
+FLD @aux
+FXCH
+FCOM
+FSTSW AX
+SAHF
+FFREE
+JNE _ET_50
+FLD @cant
+FLD _1
+FADD
+FSTP @cant
+_ET_50:
+FLD _4
+FLD @aux
+FXCH
+FCOM
+FSTSW AX
+SAHF
+FFREE
+JNE _ET_56
+FLD @cant
+FLD _1
+FADD
+FSTP @cant
+_ET_56:
+FLD _5
+FLD @aux
+FXCH
+FCOM
+FSTSW AX
+SAHF
+FFREE
+JNE _ET_62
+FLD @cant
+FLD _1
+FADD
+FSTP @cant
+_ET_62:
+FLD @cant
+FSTP a
+DisplayString _el_valor_de_a_es
+newline 1
+DisplayFloat a, 2
+newline 1
 
 MOV EAX, 4C00H
 INT 21h

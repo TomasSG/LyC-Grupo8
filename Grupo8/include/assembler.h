@@ -17,9 +17,10 @@ void generar_codigo(FILE*, const t_lista_tercetos*);
 void generar_final(FILE*);
 
 
-void operacion_aritmetica(FILE*, const char*);
+void operacion_aritmetica(FILE*, const char*, const char*, const char*);
 void operacion_salida(FILE*, const char*);
 void operacion_comparacion(FILE*, const char*);
+void operacion_asignacion(FILE*, const char*, const char*);
 
 int es_constante(const char*);
 int es_operador_aritmetico(const char*);

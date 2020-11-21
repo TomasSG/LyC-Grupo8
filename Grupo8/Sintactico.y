@@ -121,18 +121,24 @@ constantes	: constantes  COMA 	constante
 
 	crear_terceto(CMP, VARIABLE_AUX, transformar_indice(constante_indice), &numeracion_terceto, &lista_tercetos);
 	crear_terceto(BNE, transformar_indice(numeracion_terceto + CANTIDAD_SALTOS_CONTAR), SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
-	aux_indice = crear_terceto(SIGNO_SUMAR, VARIABLE_CANT, AUMENTO_VARIABLE_CANT, &numeracion_terceto, &lista_tercetos);
+	aux_indice = crear_terceto(SIGNO_SUMAR, VARIABLE_CANT, agregar_guion_bajo(AUMENTO_VARIABLE_CANT), &numeracion_terceto, &lista_tercetos);
 	contar_indice = crear_terceto(SIGNO_IGUAL, VARIABLE_CANT, transformar_indice(aux_indice), &numeracion_terceto, &lista_tercetos);
+	crear_terceto(crear_etiqueta(numeracion_terceto), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
+	
 }
 
 | constante	
 {
-	crear_terceto(SIGNO_IGUAL, VARIABLE_CANT, INI_VARIABLE_CANT, &numeracion_terceto, &lista_tercetos);
+	insertar_ts(agregar_guion_bajo(INI_VARIABLE_CANT), LEXICO_TIPO_INTEGER, INI_VARIABLE_CANT, 0, &tabla_simbolos);
+	insertar_ts(agregar_guion_bajo(AUMENTO_VARIABLE_CANT), LEXICO_TIPO_INTEGER, AUMENTO_VARIABLE_CANT, 0, &tabla_simbolos);
+	
+	crear_terceto(SIGNO_IGUAL, VARIABLE_CANT, agregar_guion_bajo(INI_VARIABLE_CANT), &numeracion_terceto, &lista_tercetos);
 
 	crear_terceto(CMP, VARIABLE_AUX, transformar_indice(constante_indice), &numeracion_terceto, &lista_tercetos);
 	crear_terceto(BNE,transformar_indice(numeracion_terceto + CANTIDAD_SALTOS_CONTAR), SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
-	aux_indice = crear_terceto(SIGNO_SUMAR, VARIABLE_CANT, AUMENTO_VARIABLE_CANT, &numeracion_terceto, &lista_tercetos);
+	aux_indice = crear_terceto(SIGNO_SUMAR, VARIABLE_CANT, agregar_guion_bajo(AUMENTO_VARIABLE_CANT), &numeracion_terceto, &lista_tercetos);
 	contar_indice = crear_terceto(SIGNO_IGUAL, VARIABLE_CANT, transformar_indice(aux_indice), &numeracion_terceto, &lista_tercetos);
+	crear_terceto(crear_etiqueta(numeracion_terceto), SIGNO_VACIO, SIGNO_VACIO, &numeracion_terceto, &lista_tercetos);
 }
 ;
 

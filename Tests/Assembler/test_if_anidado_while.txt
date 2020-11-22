@@ -1,0 +1,24 @@
+DIM <a,b, c> AS <Integer, Integer, Integer>
+
+PUT "Ingrese un valor para a";
+GET a;
+
+if(a == 1)
+{
+	b := 0;
+	while(b < 2)
+	{
+		PUT "ADENTRO DEL WHILE";
+	}
+}
+else
+{
+	b := 1;
+	while(b <> 0)
+	{
+		PUT "Con 0 finaliza";
+		PUT "Ingrese un valor para b";
+		GET b;
+	}
+	
+}

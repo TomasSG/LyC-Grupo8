@@ -5,14 +5,9 @@
 |--------------------------------|--------|--------------------------------|--------|
 |@aux                            |Float   |                                |        |
 |@cant                           |Integer |                                |        |
-|_a___b                          |String  |"a < b"                         |5       |
-|_a__b                           |String  |"a >b"                          |4       |
-|_c____b                         |String  |"c <= b"                        |6       |
-|_c___b                          |String  |"c > b"                         |5       |
-|_ingrese_un_valor_a             |String  |"Ingrese un valor a"            |18      |
-|_ingrese_un_valor_b             |String  |"Ingrese un valor b"            |18      |
-|_ingrese_un_valor_c             |String  |"Ingrese un valor c"            |18      |
-|a                               |Integer |                                |        |
-|b                               |Integer |                                |        |
-|c                               |Integer |                                |        |
+|_________                       |String  |"@_-.!'?*"                      |8       |
+|_c                              |String  |"c"                             |1       |
+|_string_con_123                 |String  |"String con 123"                |14      |
+|_string_dif_ic_il_12_           |String  |"String dif ic il 12!"          |20      |
+|_string_facil                   |String  |"String facil"                  |12      |
 |-----------------------------------------------------------------------------------|

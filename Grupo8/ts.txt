@@ -5,9 +5,20 @@
 |--------------------------------|--------|--------------------------------|--------|
 |@aux                            |Float   |                                |        |
 |@cant                           |Integer |                                |        |
-|_________                       |String  |"@_-.!'?*"                      |8       |
-|_c                              |String  |"c"                             |1       |
-|_string_con_123                 |String  |"String con 123"                |14      |
-|_string_dif_ic_il_12_           |String  |"String dif ic il 12!"          |20      |
-|_string_facil                   |String  |"String facil"                  |12      |
+|_0                              |Integer |0                               |        |
+|_0b10                           |Integer |2                               |        |
+|_0xF                            |Integer |15                              |        |
+|_1                              |Integer |1                               |        |
+|_15                             |Integer |15                              |        |
+|_1_2                            |Float   |1.2                             |        |
+|_2                              |Integer |2                               |        |
+|_3                              |Integer |3                               |        |
+|_4                              |Integer |4                               |        |
+|_8                              |Integer |8                               |        |
+|_resultado_esperado__0          |String  |"Resultado esperado: 0"         |21      |
+|_resultado_esperado__1          |String  |"Resultado esperado: 1"         |21      |
+|_resultado_esperado__2          |String  |"Resultado esperado: 2"         |21      |
+|a                               |Integer |                                |        |
+|b                               |Float   |                                |        |
+|c                               |Integer |                                |        |
 |-----------------------------------------------------------------------------------|

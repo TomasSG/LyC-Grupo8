@@ -1,4 +1,5 @@
+DIM <a> AS <Integer>
 
-
-
-PUT "Valor para a"
+PUT "Valor para a";
+GET a;
+PUT a;

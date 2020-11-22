@@ -5,19 +5,14 @@
 |--------------------------------|--------|--------------------------------|--------|
 |@aux                            |Float   |                                |        |
 |@cant                           |Integer |                                |        |
-|_0                              |Integer |0                               |        |
-|_1                              |Integer |1                               |        |
-|_2                              |Integer |2                               |        |
-|_3                              |Integer |3                               |        |
-|_4                              |Integer |4                               |        |
-|_ari_la_tiene_adentro           |String  |"Ari la tiene adentro"          |20      |
-|_ingrese_un_valor_para_actual__ |String  |"Ingrese un valor para actual: "|30      |
-|_lu_la_tiene_adentro            |String  |"Lu la tiene adentro"           |19      |
-|_mayoru_la_tiene_adentro        |String  |"Mayoru la tiene adentro"       |23      |
-|_prueba_txt_lyc_tema_1_         |String  |"Prueba.txt LyC Tema 1!"        |22      |
-|_tomas_la_tiene_adentro         |String  |"Tomas la tiene adentro"        |22      |
-|actual                          |Float   |                                |        |
-|contador                        |Integer |                                |        |
-|promedio                        |Float   |                                |        |
-|suma                            |Float   |                                |        |
+|_a___b                          |String  |"a < b"                         |5       |
+|_a__b                           |String  |"a >b"                          |4       |
+|_c____b                         |String  |"c <= b"                        |6       |
+|_c___b                          |String  |"c > b"                         |5       |
+|_ingrese_un_valor_a             |String  |"Ingrese un valor a"            |18      |
+|_ingrese_un_valor_b             |String  |"Ingrese un valor b"            |18      |
+|_ingrese_un_valor_c             |String  |"Ingrese un valor c"            |18      |
+|a                               |Integer |                                |        |
+|b                               |Integer |                                |        |
+|c                               |Integer |                                |        |
 |-----------------------------------------------------------------------------------|

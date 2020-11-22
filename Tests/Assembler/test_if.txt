@@ -5,6 +5,27 @@ GET a;
 PUT "Ingrese un valor b";
 GET b;
 
+*- IF SIMPLES -*
+
+if(a == b)
+	PUT "IF UNA SOLA LINEA";
+
+if(a>b)
+{
+	PUT "IF SIN ELSE";
+}
+
+if(a<b)
+{
+	PUT "VERDADERO IF CON ELSE";
+}
+else
+{
+	PUT "FALSO IF CON ELSE";
+}
+
+*- IF ANIDADOS -*
+
 if(a == b)
 {
 	PUT "Ingrese un valor c";
@@ -24,8 +45,7 @@ else
 	}
 	else
 	{
-		PUT "a >b";
+		PUT "a > b";
 	}
 	
-}
 	

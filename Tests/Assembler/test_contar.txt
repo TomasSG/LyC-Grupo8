@@ -1,4 +1,4 @@
-DIM <a, b, c> AS <Integer, Float, Integer>
+DIM <a, b, c> AS <Integer, Integer, Integer>
 
 *- CONTAR CON RESULTADO CERO -*
 a := contar(4; [1,2,1,3]); *- 0 -*

@@ -28,3 +28,9 @@ PUT a;
 a := contar(2*4; [1.2,2,8,15,8]); *- 2 -*
 PUT "Resultado esperado: 2";
 PUT a;
+
+b:= 2;
+c:= 4;
+a := contar(b / c; [1.2,.5,8,.5,8]); *- 2 -*
+PUT "Resultado esperado: 2";
+PUT a;

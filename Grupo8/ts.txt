@@ -15,10 +15,11 @@
 |_3                              |Integer |3                               |        |
 |_4                              |Integer |4                               |        |
 |_8                              |Integer |8                               |        |
+|__5                             |Float   |.5                              |        |
 |_resultado_esperado__0          |String  |"Resultado esperado: 0"         |21      |
 |_resultado_esperado__1          |String  |"Resultado esperado: 1"         |21      |
 |_resultado_esperado__2          |String  |"Resultado esperado: 2"         |21      |
 |a                               |Integer |                                |        |
-|b                               |Float   |                                |        |
+|b                               |Integer |                                |        |
 |c                               |Integer |                                |        |
 |-----------------------------------------------------------------------------------|

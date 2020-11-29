@@ -1,0 +1,28 @@
+|-----------------------------------------------------------------------------------|
+|            					TABLA DE SIMBOLOS                                   |
+|-----------------------------------------------------------------------------------|
+|LEXEMA                          |TIPO    |VALOR                           |LONGITUD|
+|--------------------------------|--------|--------------------------------|--------|
+|@aux                            |Float   |                                |        |
+|@cant                           |Integer |                                |        |
+|_0                              |Integer |0                               |        |
+|_02_5                           |Float   |02.5                            |        |
+|_0_342                          |Float   |0.342                           |        |
+|_0b10                           |Integer |2                               |        |
+|_0b111010                       |Integer |58                              |        |
+|_0x7FF                          |Integer |2047                            |        |
+|_1                              |Integer |1                               |        |
+|_256                            |Integer |256                             |        |
+|_4                              |Integer |4                               |        |
+|_52                             |Integer |52                              |        |
+|_92                             |Integer |92                              |        |
+|_ingrese_un_valor_para_actual__ |String  |"Ingrese un valor para actual: "|30      |
+|_la_suma_es__                   |String  |"La suma es: "                  |12      |
+|_mayor_que_2_y_distinto_de_cero |String  |"mayor que 2 y distinto de cero"|30      |
+|_no_es_mayor_que_2              |String  |"no es mayor que 2"             |17      |
+|_prueba_txt_lyc_tema_1_         |String  |"Prueba.txt LyC Tema 1!"        |22      |
+|actual                          |Float   |                                |        |
+|contador                        |Integer |                                |        |
+|promedio                        |Float   |                                |        |
+|suma                            |Float   |                                |        |
+|-----------------------------------------------------------------------------------|

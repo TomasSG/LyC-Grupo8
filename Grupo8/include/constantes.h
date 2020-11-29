@@ -111,7 +111,6 @@
 #define CMD_PUSH "FLD"
 #define CMD_POP "FSTP"
 #define CMD_LIBERAR "FFREE"
-
 #define CMD_XCH "FXCH"
 
 // Operaciones input/output

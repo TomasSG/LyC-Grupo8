@@ -1,0 +1,1 @@
+Para correr el Final.asm debera poner el archivo Final.asm en la carpeta assembler y desde el DosBox ejecutar generar.bat
